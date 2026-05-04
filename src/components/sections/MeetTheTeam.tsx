@@ -321,15 +321,16 @@ interface AgentCardProps {
 }
 
 const AgentCard = ({ item, wide, cardIdx }: AgentCardProps) => {
-  const [active, setActive] = useState(false);
+  const [hovered, setHovered] = useState(false);
 
   return (
     <div
-      onClick={() => setActive(a => !a)}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
       style={{
         gridColumn: wide ? 'span 2' : 'span 1',
-        background: active ? 'white' : 'rgba(255,255,255,0.18)',
-        border: active ? '1.5px solid rgba(16,185,129,0.25)' : '0.5px solid rgba(255,255,255,0.35)',
+        background: hovered ? 'white' : 'rgba(255,255,255,0.18)',
+        border: hovered ? '1.5px solid rgba(16,185,129,0.25)' : '0.5px solid rgba(255,255,255,0.35)',
         backdropFilter: 'blur(20px) saturate(140%)',
         WebkitBackdropFilter: 'blur(20px) saturate(140%)',
         borderRadius: 16,
@@ -339,13 +340,13 @@ const AgentCard = ({ item, wide, cardIdx }: AgentCardProps) => {
         gap: 12,
         cursor: 'pointer',
         transition: 'background 0.2s ease, border 0.2s ease, box-shadow 0.2s ease',
-        boxShadow: active ? '0 4px 20px rgba(16,185,129,0.18)' : 'none',
+        boxShadow: hovered ? '0 4px 20px rgba(16,185,129,0.18)' : 'none',
       }}
     >
       {/* Icon box */}
       <div style={{
         width: 32, height: 32, borderRadius: 8,
-        background: active ? 'linear-gradient(135deg, #10B981, #84CC16)' : 'rgba(255,255,255,0.25)',
+        background: hovered ? 'linear-gradient(135deg, #10B981, #84CC16)' : 'rgba(255,255,255,0.25)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         flexShrink: 0,
         transition: 'background 0.2s ease',
@@ -355,13 +356,13 @@ const AgentCard = ({ item, wide, cardIdx }: AgentCardProps) => {
       {/* Text */}
       <div style={{ flex: 1, minWidth: 0 }}>
         <p style={{
-          color: active ? '#065F46' : 'white',
+          color: hovered ? '#065F46' : 'white',
           fontWeight: 700, fontSize: 13, lineHeight: 1.3,
           transition: 'color 0.2s ease',
         }}>
           {item.name}
         </p>
-        <CyclingLine lines={item.lines} offset={cardIdx} active={active} />
+        <CyclingLine lines={item.lines} offset={cardIdx} active={hovered} />
       </div>
     </div>
   );
