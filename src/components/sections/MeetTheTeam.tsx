@@ -1,15 +1,31 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const Icon = ({ children }: any) => (
+interface IconProps {
+  children: React.ReactNode;
+}
+
+const Icon = ({ children }: IconProps) => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     {children}
   </svg>
 );
 
+interface AgentItem {
+  name: string;
+  lines: string[];
+  icon: React.ReactNode;
+  wide?: boolean;
+}
+
+interface AgentGroup {
+  category: string;
+  items: AgentItem[];
+}
+
 // ── All agents with multiple capability lines ──────────────────────────────
-const AGENTS = [
+const AGENTS: AgentGroup[] = [
   {
     category: 'FRONT DESK',
     items: [
@@ -239,7 +255,12 @@ const AGENTS = [
 ];
 
 // ── Cycling line ticker inside each card ──────────────────────────────────
-function CyclingLine({ lines, offset = 0 }: { lines: string[]; offset?: number }) {
+interface CyclingLineProps {
+  lines: string[];
+  offset?: number;
+}
+
+function CyclingLine({ lines, offset = 0 }: CyclingLineProps) {
   const [idx, setIdx] = useState(offset % lines.length);
   const [visible, setVisible] = useState(true);
 
@@ -249,7 +270,7 @@ function CyclingLine({ lines, offset = 0 }: { lines: string[]; offset?: number }
       const interval = setInterval(() => {
         setVisible(false);
         setTimeout(() => {
-          setIdx(i => (i + 1) % lines.length);
+          setIdx((i: number) => (i + 1) % lines.length);
           setVisible(true);
         }, 300);
       }, 2200);
@@ -275,7 +296,11 @@ function CyclingLine({ lines, offset = 0 }: { lines: string[]; offset?: number }
 }
 
 // ── Category pill ─────────────────────────────────────────────────────────
-const CategoryPill = ({ label }: { label: string }) => (
+interface CategoryPillProps {
+  label: string;
+}
+
+const CategoryPill = ({ label }: CategoryPillProps) => (
   <div className="flex justify-center my-5">
     <span style={{
       display: 'inline-block',
@@ -289,12 +314,19 @@ const CategoryPill = ({ label }: { label: string }) => (
 );
 
 // ── Agent card ────────────────────────────────────────────────────────────
-let globalCardIdx = 0;
-const AgentCard = ({ item, wide, cardIdx }: { item: any; wide?: boolean; cardIdx: number }) => (
+interface AgentCardProps {
+  item: AgentItem;
+  wide?: boolean;
+  cardIdx: number;
+}
+
+const AgentCard = ({ item, wide, cardIdx }: AgentCardProps) => (
   <div style={{
     gridColumn: wide ? 'span 2' : 'span 1',
-    background: 'rgba(255,255,255,0.15)',
-    border: '1.5px solid rgba(255,255,255,0.3)',
+    background: 'rgba(255,255,255,0.18)',
+    border: '0.5px solid rgba(255,255,255,0.35)',
+    backdropFilter: 'blur(20px) saturate(140%)',
+    WebkitBackdropFilter: 'blur(20px) saturate(140%)',
     borderRadius: 16,
     padding: '14px 16px',
     display: 'flex',
@@ -304,7 +336,7 @@ const AgentCard = ({ item, wide, cardIdx }: { item: any; wide?: boolean; cardIdx
     {/* Icon box */}
     <div style={{
       width: 32, height: 32, borderRadius: 8,
-      background: 'rgba(255,255,255,0.2)',
+      background: 'rgba(255,255,255,0.25)',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       flexShrink: 0,
     }}>
@@ -326,13 +358,34 @@ export const MeetTheTeam = () => {
   return (
     <section
       id="features"
+      className="relative overflow-hidden"
       style={{
-        background: 'linear-gradient(135deg, #5DD62C 0%, #6EE832 60%, #84E040 100%)',
         padding: '56px 0 48px',
-        overflow: 'hidden',
+        position: 'relative',
       }}
     >
-      <div style={{ maxWidth: 560, margin: '0 auto', padding: '0 20px' }}>
+      {/* Background layers */}
+      <div style={{
+        position: 'absolute', inset: 0, zIndex: 0,
+        background: `
+          radial-gradient(ellipse 60% 55% at 90% 8%, rgba(254, 252, 232, 0.22) 0%, rgba(254, 252, 232, 0) 60%),
+          linear-gradient(135deg, #10B981 0%, #34D399 25%, #6EE7B7 50%, #84CC16 75%, #84CC16 100%)
+        `
+      }} />
+      
+      {/* Top fade */}
+      <div style={{
+        position: 'absolute', top: 0, left: 0, right: 0, height: 80, zIndex: 1,
+        background: 'linear-gradient(180deg, #FAFAF8 0%, #ECFDF5 30%, #D1FAE5 65%, #6EE7B7 100%)'
+      }} />
+      
+      {/* Bottom fade */}
+      <div style={{
+        position: 'absolute', bottom: 0, left: 0, right: 0, height: 80, zIndex: 1,
+        background: 'linear-gradient(180deg, rgba(132, 204, 22, 0) 0%, #D1FAE5 50%, #FAFAF8 100%)'
+      }} />
+
+      <div style={{ maxWidth: 560, margin: '0 auto', padding: '0 20px', position: 'relative', zIndex: 2 }}>
 
         {/* Top pill */}
         <div className="flex justify-center mb-6">
@@ -374,7 +427,7 @@ export const MeetTheTeam = () => {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
               {group.items.map((item, ii) => {
                 const idx = cardCounter++;
-                return <AgentCard key={ii} item={item} wide={item.wide} cardIdx={idx} />;
+                return <AgentCard item={item} wide={item.wide} cardIdx={idx} key={ii} />;
               })}
             </div>
           </div>

@@ -3,6 +3,24 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { SectionPill } from '../ui/SectionPill';
 
+// Live counter for conversations
+function LiveCounter() {
+  const [count, setCount] = useState(376);
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCount(prev => prev + Math.floor(Math.random() * 3)); // Increment by 0-2 randomly
+    }, 2000 + Math.random() * 3000); // Every 2-5 seconds
+    return () => clearInterval(interval);
+  }, []);
+  
+  return (
+    <span style={{ color: 'white', fontSize: 'clamp(28px,5vw,40px)', fontWeight: 800, lineHeight: 1 }}>
+      {count.toLocaleString()}
+    </span>
+  );
+}
+
 const GradientText = ({ children, italic = false }: any) => (
   <span style={{
     background: 'linear-gradient(135deg, #10B981, #84CC16)',
@@ -20,6 +38,74 @@ const SketchUnderline = ({ width = 220 }) => (
 );
 
 const RESULTS = [
+  // Card 1
+  {
+    product: 'AI RECEPTIONIST',
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+      </svg>
+    ),
+    amount: '$14,400',
+    amountSuffix: 'SINGLE BOOKING',
+    action: 'Booked from a 2:14 AM call',
+    attribution: 'Carlos M., MVP Miami · April 18',
+    tag: 'LAMBO AVENTADOR · 3-DAY RENTAL',
+    stat1: { value: '2:14AM', label: 'CALL TIME' },
+    stat2: { value: '$14,400', label: 'BOOKING VALUE' },
+  },
+  // Card 2
+  {
+    product: 'AI OMNICHANNEL',
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+    ),
+    amount: '$4,800',
+    amountSuffix: 'WEEKEND RENTAL',
+    action: 'Weekend rental closed in 4 minutes via Instagram DM',
+    attribution: 'Royalty Vegas · April 22',
+    tag: 'LAMBORGHINI HURACÁN',
+    stat1: { value: '4 min', label: 'CLOSE TIME' },
+    stat2: { value: '$4,800', label: 'WEEKEND VALUE' },
+  },
+  // Card 3
+  {
+    product: 'AI LEAD QUALIFIER',
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <line x1="18" y1="20" x2="18" y2="10"/>
+        <line x1="12" y1="20" x2="12" y2="4"/>
+        <line x1="6" y1="20" x2="6" y2="14"/>
+      </svg>
+    ),
+    amount: '47',
+    amountSuffix: 'HOT LEADS',
+    action: 'Flagged from $2.1M of inquiries',
+    attribution: 'LA Exotic · April 21',
+    tag: '8 LEADS SCORED',
+    stat1: { value: '47', label: 'HOT LEADS' },
+    stat2: { value: '$2.1M', label: 'INQUIRIES' },
+  },
+  // Card 4
+  {
+    product: 'AI FOLLOW-UP',
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="23 4 23 10 17 10"/>
+        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+      </svg>
+    ),
+    amount: '$8,200',
+    amountSuffix: 'RECOVERED',
+    action: 'Recovered from a 9-day-old quote',
+    attribution: 'Miami Drive · April 14',
+    tag: 'RANGE ROVER SPORT',
+    stat1: { value: '9 days', label: 'OLD QUOTE' },
+    stat2: { value: '$8,200', label: 'RECOVERED' },
+  },
+  // Card 5
   {
     product: 'AI QUOTE & BOOKING',
     icon: (
@@ -32,12 +118,13 @@ const RESULTS = [
     ),
     amount: '11s',
     amountSuffix: 'QUOTE-TO-DEPOSIT',
-    action: '312 contracts signed.',
+    action: '312 contracts signed',
     attribution: 'Atlanta Exotic · April',
     tag: 'AVG BOOKING VALUE $5,200',
-    stat1: { value: '312', label: 'CONTRACTS SIGNED' },
-    stat2: { value: '$5,200', label: 'AVG BOOKING VALUE' },
+    stat1: { value: '312', label: 'CONTRACTS' },
+    stat2: { value: '$5,200', label: 'AVG VALUE' },
   },
+  // Card 6
   {
     product: 'AI REVIEW MANAGER',
     icon: (
@@ -46,82 +133,118 @@ const RESULTS = [
       </svg>
     ),
     amount: '184',
-    amountSuffix: '5-STAR REVIEWS',
-    action: '5-star Google reviews intercepted.',
+    amountSuffix: 'REVIEWS',
+    action: '5-star Google reviews collected. 3 negatives intercepted',
     attribution: 'Scottsdale Luxury · April',
-    tag: 'RATING: 4.8 → 4.9',
+    tag: 'RATING 4.8 → 4.9',
     stat1: { value: '184', label: '5-STAR REVIEWS' },
     stat2: { value: '4.9', label: 'NEW RATING' },
   },
+  // Card 7
   {
-    product: 'AI RECEPTIONIST',
+    product: 'AI VIP MANAGER',
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
       </svg>
     ),
-    amount: '$14,400',
-    amountSuffix: 'SINGLE BOOKING',
-    action: 'Booked from a 2:14 AM call.',
-    attribution: 'Carlos M., MVP Miami · April',
-    tag: 'LAMBO AVENTADOR',
-    stat1: { value: '2:14AM', label: 'CALL TIME' },
-    stat2: { value: '$14,400', label: 'BOOKING VALUE' },
+    amount: '$26,400',
+    amountSuffix: 'REACTIVATED',
+    action: 'Reactivated a Platinum customer',
+    attribution: 'Houston Premium · April 11',
+    tag: 'BIRTHDAY WEEKEND',
+    stat1: { value: '1', label: 'PLATINUM' },
+    stat2: { value: '$26,400', label: 'REACTIVATED' },
   },
+  // Card 8
   {
-    product: 'AI OMNICHANNEL',
+    product: 'AI EMAIL + SMS',
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+        <polyline points="22,6 12,13 2,6"/>
       </svg>
     ),
     amount: '$47,000',
     amountSuffix: 'F1 CAMPAIGN',
-    action: '18 bookings from one campaign.',
+    action: 'F1 weekend campaign · 247 past customers · 18 bookings',
     attribution: 'Miami Drive · April',
     tag: '7.3% CONVERSION',
-    stat1: { value: '18', label: 'BOOKINGS CLOSED' },
-    stat2: { value: '7.3%', label: 'CONVERSION RATE' },
+    stat1: { value: '18', label: 'BOOKINGS' },
+    stat2: { value: '7.3%', label: 'CONVERSION' },
   },
+  // Card 9
   {
-    product: 'AI FOLLOW-UP',
+    product: 'AI LISTING OPTIMIZER',
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="23 4 23 10 17 10"/>
-        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+        <circle cx="11" cy="11" r="8"/>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
       </svg>
     ),
-    amount: '$8,200',
-    amountSuffix: 'RECOVERED',
-    action: 'Recovered from a 9-day-old quote.',
-    attribution: 'Miami Drive · April',
-    tag: 'RANGE ROVER SPORT',
-    stat1: { value: '9 days', label: 'OLD QUOTE' },
-    stat2: { value: '$8,200', label: 'RECOVERED' },
+    amount: '+31%',
+    amountSuffix: 'GOOGLE CLICKS',
+    action: 'Google Business clicks in 30 days',
+    attribution: 'Atlanta Exotic · April',
+    tag: 'LOCAL PACK +2 POSITIONS',
+    stat1: { value: '+31%', label: 'CLICKS' },
+    stat2: { value: '+2', label: 'POSITIONS' },
   },
+  // Card 10
   {
-    product: 'AI LEAD QUALIFIER',
+    product: 'AI SOCIAL MANAGER',
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <line x1="18" y1="20" x2="18" y2="10"/>
-        <line x1="12" y1="20" x2="12" y2="4"/>
-        <line x1="6" y1="20" x2="6" y2="14"/>
+        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
       </svg>
     ),
-    amount: '47',
-    amountSuffix: 'HOT LEADS',
-    action: 'Flagged from $2.1M of inquiries.',
-    attribution: 'LA Exotic · April',
-    tag: 'LEADS SCORED TOTAL',
-    stat1: { value: '47', label: 'HOT LEADS' },
-    stat2: { value: '$2.1M', label: 'INQUIRIES SCORED' },
+    amount: '2.1M',
+    amountSuffix: 'VIEWS',
+    action: '42 Instagram Reels posted in April',
+    attribution: 'Las Vegas Exotic · April',
+    tag: '+4,800 FOLLOWERS',
+    stat1: { value: '42', label: 'REELS' },
+    stat2: { value: '+4,800', label: 'FOLLOWERS' },
+  },
+  // Card 11
+  {
+    product: 'AI CUSTOMER SUPPORT',
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+      </svg>
+    ),
+    amount: '1,400',
+    amountSuffix: 'TICKETS',
+    action: 'Mid-rental issues resolved · 90s avg',
+    attribution: 'Orlando Luxury · April',
+    tag: 'CSAT 4.7/5',
+    stat1: { value: '1,400', label: 'TICKETS' },
+    stat2: { value: '4.7/5', label: 'CSAT' },
+  },
+  // Card 12
+  {
+    product: 'AI WEBSITE CHATBOT',
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="2"/>
+        <path d="M8 12h8"/>
+        <path d="M8 8h5"/>
+      </svg>
+    ),
+    amount: '$94,000',
+    amountSuffix: 'CHAT BOOKINGS',
+    action: 'Booked directly from website chat — no human touch',
+    attribution: 'Tampa Premium · April',
+    tag: '14% CHAT-TO-BOOKING',
+    stat1: { value: '$94K', label: 'CHAT REVENUE' },
+    stat2: { value: '14%', label: 'CONVERSION' },
   },
 ];
 
 export const RealResults = () => {
   const [current, setCurrent] = useState(0);
   const [animating, setAnimating] = useState(false);
-  const [statsAnimating, setStatsAnimating] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const total = RESULTS.length;
 
@@ -135,11 +258,9 @@ export const RealResults = () => {
   const goTo = (idx: number) => {
     if (animating) return;
     setAnimating(true);
-    setStatsAnimating(true);
     setTimeout(() => {
       setCurrent(idx);
       setAnimating(false);
-      setTimeout(() => setStatsAnimating(false), 50);
     }, 300);
   };
 
@@ -267,24 +388,28 @@ export const RealResults = () => {
           </span>
         </div>
 
-        {/* Dynamic bottom stat boxes — change with active card */}
+        {/* Fixed bottom stat boxes — US CLIENTS and CONVERSATIONS */}
         <div className="grid grid-cols-2 gap-4" style={{ maxWidth: 420, margin: '0 auto' }}>
-          {[active.stat1, active.stat2].map((stat, i) => (
-            <div
-              key={`${current}-${i}`}
-              className="rounded-2xl flex flex-col items-center justify-center py-6"
-              style={{
-                background: 'linear-gradient(135deg, #34d399 0%, #86efac 50%, #a3e635 100%)',
-                boxShadow: '0 8px 24px rgba(16,185,129,0.2)',
-                opacity: statsAnimating ? 0 : 1,
-                transform: statsAnimating ? 'translateY(6px)' : 'translateY(0)',
-                transition: 'opacity 0.35s ease, transform 0.35s ease',
-              }}
-            >
-              <span style={{ color: 'white', fontSize: 'clamp(28px,5vw,40px)', fontWeight: 800, lineHeight: 1 }}>{stat.value}</span>
-              <span style={{ color: 'rgba(255,255,255,0.85)', fontSize: 9, fontWeight: 700, letterSpacing: '0.12em', marginTop: 6, textAlign: 'center', padding: '0 8px' }}>{stat.label}</span>
-            </div>
-          ))}
+          <div
+            className="rounded-2xl flex flex-col items-center justify-center py-6"
+            style={{
+              background: 'linear-gradient(135deg, #34d399 0%, #86efac 50%, #a3e635 100%)',
+              boxShadow: '0 8px 24px rgba(16,185,129,0.2)',
+            }}
+          >
+            <span style={{ color: 'white', fontSize: 'clamp(28px,5vw,40px)', fontWeight: 800, lineHeight: 1 }}>16</span>
+            <span style={{ color: 'rgba(255,255,255,0.85)', fontSize: 9, fontWeight: 700, letterSpacing: '0.12em', marginTop: 6, textAlign: 'center' }}>US CLIENTS</span>
+          </div>
+          <div
+            className="rounded-2xl flex flex-col items-center justify-center py-6"
+            style={{
+              background: 'linear-gradient(135deg, #34d399 0%, #86efac 50%, #a3e635 100%)',
+              boxShadow: '0 8px 24px rgba(16,185,129,0.2)',
+            }}
+          >
+            <LiveCounter />
+            <span style={{ color: 'rgba(255,255,255,0.85)', fontSize: 9, fontWeight: 700, letterSpacing: '0.12em', marginTop: 6, textAlign: 'center' }}>CONVERSATIONS</span>
+          </div>
         </div>
 
       </div>
