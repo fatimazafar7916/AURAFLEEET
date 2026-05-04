@@ -51,7 +51,7 @@ export const Navbar = () => {
           {[
             { label: 'About', href: '/about' },
             { label: 'Product', href: '#product' },
-            { label: 'AEO-Geo', href: '#aeo-geo' },
+            { label: 'AEO-Geo', href: '/aeo-geo' },
             { label: 'Pricing', href: '/pricing' }
           ].map(link => (
             <a key={link.label} href={link.href}
@@ -84,7 +84,7 @@ export const Navbar = () => {
           {[
             { label: 'About', href: '/about' },
             { label: 'Product', href: '#product' },
-            { label: 'AEO-Geo', href: '#aeo-geo' },
+            { label: 'AEO-Geo', href: '/aeo-geo' },
             { label: 'Pricing', href: '/pricing' }
           ].map(link => (
             <a key={link.label} href={link.href}

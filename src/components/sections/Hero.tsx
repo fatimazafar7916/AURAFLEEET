@@ -105,12 +105,12 @@ function ChannelTabs({ activeChannel, onChannelChange }: { activeChannel: string
   ];
 
   return (
-    <div className="flex gap-3 mb-6 flex-wrap px-6 pt-6">
+    <div className="flex gap-4 mb-8 flex-wrap px-8 pt-8">
       {tabs.map(tab => (
         <button
           key={tab.id}
           onClick={() => onChannelChange(tab.id)}
-          className="px-5 py-2.5 rounded-full text-xs font-bold tracking-wider transition-all hover:scale-105 cursor-pointer"
+          className="px-6 py-3 rounded-full text-sm font-bold tracking-wider transition-all hover:scale-105 cursor-pointer whitespace-nowrap"
           style={{
             background: tab.id === activeChannel 
               ? 'rgba(16,185,129,0.12)' 
@@ -459,12 +459,12 @@ function ChannelCard({ channel, onChannelChange }: { channel: any; onChannelChan
 
   // Wrapper with border containing tabs + mockup
   return (
-    <div className="rounded-3xl overflow-hidden" style={{ background: '#FFFFFF', border: '2px solid #E2E8F0', boxShadow: '0 8px 32px rgba(0,0,0,0.08)' }}>
+    <div className="rounded-3xl overflow-hidden" style={{ background: '#FFFFFF', border: '2px solid #E2E8F0', boxShadow: '0 8px 32px rgba(0,0,0,0.08)', minWidth: 500, width: '100%', maxWidth: 700 }}>
       {/* Tabs inside container */}
       <ChannelTabs activeChannel={channel.id} onChannelChange={onChannelChange} />
       
       {/* Channel mockup */}
-      <div className="px-6 pb-6">
+      <div className="px-8 pb-8">
         {channel.id === 'instagram' && <InstagramCard channel={channel} step={step} typedText={typedText} isTyping={isTyping} />}
         {channel.id === 'whatsapp' && <WhatsAppCard channel={channel} step={step} typedText={typedText} isTyping={isTyping} />}
         {channel.id === 'sms' && <IMessageCard channel={channel} step={step} typedText={typedText} isTyping={isTyping} />}
@@ -533,7 +533,7 @@ export const Hero = () => {
                 <span className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: 'linear-gradient(135deg, #10B981, #84CC16)' }}>
                   <Play size={11} fill="white" color="white" />
                 </span>
-                Watch 90-sec demo
+                Book a strategy call
               </button>
             </div>
 
@@ -631,7 +631,7 @@ export const Hero = () => {
               <span className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: 'linear-gradient(135deg, #10B981, #84CC16)' }}>
                 <Play size={11} fill="white" color="white" />
               </span>
-              Watch 90-sec demo
+              Book a strategy call
             </button>
           </div>
 

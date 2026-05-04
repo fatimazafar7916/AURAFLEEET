@@ -185,17 +185,16 @@ export const RealResults = () => {
         {/* Header */}
         <div className="max-w-3xl mx-auto text-center mb-16 md:mb-20">
           <div className="flex justify-center mb-6">
-            <SectionPill>TRANSPARENCY · LIVE DATA</SectionPill>
+            <SectionPill>RESULTS OF LAST 30 DAYS</SectionPill>
           </div>
           <h2 className="font-sans font-bold text-deep-ink mb-6 px-4 leading-[1.1] tracking-tight" style={{ fontSize: 'clamp(36px, 6vw, 64px)' }}>
-            Real results. <br className="md:hidden" />
-            <GradientText italic>Real operators.</GradientText>
+            Results by <GradientText italic>Operators</GradientText>
           </h2>
           <div className="flex justify-center -mt-4 mb-8 md:mb-10">
             <SketchUnderline width={isMobile ? 240 : 380} />
           </div>
           <p className="text-lg md:text-xl text-ink-soft leading-relaxed max-w-2xl mx-auto">
-            Specific bookings recovered, calls captured, and reviews collected by Aiaura — purpose-built for US rental fleets with 5–50 cars.
+            Specific bookings recovered, calls captured, and reviews collected by Aiaura — for US rental shops between 5 and 50 cars.
           </p>
         </div>
 
