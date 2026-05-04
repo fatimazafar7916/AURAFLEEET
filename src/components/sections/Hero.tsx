@@ -105,22 +105,20 @@ function ChannelTabs({ activeChannel, onChannelChange }: { activeChannel: string
   ];
 
   return (
-    <div className="flex gap-2 mb-3 flex-wrap">
+    <div className="flex gap-3 mb-6 flex-wrap px-6 pt-6">
       {tabs.map(tab => (
         <button
           key={tab.id}
           onClick={() => onChannelChange(tab.id)}
-          className="px-4 py-2 rounded-full text-xs font-bold tracking-wide transition-all hover:scale-105 cursor-pointer"
+          className="px-5 py-2.5 rounded-full text-xs font-bold tracking-wider transition-all hover:scale-105 cursor-pointer"
           style={{
             background: tab.id === activeChannel 
-              ? 'rgba(16,185,129,0.15)' 
-              : 'rgba(0,0,0,0.03)',
+              ? 'rgba(16,185,129,0.12)' 
+              : 'transparent',
             color: tab.id === activeChannel 
               ? '#10B981' 
-              : '#9CA3AF',
-            border: tab.id === activeChannel 
-              ? '1px solid rgba(16,185,129,0.3)' 
-              : '1px solid rgba(0,0,0,0.08)',
+              : '#94A3B8',
+            border: 'none',
           }}
         >
           {tab.label}
@@ -429,7 +427,7 @@ function GmailCard({ channel, step, typedText, isTyping }: any) {
   );
 }
 
-function ChannelCard({ channel }: { channel: any }) {
+function ChannelCard({ channel, onChannelChange }: { channel: any; onChannelChange: (channelId: string) => void }) {
   const [step, setStep] = useState(0);
   const [typedText, setTypedText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -459,12 +457,22 @@ function ChannelCard({ channel }: { channel: any }) {
     };
   }, [channel]);
 
-  if (channel.id === 'instagram') return <InstagramCard channel={channel} step={step} typedText={typedText} isTyping={isTyping} />;
-  if (channel.id === 'whatsapp') return <WhatsAppCard channel={channel} step={step} typedText={typedText} isTyping={isTyping} />;
-  if (channel.id === 'sms') return <IMessageCard channel={channel} step={step} typedText={typedText} isTyping={isTyping} />;
-  if (channel.id === 'call') return <PhoneCallCard channel={channel} step={step} typedText={typedText} isTyping={isTyping} />;
-  if (channel.id === 'email') return <GmailCard channel={channel} step={step} typedText={typedText} isTyping={isTyping} />;
-  return null;
+  // Wrapper with border containing tabs + mockup
+  return (
+    <div className="rounded-3xl overflow-hidden" style={{ background: '#FFFFFF', border: '2px solid #E2E8F0', boxShadow: '0 8px 32px rgba(0,0,0,0.08)' }}>
+      {/* Tabs inside container */}
+      <ChannelTabs activeChannel={channel.id} onChannelChange={onChannelChange} />
+      
+      {/* Channel mockup */}
+      <div className="px-6 pb-6">
+        {channel.id === 'instagram' && <InstagramCard channel={channel} step={step} typedText={typedText} isTyping={isTyping} />}
+        {channel.id === 'whatsapp' && <WhatsAppCard channel={channel} step={step} typedText={typedText} isTyping={isTyping} />}
+        {channel.id === 'sms' && <IMessageCard channel={channel} step={step} typedText={typedText} isTyping={isTyping} />}
+        {channel.id === 'call' && <PhoneCallCard channel={channel} step={step} typedText={typedText} isTyping={isTyping} />}
+        {channel.id === 'email' && <GmailCard channel={channel} step={step} typedText={typedText} isTyping={isTyping} />}
+      </div>
+    </div>
+  );
 }
 
 export const Hero = () => {
@@ -584,24 +592,21 @@ export const Hero = () => {
           <div className="relative flex flex-col items-center justify-center">
             <div className="absolute inset-0 bg-mint/10 blur-[100px] rounded-full -z-10" />
             
-            {/* Channel Tabs - Outside the card */}
-            <ChannelTabs 
-              activeChannel={CHANNELS[channelIdx].id} 
-              onChannelChange={(channelId: string) => {
-                const newIdx = CHANNELS.findIndex(ch => ch.id === channelId);
-                if (newIdx !== -1 && newIdx !== channelIdx) {
-                  setChannelFade(false);
-                  setTimeout(() => {
-                    setChannelIdx(newIdx);
-                    setChannelFade(true);
-                  }, 300);
-                }
-              }}
-            />
-            
-            {/* Channel Card */}
+            {/* Channel Card with tabs inside */}
             <div className="w-full" style={{ transition: 'opacity 0.45s ease', opacity: channelFade ? 1 : 0 }}>
-              <ChannelCard channel={CHANNELS[channelIdx]} />
+              <ChannelCard 
+                channel={CHANNELS[channelIdx]} 
+                onChannelChange={(channelId: string) => {
+                  const newIdx = CHANNELS.findIndex(ch => ch.id === channelId);
+                  if (newIdx !== -1 && newIdx !== channelIdx) {
+                    setChannelFade(false);
+                    setTimeout(() => {
+                      setChannelIdx(newIdx);
+                      setChannelFade(true);
+                    }, 300);
+                  }
+                }}
+              />
             </div>
             
             <div className="flex items-center justify-center gap-2 mt-4">
