@@ -48,11 +48,16 @@ export const Navbar = () => {
 
         {/* Desktop nav links */}
         <div className="hidden lg:flex items-center gap-8">
-          {['Product', 'How it works', 'Integrations', 'FAQ'].map(link => (
-            <a key={link} href={`#${link.toLowerCase().replace(/ /g,'-')}`}
+          {[
+            { label: 'About', href: '/about' },
+            { label: 'Product', href: '#product' },
+            { label: 'AEO-Geo', href: '#aeo-geo' },
+            { label: 'Pricing', href: '/pricing' }
+          ].map(link => (
+            <a key={link.label} href={link.href}
               className="text-sm font-medium transition-colors hover:text-emerald-600"
               style={{ color: '#2D4F47' }}>
-              {link}
+              {link.label}
             </a>
           ))}
         </div>
@@ -76,12 +81,17 @@ export const Navbar = () => {
       {menuOpen && (
         <div className="nav-menu-open lg:hidden border-t mx-4 mb-2 rounded-2xl overflow-hidden"
           style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 8px 32px rgba(0,0,0,0.1)' }}>
-          {['Product', 'How it works', 'Integrations', 'FAQ', 'Sign in'].map(link => (
-            <a key={link} href={`#${link.toLowerCase().replace(/ /g,'-')}`}
+          {[
+            { label: 'About', href: '/about' },
+            { label: 'Product', href: '#product' },
+            { label: 'AEO-Geo', href: '#aeo-geo' },
+            { label: 'Pricing', href: '/pricing' }
+          ].map(link => (
+            <a key={link.label} href={link.href}
               className="block px-6 py-3.5 text-sm font-medium border-b transition-colors hover:text-emerald-600"
               style={{ color: '#2D4F47', borderColor: '#F1F5F9' }}
               onClick={() => setMenuOpen(false)}>
-              {link}
+              {link.label}
             </a>
           ))}
           <a href="#audit"
