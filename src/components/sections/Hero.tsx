@@ -94,12 +94,49 @@ function AiauraBadge({ responseTime }: { responseTime: string }) {
   );
 }
 
+/* ─── CHANNEL TABS ─── */
+function ChannelTabs({ activeChannel }: { activeChannel: string }) {
+  const tabs = [
+    { id: 'instagram', label: 'INSTAGRAM' },
+    { id: 'sms', label: 'TEXT' },
+    { id: 'whatsapp', label: 'WHATSAPP' },
+    { id: 'call', label: 'PHONE CALL' },
+    { id: 'email', label: 'GMAIL' },
+  ];
+
+  return (
+    <div className="flex gap-2 mb-3 flex-wrap">
+      {tabs.map(tab => (
+        <div
+          key={tab.id}
+          className="px-4 py-2 rounded-full text-xs font-bold tracking-wide transition-all"
+          style={{
+            background: tab.id === activeChannel 
+              ? 'rgba(16,185,129,0.15)' 
+              : 'rgba(0,0,0,0.03)',
+            color: tab.id === activeChannel 
+              ? '#10B981' 
+              : '#9CA3AF',
+            border: tab.id === activeChannel 
+              ? '1px solid rgba(16,185,129,0.3)' 
+              : '1px solid rgba(0,0,0,0.08)',
+          }}
+        >
+          {tab.label}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 /* ─── INSTAGRAM DM ─── */
 function InstagramCard({ channel, step, typedText, isTyping }: any) {
   return (
-    <div className="rounded-2xl overflow-hidden flex flex-col" style={{ background: '#000000', minHeight: 320, boxShadow: '0 8px 32px rgba(0,0,0,0.4)' }}>
-      {/* Instagram DM header */}
-      <div className="flex items-center gap-3 px-4 py-3" style={{ borderBottom: '1px solid #262626' }}>
+    <div className="w-full">
+      <ChannelTabs activeChannel="instagram" />
+      <div className="rounded-2xl overflow-hidden flex flex-col" style={{ background: '#000000', minHeight: 320, boxShadow: '0 8px 32px rgba(0,0,0,0.4)' }}>
+        {/* Instagram DM header */}
+        <div className="flex items-center gap-3 px-4 py-3" style={{ borderBottom: '1px solid #262626' }}>
         <button className="text-white" style={{ fontSize: 20 }}>&#8592;</button>
         <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm"
           style={{ background: 'linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888)' }}>C</div>
@@ -145,6 +182,7 @@ function InstagramCard({ channel, step, typedText, isTyping }: any) {
           <span className="font-bold text-gradient">{channel.caption.slice(0,7)}</span>{channel.caption.slice(7)}
         </div>
       )}
+      </div>
     </div>
   );
 }
@@ -152,7 +190,9 @@ function InstagramCard({ channel, step, typedText, isTyping }: any) {
 /* ─── WHATSAPP ─── */
 function WhatsAppCard({ channel, step, typedText, isTyping }: any) {
   return (
-    <div className="rounded-2xl overflow-hidden flex flex-col" style={{ background: '#0B141A', minHeight: 320, boxShadow: '0 8px 32px rgba(0,0,0,0.4)' }}>
+    <div className="w-full">
+      <ChannelTabs activeChannel="whatsapp" />
+      <div className="rounded-2xl overflow-hidden flex flex-col" style={{ background: '#0B141A', minHeight: 320, boxShadow: '0 8px 32px rgba(0,0,0,0.4)' }}>
       {/* WhatsApp header */}
       <div className="flex items-center gap-3 px-4 py-3" style={{ background: '#1F2C34', borderBottom: '1px solid #2A3942' }}>
         <button className="text-white text-lg">&#8592;</button>
@@ -205,6 +245,7 @@ function WhatsAppCard({ channel, step, typedText, isTyping }: any) {
           <span className="font-bold text-gradient">{channel.caption.slice(0,7)}</span>{channel.caption.slice(7)}
         </div>
       )}
+      </div>
     </div>
   );
 }
@@ -212,7 +253,9 @@ function WhatsAppCard({ channel, step, typedText, isTyping }: any) {
 /* ─── iMESSAGE / SMS ─── */
 function IMessageCard({ channel, step, typedText, isTyping }: any) {
   return (
-    <div className="rounded-2xl overflow-hidden flex flex-col" style={{ background: '#000000', minHeight: 320, boxShadow: '0 8px 32px rgba(0,0,0,0.4)' }}>
+    <div className="w-full">
+      <ChannelTabs activeChannel="sms" />
+      <div className="rounded-2xl overflow-hidden flex flex-col" style={{ background: '#000000', minHeight: 320, boxShadow: '0 8px 32px rgba(0,0,0,0.4)' }}>
       {/* iMessage header */}
       <div className="flex flex-col items-center py-3 px-4" style={{ background: '#1C1C1E', borderBottom: '1px solid #38383A' }}>
         <div className="w-10 h-10 rounded-full bg-gray-600 flex items-center justify-center text-white font-bold mb-1">J</div>
@@ -252,6 +295,7 @@ function IMessageCard({ channel, step, typedText, isTyping }: any) {
           <span className="font-bold text-gradient">{channel.caption.slice(0,7)}</span>{channel.caption.slice(7)}
         </div>
       )}
+      </div>
     </div>
   );
 }
@@ -259,7 +303,9 @@ function IMessageCard({ channel, step, typedText, isTyping }: any) {
 /* ─── PHONE CALL ─── */
 function PhoneCallCard({ channel, step, typedText, isTyping }: any) {
   return (
-    <div className="rounded-2xl overflow-hidden flex flex-col" style={{ background: 'linear-gradient(180deg, #1C1C1E 0%, #0D1F17 100%)', minHeight: 320, boxShadow: '0 8px 32px rgba(0,0,0,0.5)' }}>
+    <div className="w-full">
+      <ChannelTabs activeChannel="call" />
+      <div className="rounded-2xl overflow-hidden flex flex-col" style={{ background: 'linear-gradient(180deg, #1C1C1E 0%, #0D1F17 100%)', minHeight: 320, boxShadow: '0 8px 32px rgba(0,0,0,0.5)' }}>
       {/* iOS call screen */}
       <div className="flex flex-col items-center pt-8 pb-4 px-4">
         <div className="text-[13px] mb-1" style={{ color: '#8E8E93' }}>Aiaura AI Receptionist</div>
@@ -318,6 +364,7 @@ function PhoneCallCard({ channel, step, typedText, isTyping }: any) {
           <span className="font-bold text-gradient">{channel.caption.slice(0,7)}</span>{channel.caption.slice(7)}
         </div>
       )}
+      </div>
     </div>
   );
 }
@@ -325,7 +372,9 @@ function PhoneCallCard({ channel, step, typedText, isTyping }: any) {
 /* ─── GMAIL ─── */
 function GmailCard({ channel, step, typedText, isTyping }: any) {
   return (
-    <div className="rounded-2xl overflow-hidden flex flex-col" style={{ background: '#FFFFFF', minHeight: 320, boxShadow: '0 8px 32px rgba(0,0,0,0.12)' }}>
+    <div className="w-full">
+      <ChannelTabs activeChannel="email" />
+      <div className="rounded-2xl overflow-hidden flex flex-col" style={{ background: '#FFFFFF', minHeight: 320, boxShadow: '0 8px 32px rgba(0,0,0,0.12)' }}>
       {/* Gmail header */}
       <div className="flex items-center gap-3 px-4 py-3" style={{ background: '#FFFFFF', borderBottom: '1px solid #E8EAED' }}>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5F6368" strokeWidth="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
@@ -389,6 +438,7 @@ function GmailCard({ channel, step, typedText, isTyping }: any) {
           <span className="font-bold text-gradient">{channel.caption.slice(0,7)}</span>{channel.caption.slice(7)}
         </div>
       )}
+      </div>
     </div>
   );
 }
