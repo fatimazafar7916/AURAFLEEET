@@ -131,13 +131,11 @@ function ChannelTabs({ activeChannel, onChannelChange }: { activeChannel: string
 }
 
 /* ─── INSTAGRAM DM ─── */
-function InstagramCard({ channel, step, typedText, isTyping, onChannelChange }: any) {
+function InstagramCard({ channel, step, typedText, isTyping }: any) {
   return (
-    <div className="w-full">
-      <ChannelTabs activeChannel="instagram" onChannelChange={onChannelChange} />
-      <div className="rounded-2xl overflow-hidden flex flex-col" style={{ background: '#000000', minHeight: 320, boxShadow: '0 8px 32px rgba(0,0,0,0.4)' }}>
-        {/* Instagram DM header */}
-        <div className="flex items-center gap-3 px-4 py-3" style={{ borderBottom: '1px solid #262626' }}>
+    <div className="rounded-2xl overflow-hidden flex flex-col" style={{ background: '#000000', minHeight: 320, boxShadow: '0 8px 32px rgba(0,0,0,0.4)' }}>
+      {/* Instagram DM header */}
+      <div className="flex items-center gap-3 px-4 py-3" style={{ borderBottom: '1px solid #262626' }}>
         <button className="text-white" style={{ fontSize: 20 }}>&#8592;</button>
         <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm"
           style={{ background: 'linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888)' }}>C</div>
@@ -183,17 +181,14 @@ function InstagramCard({ channel, step, typedText, isTyping, onChannelChange }: 
           <span className="font-bold text-gradient">{channel.caption.slice(0,7)}</span>{channel.caption.slice(7)}
         </div>
       )}
-      </div>
     </div>
   );
 }
 
 /* ─── WHATSAPP ─── */
-function WhatsAppCard({ channel, step, typedText, isTyping, onChannelChange }: any) {
+function WhatsAppCard({ channel, step, typedText, isTyping }: any) {
   return (
-    <div className="w-full">
-      <ChannelTabs activeChannel="whatsapp" onChannelChange={onChannelChange} />
-      <div className="rounded-2xl overflow-hidden flex flex-col" style={{ background: '#0B141A', minHeight: 320, boxShadow: '0 8px 32px rgba(0,0,0,0.4)' }}>
+    <div className="rounded-2xl overflow-hidden flex flex-col" style={{ background: '#0B141A', minHeight: 320, boxShadow: '0 8px 32px rgba(0,0,0,0.4)' }}>
       {/* WhatsApp header */}
       <div className="flex items-center gap-3 px-4 py-3" style={{ background: '#1F2C34', borderBottom: '1px solid #2A3942' }}>
         <button className="text-white text-lg">&#8592;</button>
@@ -246,17 +241,14 @@ function WhatsAppCard({ channel, step, typedText, isTyping, onChannelChange }: a
           <span className="font-bold text-gradient">{channel.caption.slice(0,7)}</span>{channel.caption.slice(7)}
         </div>
       )}
-      </div>
     </div>
   );
 }
 
 /* ─── iMESSAGE / SMS ─── */
-function IMessageCard({ channel, step, typedText, isTyping, onChannelChange }: any) {
+function IMessageCard({ channel, step, typedText, isTyping }: any) {
   return (
-    <div className="w-full">
-      <ChannelTabs activeChannel="sms" onChannelChange={onChannelChange} />
-      <div className="rounded-2xl overflow-hidden flex flex-col" style={{ background: '#000000', minHeight: 320, boxShadow: '0 8px 32px rgba(0,0,0,0.4)' }}>
+    <div className="rounded-2xl overflow-hidden flex flex-col" style={{ background: '#000000', minHeight: 320, boxShadow: '0 8px 32px rgba(0,0,0,0.4)' }}>
       {/* iMessage header */}
       <div className="flex flex-col items-center py-3 px-4" style={{ background: '#1C1C1E', borderBottom: '1px solid #38383A' }}>
         <div className="w-10 h-10 rounded-full bg-gray-600 flex items-center justify-center text-white font-bold mb-1">J</div>
@@ -296,17 +288,14 @@ function IMessageCard({ channel, step, typedText, isTyping, onChannelChange }: a
           <span className="font-bold text-gradient">{channel.caption.slice(0,7)}</span>{channel.caption.slice(7)}
         </div>
       )}
-      </div>
     </div>
   );
 }
 
 /* ─── PHONE CALL ─── */
-function PhoneCallCard({ channel, step, typedText, isTyping, onChannelChange }: any) {
+function PhoneCallCard({ channel, step, typedText, isTyping }: any) {
   return (
-    <div className="w-full">
-      <ChannelTabs activeChannel="call" onChannelChange={onChannelChange} />
-      <div className="rounded-2xl overflow-hidden flex flex-col" style={{ background: 'linear-gradient(180deg, #1C1C1E 0%, #0D1F17 100%)', minHeight: 320, boxShadow: '0 8px 32px rgba(0,0,0,0.5)' }}>
+    <div className="rounded-2xl overflow-hidden flex flex-col" style={{ background: 'linear-gradient(180deg, #1C1C1E 0%, #0D1F17 100%)', minHeight: 320, boxShadow: '0 8px 32px rgba(0,0,0,0.5)' }}>
       {/* iOS call screen */}
       <div className="flex flex-col items-center pt-8 pb-4 px-4">
         <div className="text-[13px] mb-1" style={{ color: '#8E8E93' }}>Aiaura AI Receptionist</div>
@@ -365,17 +354,14 @@ function PhoneCallCard({ channel, step, typedText, isTyping, onChannelChange }: 
           <span className="font-bold text-gradient">{channel.caption.slice(0,7)}</span>{channel.caption.slice(7)}
         </div>
       )}
-      </div>
     </div>
   );
 }
 
 /* ─── GMAIL ─── */
-function GmailCard({ channel, step, typedText, isTyping, onChannelChange }: any) {
+function GmailCard({ channel, step, typedText, isTyping }: any) {
   return (
-    <div className="w-full">
-      <ChannelTabs activeChannel="email" onChannelChange={onChannelChange} />
-      <div className="rounded-2xl overflow-hidden flex flex-col" style={{ background: '#FFFFFF', minHeight: 320, boxShadow: '0 8px 32px rgba(0,0,0,0.12)' }}>
+    <div className="rounded-2xl overflow-hidden flex flex-col" style={{ background: '#FFFFFF', minHeight: 320, boxShadow: '0 8px 32px rgba(0,0,0,0.12)' }}>
       {/* Gmail header */}
       <div className="flex items-center gap-3 px-4 py-3" style={{ background: '#FFFFFF', borderBottom: '1px solid #E8EAED' }}>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5F6368" strokeWidth="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
@@ -439,12 +425,11 @@ function GmailCard({ channel, step, typedText, isTyping, onChannelChange }: any)
           <span className="font-bold text-gradient">{channel.caption.slice(0,7)}</span>{channel.caption.slice(7)}
         </div>
       )}
-      </div>
     </div>
   );
 }
 
-function ChannelCard({ channel, onChannelChange }: { channel: any; onChannelChange: (channelId: string) => void }) {
+function ChannelCard({ channel }: { channel: any }) {
   const [step, setStep] = useState(0);
   const [typedText, setTypedText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -474,11 +459,11 @@ function ChannelCard({ channel, onChannelChange }: { channel: any; onChannelChan
     };
   }, [channel]);
 
-  if (channel.id === 'instagram') return <InstagramCard channel={channel} step={step} typedText={typedText} isTyping={isTyping} onChannelChange={onChannelChange} />;
-  if (channel.id === 'whatsapp') return <WhatsAppCard channel={channel} step={step} typedText={typedText} isTyping={isTyping} onChannelChange={onChannelChange} />;
-  if (channel.id === 'sms') return <IMessageCard channel={channel} step={step} typedText={typedText} isTyping={isTyping} onChannelChange={onChannelChange} />;
-  if (channel.id === 'call') return <PhoneCallCard channel={channel} step={step} typedText={typedText} isTyping={isTyping} onChannelChange={onChannelChange} />;
-  if (channel.id === 'email') return <GmailCard channel={channel} step={step} typedText={typedText} isTyping={isTyping} onChannelChange={onChannelChange} />;
+  if (channel.id === 'instagram') return <InstagramCard channel={channel} step={step} typedText={typedText} isTyping={isTyping} />;
+  if (channel.id === 'whatsapp') return <WhatsAppCard channel={channel} step={step} typedText={typedText} isTyping={isTyping} />;
+  if (channel.id === 'sms') return <IMessageCard channel={channel} step={step} typedText={typedText} isTyping={isTyping} />;
+  if (channel.id === 'call') return <PhoneCallCard channel={channel} step={step} typedText={typedText} isTyping={isTyping} />;
+  if (channel.id === 'email') return <GmailCard channel={channel} step={step} typedText={typedText} isTyping={isTyping} />;
   return null;
 }
 
@@ -598,21 +583,27 @@ export const Hero = () => {
           {/* Right column — channel card */}
           <div className="relative flex flex-col items-center justify-center">
             <div className="absolute inset-0 bg-mint/10 blur-[100px] rounded-full -z-10" />
+            
+            {/* Channel Tabs - Outside the card */}
+            <ChannelTabs 
+              activeChannel={CHANNELS[channelIdx].id} 
+              onChannelChange={(channelId: string) => {
+                const newIdx = CHANNELS.findIndex(ch => ch.id === channelId);
+                if (newIdx !== -1 && newIdx !== channelIdx) {
+                  setChannelFade(false);
+                  setTimeout(() => {
+                    setChannelIdx(newIdx);
+                    setChannelFade(true);
+                  }, 300);
+                }
+              }}
+            />
+            
+            {/* Channel Card */}
             <div className="w-full" style={{ transition: 'opacity 0.45s ease', opacity: channelFade ? 1 : 0 }}>
-              <ChannelCard 
-                channel={CHANNELS[channelIdx]} 
-                onChannelChange={(channelId: string) => {
-                  const newIdx = CHANNELS.findIndex(ch => ch.id === channelId);
-                  if (newIdx !== -1 && newIdx !== channelIdx) {
-                    setChannelFade(false);
-                    setTimeout(() => {
-                      setChannelIdx(newIdx);
-                      setChannelFade(true);
-                    }, 300);
-                  }
-                }}
-              />
+              <ChannelCard channel={CHANNELS[channelIdx]} />
             </div>
+            
             <div className="flex items-center justify-center gap-2 mt-4">
               {CHANNELS.map((_, i) => (
                 <button key={i} onClick={() => { setChannelFade(false); setTimeout(() => { setChannelIdx(i); setChannelFade(true); }, 300); }}
