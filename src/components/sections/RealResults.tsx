@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SectionPill } from '../ui/SectionPill';
 
 // Live counter for conversations
@@ -143,10 +143,11 @@ const ClockIcon = () => (
 );
 
 // ── 30 Cards ─────────────────────────────────────────────────────────────────
-const RESULTS = [
+// Store component references (not JSX) to avoid hydration mismatches
+const RESULTS: { product: string; Icon: React.ComponentType; amount: string; amountSuffix: string; action: string; attribution: string; tag: string; stat1: { value: string; label: string }; stat2: { value: string; label: string } }[] = [
   {
     product: 'AI RECEPTIONIST',
-    icon: <PhoneIcon />,
+    Icon: PhoneIcon,
     amount: '$14,400',
     amountSuffix: 'SINGLE BOOKING',
     action: 'Booked from a 2:14 AM call',
@@ -157,7 +158,7 @@ const RESULTS = [
   },
   {
     product: 'AI OMNICHANNEL',
-    icon: <ChatIcon />,
+    Icon: ChatIcon,
     amount: '$4,800',
     amountSuffix: 'WEEKEND RENTAL',
     action: 'Weekend rental closed in 4 minutes via Instagram DM',
@@ -168,7 +169,7 @@ const RESULTS = [
   },
   {
     product: 'AI LEAD QUALIFIER',
-    icon: <BarIcon />,
+    Icon: BarIcon,
     amount: '47',
     amountSuffix: 'HOT LEADS',
     action: 'Flagged from $2.1M of inquiries',
@@ -179,7 +180,7 @@ const RESULTS = [
   },
   {
     product: 'AI FOLLOW-UP',
-    icon: <RefreshIcon />,
+    Icon: RefreshIcon,
     amount: '$8,200',
     amountSuffix: 'RECOVERED',
     action: 'Recovered from a 9-day-old quote',
@@ -190,7 +191,7 @@ const RESULTS = [
   },
   {
     product: 'AI QUOTE & BOOKING',
-    icon: <DocIcon />,
+    Icon: DocIcon,
     amount: '11s',
     amountSuffix: 'QUOTE-TO-DEPOSIT',
     action: '312 contracts signed',
@@ -201,7 +202,7 @@ const RESULTS = [
   },
   {
     product: 'AI REVIEW MANAGER',
-    icon: <StarIcon />,
+    Icon: StarIcon,
     amount: '184',
     amountSuffix: 'REVIEWS',
     action: '5-star Google reviews collected. 3 negatives intercepted',
@@ -212,7 +213,7 @@ const RESULTS = [
   },
   {
     product: 'AI VIP MANAGER',
-    icon: <CrownIcon />,
+    Icon: CrownIcon,
     amount: '$26,400',
     amountSuffix: 'REACTIVATED',
     action: 'Reactivated a Platinum customer',
@@ -223,7 +224,7 @@ const RESULTS = [
   },
   {
     product: 'AI EMAIL + SMS',
-    icon: <MailIcon />,
+    Icon: MailIcon,
     amount: '$47,000',
     amountSuffix: 'F1 CAMPAIGN',
     action: 'F1 weekend campaign · 247 past customers · 18 bookings',
@@ -234,7 +235,7 @@ const RESULTS = [
   },
   {
     product: 'AI LISTING OPTIMIZER',
-    icon: <SearchIcon />,
+    Icon: SearchIcon,
     amount: '+31%',
     amountSuffix: 'GOOGLE CLICKS',
     action: 'Google Business clicks in 30 days',
@@ -245,7 +246,7 @@ const RESULTS = [
   },
   {
     product: 'AI SOCIAL MANAGER',
-    icon: <SocialIcon />,
+    Icon: SocialIcon,
     amount: '2.1M',
     amountSuffix: 'VIEWS',
     action: '42 Instagram Reels posted in April',
@@ -256,7 +257,7 @@ const RESULTS = [
   },
   {
     product: 'AI CUSTOMER SUPPORT',
-    icon: <HeartIcon />,
+    Icon: HeartIcon,
     amount: '1,400',
     amountSuffix: 'TICKETS',
     action: 'Mid-rental issues resolved · 90s avg',
@@ -267,7 +268,7 @@ const RESULTS = [
   },
   {
     product: 'AI WEBSITE CHATBOT',
-    icon: <BotIcon />,
+    Icon: BotIcon,
     amount: '$94,000',
     amountSuffix: 'CHAT BOOKINGS',
     action: 'Booked directly from website chat — no human touch',
@@ -279,7 +280,7 @@ const RESULTS = [
   // Cards 13–30 (duplicate set + new entries)
   {
     product: 'AI RECEPTIONIST',
-    icon: <PhoneIcon />,
+    Icon: PhoneIcon,
     amount: '22',
     amountSuffix: 'LANGUAGES',
     action: 'Calls handled in customer\'s native language',
@@ -290,7 +291,7 @@ const RESULTS = [
   },
   {
     product: 'AI OMNICHANNEL',
-    icon: <CommentIcon />,
+    Icon: CommentIcon,
     amount: '73',
     amountSuffix: 'IG COMMENTS',
     action: 'Auto-DM\'d in 4 seconds each',
@@ -301,7 +302,7 @@ const RESULTS = [
   },
   {
     product: 'AI FOLLOW-UP',
-    icon: <RefreshIcon />,
+    Icon: RefreshIcon,
     amount: '$12,800',
     amountSuffix: 'REACTIVATED',
     action: '21-day reactivation — past customer booked again',
@@ -312,7 +313,7 @@ const RESULTS = [
   },
   {
     product: 'AI QUOTE & BOOKING',
-    icon: <ClockIcon />,
+    Icon: ClockIcon,
     amount: '6s',
     amountSuffix: 'FASTEST QUOTE',
     action: 'Quote-to-send time on record',
@@ -323,7 +324,7 @@ const RESULTS = [
   },
   {
     product: 'AI REVIEW MANAGER',
-    icon: <StarIcon />,
+    Icon: StarIcon,
     amount: '4.9',
     amountSuffix: 'NEW RATING',
     action: '5-star reviews pushed. Negatives intercepted pre-post',
@@ -334,7 +335,7 @@ const RESULTS = [
   },
   {
     product: 'AI VIP MANAGER',
-    icon: <CrownIcon />,
+    Icon: CrownIcon,
     amount: '12',
     amountSuffix: 'PLATINUM REACTIVATIONS',
     action: 'Birthday + anniversary triggers fired',
@@ -345,7 +346,7 @@ const RESULTS = [
   },
   {
     product: 'AI EMAIL + SMS',
-    icon: <MailIcon />,
+    Icon: MailIcon,
     amount: '247',
     amountSuffix: 'CONTACTS',
     action: 'Texted for Coachella weekend campaign',
@@ -356,7 +357,7 @@ const RESULTS = [
   },
   {
     product: 'AI LISTING OPTIMIZER',
-    icon: <SearchIcon />,
+    Icon: SearchIcon,
     amount: '+47%',
     amountSuffix: 'IMPRESSIONS',
     action: 'Google Maps + Yelp combined',
@@ -367,7 +368,7 @@ const RESULTS = [
   },
   {
     product: 'AI SOCIAL MANAGER',
-    icon: <SocialIcon />,
+    Icon: SocialIcon,
     amount: '+38%',
     amountSuffix: 'ENGAGEMENT',
     action: 'Instagram engagement vs March',
@@ -378,7 +379,7 @@ const RESULTS = [
   },
   {
     product: 'AI CUSTOMER SUPPORT',
-    icon: <HeartIcon />,
+    Icon: HeartIcon,
     amount: '90s',
     amountSuffix: 'AVG RESOLUTION',
     action: 'On 24/7 tickets',
@@ -389,7 +390,7 @@ const RESULTS = [
   },
   {
     product: 'AI WEBSITE CHATBOT',
-    icon: <BotIcon />,
+    Icon: BotIcon,
     amount: '14%',
     amountSuffix: 'CONVERSION',
     action: 'Visitors who chat → bookings',
@@ -400,7 +401,7 @@ const RESULTS = [
   },
   {
     product: 'AI LEAD QUALIFIER',
-    icon: <FilterIcon />,
+    Icon: FilterIcon,
     amount: '−$50K',
     amountSuffix: 'JUNK FILTERED',
     action: 'Junk leads filtered before sales touched them',
@@ -411,7 +412,7 @@ const RESULTS = [
   },
   {
     product: 'AI RECEPTIONIST',
-    icon: <PhoneIcon />,
+    Icon: PhoneIcon,
     amount: '$6,200',
     amountSuffix: 'OVERNIGHT BOOKING',
     action: 'Captured while owner was asleep',
@@ -422,7 +423,7 @@ const RESULTS = [
   },
   {
     product: 'AI OMNICHANNEL',
-    icon: <GlobeIcon />,
+    Icon: GlobeIcon,
     amount: '8',
     amountSuffix: 'CHANNELS',
     action: 'Unified inbox — zero missed touchpoints',
@@ -433,7 +434,7 @@ const RESULTS = [
   },
   {
     product: 'AI FOLLOW-UP',
-    icon: <RefreshIcon />,
+    Icon: RefreshIcon,
     amount: '$21,600',
     amountSuffix: 'WEEK RECOVERED',
     action: 'Three stale quotes closed in one week',
@@ -444,7 +445,7 @@ const RESULTS = [
   },
   {
     product: 'AI VIP MANAGER',
-    icon: <CrownIcon />,
+    Icon: CrownIcon,
     amount: '1,200',
     amountSuffix: 'TRACKED',
     action: 'Silver / Gold / Platinum tiers managed',
@@ -455,7 +456,7 @@ const RESULTS = [
   },
   {
     product: 'AI BOOKING PROTECTOR',
-    icon: <ShieldIcon />,
+    Icon: ShieldIcon,
     amount: '−$12,000',
     amountSuffix: 'FRAUD BLOCKED',
     action: 'Fraud attempt flagged before deposit cleared',
@@ -466,7 +467,7 @@ const RESULTS = [
   },
   {
     product: 'AI EMAIL + SMS',
-    icon: <MailIcon />,
+    Icon: MailIcon,
     amount: '$33,000',
     amountSuffix: 'SPRING CAMPAIGN',
     action: '182 contacts · 11 bookings · F1 follow-up',
@@ -539,7 +540,7 @@ export const RealResults = () => {
           >
             <div className="p-5 pt-6">
               <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-4" style={{ background: 'rgba(255,255,255,0.3)' }}>
-                {prev.icon}
+                <prev.Icon />
               </div>
               <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: 9, fontWeight: 700, letterSpacing: '0.1em' }}>{prev.product}</p>
               <p style={{ color: 'white', fontSize: 32, fontWeight: 800, lineHeight: 1, marginTop: 8 }}>{prev.amount}</p>
@@ -561,7 +562,7 @@ export const RealResults = () => {
           >
             <div style={{ position: 'absolute', top: -40, right: -40, width: 180, height: 180, borderRadius: '50%', background: 'rgba(255,255,255,0.15)', filter: 'blur(40px)' }} />
             <div className="w-10 h-10 rounded-2xl flex items-center justify-center mb-5 relative z-10" style={{ background: 'rgba(255,255,255,0.25)' }}>
-              {active.icon}
+              <active.Icon />
             </div>
             <p className="relative z-10 mb-3" style={{ color: 'rgba(255,255,255,0.85)', fontSize: 10, fontWeight: 700, letterSpacing: '0.12em' }}>
               {active.product}
@@ -599,7 +600,7 @@ export const RealResults = () => {
           >
             <div className="p-5 pt-6">
               <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-4" style={{ background: 'rgba(255,255,255,0.3)' }}>
-                {next.icon}
+                <next.Icon />
               </div>
               <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: 9, fontWeight: 700, letterSpacing: '0.1em' }}>{next.product}</p>
               <p style={{ color: 'white', fontSize: 32, fontWeight: 800, lineHeight: 1, marginTop: 8 }}>{next.amount}</p>
