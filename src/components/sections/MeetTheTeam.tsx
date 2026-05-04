@@ -1,237 +1,399 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
-import { SectionPill } from '../ui/SectionPill';
-import { CTAButton } from '../ui/CTAButton';
-import { PhoneCall, MessageSquare, Bot, Target, Calculator, RefreshCcw, Mail, Crown, Star, TrendingUp, Camera, HelpCircle } from 'lucide-react';
 
-const PulseDot = ({ size = 6 }) => (
-  <div className="rounded-full animate-pulse" style={{ width: size, height: size, background: '#10B981', boxShadow: '0 0 8px #10B981' }} />
+const Icon = ({ children }: any) => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    {children}
+  </svg>
 );
 
-const GradientText = ({ children, italic = false, className = '' }: any) => (
-  <span className={`text-gradient ${italic ? 'italic' : ''} ${className}`}>{children}</span>
-);
-
-const PRODUCT_ICONS: any = {
-  'AI Receptionist': PhoneCall,
-  'AI Omnichannel Responder': MessageSquare,
-  'AI Website Chatbot': Bot,
-  'AI Lead Qualifier': Target,
-  'AI Quote & Booking': Calculator,
-  'AI Follow-up Assistant': RefreshCcw,
-  'AI Email + SMS Marketing': Mail,
-  'AI VIP Manager': Crown,
-  'AI Review Manager': Star,
-  'AI Listing Optimizer': TrendingUp,
-  'AI Social Manager': Camera,
-  'AI Customer Support': HelpCircle,
-};
-
-const DEPARTMENTS = [
+// ── All agents with multiple capability lines ──────────────────────────────
+const AGENTS = [
   {
-    label: 'FRONT DESK', count: 4,
-    products: [
-      { name: 'AI Receptionist', stat: '47 calls today', caps: ['Picks up calls 24/7','Talks in 22+ languages','Detects caller sentiment in real-time','Pushes leads into your CRM automatically','Live-transfers VIP callers to you','Records and transcribes every call','Handles voicemail follow-up','Routes Spanish calls in Spanish'] },
-      { name: 'AI Omnichannel Responder', stat: '312 conversations live', wedge: true, caps: ['Replies on Instagram, SMS, WhatsApp, Email','Auto-DMs Instagram commenters in 4s','Recognizes returning customers across channels','Closes bookings inside the chat','Replies in customer\'s native language','Detects urgency and escalates to you','Handles 8 channels simultaneously','Learns your brand voice over time'] },
-      { name: 'AI Website Chatbot', stat: '$94K booked in chat', caps: ['Greets every visitor in their language','Books rentals directly inside chat','Captures email if visitor leaves','Recommends vehicles by use case','Live-handoff to operator if needed','Quotes prices instantly','Answers fleet questions 24/7','Collects lead-qualifying data'] },
-      { name: 'AI Lead Qualifier', stat: '218 leads scored', caps: ['Scores leads Hot / Warm / Cold / Junk','Filters tire-kickers automatically','Flags celebrity & corporate inquiries','Validates age and insurance eligibility','Detects fraud signals before deposit','Routes hot leads to you instantly','Auto-declines under-21 bookings','Identifies repeat customer history'] },
-    ]
+    category: 'FRONT DESK',
+    items: [
+      {
+        name: 'Receptionist',
+        lines: [
+          'Picks up every call 24/7',
+          'Talks in 22+ languages',
+          'Detects caller sentiment in real-time',
+          'Live-transfers VIP callers to you',
+          'Records and transcribes every call',
+          'Handles voicemail follow-up',
+        ],
+        icon: <Icon><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></Icon>,
+      },
+      {
+        name: 'Omnichannel Responder',
+        lines: [
+          'Replies on Instagram, SMS, WhatsApp, Email',
+          'Auto-DMs Instagram commenters in 4s',
+          'Closes bookings inside the chat',
+          'Replies in customer\'s native language',
+          'Detects urgency and escalates to you',
+          'Handles 8 channels simultaneously',
+        ],
+        icon: <Icon><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></Icon>,
+      },
+      {
+        name: 'Website Chatbot',
+        lines: [
+          'Converts every landing page visit',
+          'Books rentals directly inside chat',
+          'Captures email if visitor leaves',
+          'Quotes prices instantly',
+          'Answers fleet questions 24/7',
+          'Collects lead-qualifying data',
+        ],
+        icon: <Icon><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8"/><path d="M8 8h5"/></Icon>,
+      },
+      {
+        name: 'Lead Qualifier',
+        lines: [
+          'Identifies urgent customer leads',
+          'Scores leads Hot / Warm / Cold / Junk',
+          'Filters tire-kickers automatically',
+          'Flags celebrity & corporate inquiries',
+          'Detects fraud signals before deposit',
+          'Routes hot leads to you instantly',
+        ],
+        icon: <Icon><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></Icon>,
+      },
+    ],
   },
   {
-    label: 'SALES & FOLLOW-UP', count: 4,
-    products: [
-      { name: 'AI Quote & Booking', stat: '312 quotes sent', caps: ['Generates quotes in 6 seconds','Sends Stripe payment links','E-signs contracts via DocuSign','Updates calendar atomically','Handles deposits and full payments','Applies event-driven pricing rules','Calculates multi-day discounts','Sends booking confirmations'] },
-      { name: 'AI Follow-up Assistant', stat: '$8.2K recovered', caps: ['Recovers abandoned quotes after 24 hours','Reactivates 90-day past customers','Re-engages on birthdays & anniversaries','Cross-channel nudges (DM → SMS → Email)','Stops the moment customer replies','Personalized timing per customer','A/B tests follow-up messages','Tracks open and reply rates'] },
-      { name: 'AI Email + SMS Marketing', stat: '247 contacts emailed', caps: ['Builds campaigns from a 1-line prompt','Texts past customers TCPA-compliantly','Auto-sends event-driven campaigns','Replies to interested leads automatically','A/B tests subject lines silently','Segments customers by tier','Schedules sends in customer time zones','Tracks campaign ROI per send'] },
-      { name: 'AI VIP Manager', stat: '12 VIPs active', caps: ['Tracks Silver / Gold / Platinum tiers','Remembers preferences per customer','Sends birthday & anniversary surprises','Reactivates Platinums automatically','Concierge-level recommendations','Auto-upgrades repeat renters','Tracks LTV per customer','Flags at-risk Platinum customers'] },
-    ]
+    category: 'SALES & FOLLOW-UP',
+    items: [
+      {
+        name: 'Quote & Booking',
+        lines: [
+          'Generates quotes in 6 seconds',
+          'Sends Stripe payment links',
+          'E-signs contracts via DocuSign',
+          'Handles deposits and full payments',
+          'Applies event-driven pricing rules',
+          'Sends booking confirmations',
+        ],
+        icon: <Icon><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></Icon>,
+      },
+      {
+        name: 'Follow-up',
+        lines: [
+          'Recovers abandoned quotes after 24h',
+          'Reactivates 90-day past customers',
+          'Re-engages on birthdays & anniversaries',
+          'Cross-channel nudges: DM → SMS → Email',
+          'Stops the moment customer replies',
+          'Tracks open and reply rates',
+        ],
+        icon: <Icon><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></Icon>,
+      },
+      {
+        name: 'VIP Manager',
+        lines: [
+          'Tracks Silver / Gold / Platinum tiers',
+          'Remembers preferences per customer',
+          'Sends birthday & anniversary surprises',
+          'Reactivates Platinums automatically',
+          'Auto-upgrades repeat renters',
+          'Flags at-risk Platinum customers',
+        ],
+        icon: <Icon><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></Icon>,
+        wide: true,
+      },
+    ],
   },
   {
-    label: 'REPUTATION & GROWTH', count: 4,
-    products: [
-      { name: 'AI Review Manager', stat: '184 reviews captured', caps: ['Asks happy customers for Google reviews','Intercepts negative reviews privately','Replies to every review in your voice','Escalates 1-star reviews to you','Tracks review velocity weekly','Routes complaints to service recovery','Builds review templates per scenario','Monitors competitor review trends'] },
-      { name: 'AI Listing Optimizer', stat: '+31% Google clicks', caps: ['Updates Google Business Profile weekly','Posts fresh photos and offers','Optimizes for local AI search','Tracks keyword ranking shifts','Audits competitors monthly','Updates Yelp + TripAdvisor in sync','Generates local SEO content','Monitors map-pack ranking'] },
-      { name: 'AI Social Manager', stat: '42 Reels posted', caps: ['Posts daily Reels and stories','Writes captions in your voice','Replies to comments automatically','Generates Reels from new fleet additions','Tracks engagement and adjusts cadence','Schedules optimal posting times','Repurposes content across platforms','Monitors hashtag performance'] },
-      { name: 'AI Customer Support', stat: '1.4K tickets resolved', caps: ['Handles mid-rental issues at 3 AM','Walks customers through damage reports','Coordinates roadside and tow services','Verifies returns with photo evidence','Escalates emergencies to you instantly','Resolves billing disputes','Manages refund requests','Tracks satisfaction per ticket'] },
-    ]
-  }
+    category: 'REPUTATION',
+    items: [
+      {
+        name: 'Review Manager',
+        lines: [
+          'Asks happy customers for Google reviews',
+          'Intercepts negative reviews privately',
+          'Replies to every review in your voice',
+          'Escalates 1-star reviews to you',
+          'Monitors competitor review trends',
+          'Builds review templates per scenario',
+        ],
+        icon: <Icon><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></Icon>,
+      },
+      {
+        name: 'List Optimizer',
+        lines: [
+          'Updates Google Business Profile weekly',
+          'Posts fresh photos and offers',
+          'Optimizes for local AI search',
+          'Tracks keyword ranking shifts',
+          'Automates local SEO content',
+          'Monitors map-pack ranking',
+        ],
+        icon: <Icon><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></Icon>,
+      },
+      {
+        name: 'Customer Support',
+        lines: [
+          'Handles mid-rental issues at 3 AM',
+          'Walks customers through damage reports',
+          'Coordinates roadside and tow services',
+          'Resolves billing disputes',
+          'Manages refund requests',
+          'Tracks satisfaction per ticket',
+        ],
+        icon: <Icon><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></Icon>,
+        wide: true,
+      },
+    ],
+  },
+  {
+    category: 'CHANNEL 1',
+    items: [
+      {
+        name: 'Email + Text Sender',
+        lines: [
+          'Builds campaigns from a 1-line prompt',
+          'Texts past customers TCPA-compliantly',
+          'Segments customers by tier',
+          'Schedules sends in customer time zones',
+          'A/B tests subject lines silently',
+          'Tracks campaign ROI per send',
+        ],
+        icon: <Icon><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></Icon>,
+      },
+      {
+        name: 'AEO/GEO',
+        lines: [
+          'Optimizes brand for AI-driven organic content',
+          'Gets listed in ChatGPT & Perplexity answers',
+          'Targets "best rental in [city]" queries',
+          'Builds geo-specific landing content',
+          'Tracks AI search visibility weekly',
+          'Outranks competitors in AI overviews',
+        ],
+        icon: <Icon><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></Icon>,
+      },
+    ],
+  },
+  {
+    category: 'CHANNEL 2',
+    items: [
+      {
+        name: 'Social Manager',
+        lines: [
+          'Posts daily Reels and stories',
+          'Writes captions in your voice',
+          'Replies to comments automatically',
+          'Repurposes content across platforms',
+          'Schedules optimal posting times',
+          'Monitors hashtag performance',
+        ],
+        icon: <Icon><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></Icon>,
+      },
+      {
+        name: 'Quote Slides',
+        lines: [
+          'Auto-creates visual quote decks',
+          'Updates pricing in real-time',
+          'Showcases fleet with branded slides',
+          'Sends via DM, email, or link',
+          'Tracks when prospects open them',
+          'Personalizes per customer inquiry',
+        ],
+        icon: <Icon><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></Icon>,
+      },
+    ],
+  },
+  {
+    category: 'CHANNEL 3',
+    items: [
+      {
+        name: 'Vehicle Tracking',
+        lines: [
+          'Monitors when customers cross business boundary',
+          'Sends geo-triggered alerts to operator',
+          'Tracks real-time fleet location',
+          'Detects unauthorized zone exits',
+          'Logs mileage per rental automatically',
+          'Integrates with your existing GPS',
+        ],
+        icon: <Icon><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></Icon>,
+        wide: true,
+      },
+      {
+        name: 'Finance & Insurance Verification',
+        lines: [
+          'Ensures verification works for every customer',
+          'Validates insurance in under 60 seconds',
+          'Flags expired or invalid policies',
+          'Checks credit and deposit eligibility',
+          'Stores verified docs securely',
+          'Reduces chargeback risk by 80%',
+        ],
+        icon: <Icon><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></Icon>,
+        wide: true,
+      },
+    ],
+  },
 ];
 
-// Department-level auto-rotating card showcase
-function DeptShowcase({ dept }: { dept: any }) {
-  const [activeIdx, setActiveIdx] = useState(0);
-  const [fade, setFade] = useState(true);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
-
-  const startTimer = () => {
-    intervalRef.current = setInterval(() => {
-      setFade(false);
-      setTimeout(() => {
-        setActiveIdx(i => (i + 1) % dept.products.length);
-        setFade(true);
-      }, 300);
-    }, 6000);
-  };
+// ── Cycling line ticker inside each card ──────────────────────────────────
+function CyclingLine({ lines, offset = 0 }: { lines: string[]; offset?: number }) {
+  const [idx, setIdx] = useState(offset % lines.length);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    startTimer();
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, [dept.products.length]);
-
-  const goTo = (i: number) => {
-    if (intervalRef.current) clearInterval(intervalRef.current);
-    setFade(false);
-    setTimeout(() => { setActiveIdx(i); setFade(true); startTimer(); }, 200);
-  };
-
-  const product = dept.products[activeIdx];
-  const IconComp = PRODUCT_ICONS[product.name];
+    // stagger start by offset * 600ms
+    const delay = setTimeout(() => {
+      const interval = setInterval(() => {
+        setVisible(false);
+        setTimeout(() => {
+          setIdx(i => (i + 1) % lines.length);
+          setVisible(true);
+        }, 300);
+      }, 2200);
+      return () => clearInterval(interval);
+    }, (offset % 4) * 550);
+    return () => clearTimeout(delay);
+  }, [lines.length, offset]);
 
   return (
-    <div>
-      {/* Dept header */}
-      <div className="flex items-center gap-4 mb-4">
-        <div className="flex-1 h-px" style={{ background: 'linear-gradient(90deg, transparent, #D1FAE5)' }} />
-        <span className="text-xs font-mono font-bold tracking-widest flex-shrink-0" style={{ color: '#10B981' }}>
-          {dept.label} · {dept.count} STAFF
-        </span>
-        <div className="flex-1 h-px" style={{ background: 'linear-gradient(90deg, #D1FAE5, transparent)' }} />
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* Left: premium featured card */}
-        <div className="relative overflow-hidden rounded-3xl" style={{
-          background: 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)',
-          border: '1px solid rgba(16,185,129,0.2)',
-          boxShadow: '0 8px 40px rgba(0,0,0,0.15), 0 0 0 1px rgba(16,185,129,0.08)',
-          minHeight: 260,
-          transition: 'opacity 0.3s ease',
-          opacity: fade ? 1 : 0,
-        }}>
-          {/* Gradient accent */}
-          <div className="absolute top-0 left-0 right-0 h-0.5" style={{ background: 'linear-gradient(90deg, #10B981, #84CC16)' }} />
-          <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full opacity-10"
-            style={{ background: 'radial-gradient(circle, #10B981, transparent)' }} />
-
-          <div className="p-6 flex flex-col h-full">
-            <div className="flex items-start justify-between mb-4">
-              <div className="w-12 h-12 rounded-xl flex items-center justify-center"
-                style={{ background: 'linear-gradient(135deg, #10B981, #84CC16)' }}>
-                {IconComp && <div style={{ width: 22, height: 22, color: 'white' }}><IconComp /></div>}
-              </div>
-              {product.wedge && (
-                <span className="text-xs font-mono font-bold px-2 py-1 rounded-full"
-                  style={{ background: 'rgba(16,185,129,0.15)', color: '#10B981', border: '1px solid rgba(16,185,129,0.3)' }}>WEDGE</span>
-              )}
-            </div>
-
-            <h3 className="font-sans font-bold text-base mb-2" style={{ color: '#ffffff' }}>{product.name}</h3>
-
-            <div className="flex-1">
-              <CapabilityList caps={product.caps} />
-            </div>
-
-            <div className="flex items-center gap-2 mt-4 pt-3" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
-              <PulseDot size={5} />
-              <span className="font-mono text-xs font-bold" style={{ color: '#10B981' }}>{product.stat}</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Right: product nav tabs */}
-        <div className="flex flex-col gap-2">
-          {dept.products.map((p: any, i: number) => {
-            const PIcomp = PRODUCT_ICONS[p.name];
-            const isActive = i === activeIdx;
-            return (
-              <button key={i} onClick={() => goTo(i)}
-                className="flex items-center gap-3 p-4 rounded-2xl text-left transition-all"
-                style={{
-                  background: isActive ? '#F0FDF4' : '#ffffff',
-                  border: isActive ? '1.5px solid #10B981' : '1px solid #E2E8F0',
-                  boxShadow: isActive ? '0 4px 16px rgba(16,185,129,0.12)' : 'none',
-                  transform: isActive ? 'scale(1.01)' : 'scale(1)',
-                }}>
-                <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-                  style={{ background: isActive ? 'linear-gradient(135deg, #10B981, #84CC16)' : '#F1F5F9', color: isActive ? 'white' : '#64748B' }}>
-                  {PIcomp && <div style={{ width: 16, height: 16 }}><PIcomp /></div>}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="font-sans font-semibold text-sm leading-tight truncate" style={{ color: isActive ? '#0F172A' : '#475569' }}>{p.name}</p>
-                  {isActive && <p className="text-xs font-mono mt-0.5 text-gradient font-bold">{p.stat}</p>}
-                </div>
-                {isActive && (
-                  <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: 'linear-gradient(135deg, #10B981, #84CC16)' }} />
-                )}
-              </button>
-            );
-          })}
-        </div>
-      </div>
-    </div>
+    <p style={{
+      color: 'rgba(255,255,255,0.75)',
+      fontSize: 11,
+      marginTop: 3,
+      lineHeight: 1.4,
+      minHeight: 16,
+      opacity: visible ? 1 : 0,
+      transform: visible ? 'translateY(0)' : 'translateY(4px)',
+      transition: 'opacity 0.25s ease, transform 0.25s ease',
+    }}>
+      {lines[idx]}
+    </p>
   );
 }
 
-function CapabilityList({ caps }: { caps: string[] }) {
-  const [visibleIdx, setVisibleIdx] = useState(0);
+// ── Category pill ─────────────────────────────────────────────────────────
+const CategoryPill = ({ label }: { label: string }) => (
+  <div className="flex justify-center my-5">
+    <span style={{
+      display: 'inline-block',
+      padding: '5px 20px', borderRadius: 40,
+      border: '1.5px solid rgba(255,255,255,0.5)',
+      color: 'white', fontSize: 12, fontWeight: 700,
+      fontStyle: 'italic', letterSpacing: '0.05em',
+      background: 'rgba(255,255,255,0.1)',
+    }}>{label}</span>
+  </div>
+);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setVisibleIdx(i => (i + 1) % caps.length);
-    }, 1800);
-    return () => clearInterval(interval);
-  }, [caps.length]);
-
-  return (
-    <div className="flex flex-col gap-1.5">
-      {caps.slice(0, 6).map((cap, i) => {
-        const isCurrent = i % 6 === visibleIdx % 6;
-        return (
-          <div key={i} className="flex items-center gap-2 transition-all"
-            style={{ opacity: isCurrent ? 1 : 0.45, transform: isCurrent ? 'translateX(0)' : 'translateX(-2px)' }}>
-            <div className="w-3.5 h-3.5 rounded-full flex items-center justify-center flex-shrink-0"
-              style={{ background: isCurrent ? 'linear-gradient(135deg, #10B981, #84CC16)' : 'rgba(16,185,129,0.2)' }}>
-              <svg width="6" height="6" viewBox="0 0 10 10" fill="none">
-                <polyline points="1 5 4 8 9 2" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </div>
-            <span className="text-xs leading-snug" style={{ color: isCurrent ? '#E2E8F0' : '#94A3B8' }}>{cap}</span>
-          </div>
-        );
-      })}
+// ── Agent card ────────────────────────────────────────────────────────────
+let globalCardIdx = 0;
+const AgentCard = ({ item, wide, cardIdx }: { item: any; wide?: boolean; cardIdx: number }) => (
+  <div style={{
+    gridColumn: wide ? 'span 2' : 'span 1',
+    background: 'rgba(255,255,255,0.15)',
+    border: '1.5px solid rgba(255,255,255,0.3)',
+    borderRadius: 16,
+    padding: '14px 16px',
+    display: 'flex',
+    alignItems: 'flex-start',
+    gap: 12,
+  }}>
+    {/* Icon box */}
+    <div style={{
+      width: 32, height: 32, borderRadius: 8,
+      background: 'rgba(255,255,255,0.2)',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      flexShrink: 0,
+    }}>
+      {item.icon}
     </div>
-  );
-}
+    {/* Text */}
+    <div style={{ flex: 1, minWidth: 0 }}>
+      <p style={{ color: 'white', fontWeight: 700, fontSize: 13, lineHeight: 1.3 }}>{item.name}</p>
+      <CyclingLine lines={item.lines} offset={cardIdx} />
+    </div>
+  </div>
+);
 
+// ── Main section ──────────────────────────────────────────────────────────
 export const MeetTheTeam = () => {
+  // assign a stable index to each card for staggered offsets
+  let cardCounter = 0;
+
   return (
-    <section id="features" className="py-16 md:py-20 bg-bg-mint/10 overflow-hidden">
-      <div className="container mx-auto px-6">
-        <div className="flex justify-center mb-4">
-          <SectionPill>YOUR AI TEAM</SectionPill>
+    <section
+      id="features"
+      style={{
+        background: 'linear-gradient(160deg, #34d399 0%, #4ade80 40%, #86efac 100%)',
+        padding: '56px 0 48px',
+        overflow: 'hidden',
+      }}
+    >
+      <div style={{ maxWidth: 560, margin: '0 auto', padding: '0 20px' }}>
+
+        {/* Top pill */}
+        <div className="flex justify-center mb-6">
+          <span style={{
+            display: 'inline-flex', alignItems: 'center', gap: 6,
+            padding: '6px 18px', borderRadius: 40,
+            border: '1.5px solid rgba(255,255,255,0.6)',
+            color: 'white', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em',
+            background: 'rgba(255,255,255,0.15)',
+          }}>
+            <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'white', display: 'inline-block' }} />
+            YOUR AI SOLUTIONS
+          </span>
         </div>
-        <h2 className="font-sans font-bold text-center mb-2" style={{ fontSize: 'clamp(30px,5vw,44px)', color: '#0A2620', lineHeight: 1.15 }}>
-          <span style={{ color: '#10B981', fontWeight: 800 }}>12 specialists.</span>{' '}
-          <GradientText italic>One platform.</GradientText>
+
+        {/* Heading */}
+        <h2 style={{
+          textAlign: 'center', color: 'white',
+          fontSize: 'clamp(28px,5vw,40px)', fontWeight: 800,
+          lineHeight: 1.15, marginBottom: 10,
+        }}>
+          17 AI specialists.{' '}
+          <span style={{ fontStyle: 'italic', fontWeight: 800 }}>One platform.</span>
         </h2>
 
-        <p className="text-center text-base mb-8" style={{ color: '#2D4F47', lineHeight: 1.55, maxWidth: 520, margin: '0 auto 2rem' }}>
-          Trained on your business. Working 24/7. Replace 8 vendors with one.
+        {/* Subheading */}
+        <p style={{
+          textAlign: 'center', color: 'rgba(255,255,255,0.85)',
+          fontSize: 13, lineHeight: 1.6, marginBottom: 8,
+        }}>
+          Trained on your business. Working 24/7. Replaces<br />
+          8+ vendors with one.
         </p>
 
-        <div className="flex flex-col gap-10 max-w-5xl mx-auto">
-          {DEPARTMENTS.map((dept, di) => (
-            <DeptShowcase key={di} dept={dept} />
-          ))}
+        {/* Agent groups */}
+        {AGENTS.map((group, gi) => (
+          <div key={gi}>
+            <CategoryPill label={group.category} />
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+              {group.items.map((item, ii) => {
+                const idx = cardCounter++;
+                return <AgentCard key={ii} item={item} wide={item.wide} cardIdx={idx} />;
+              })}
+            </div>
+          </div>
+        ))}
+
+        {/* Bottom pill */}
+        <div className="flex justify-center mt-8">
+          <span style={{
+            display: 'inline-flex', alignItems: 'center', gap: 6,
+            padding: '8px 22px', borderRadius: 40,
+            border: '1.5px solid rgba(255,255,255,0.6)',
+            color: 'white', fontSize: 11, fontWeight: 700, letterSpacing: '0.08em',
+            background: 'rgba(255,255,255,0.15)',
+          }}>
+            <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'white', display: 'inline-block' }} />
+            MORE SOLUTIONS IN THE PIPELINE
+          </span>
         </div>
 
-        <div className="h-px my-8 max-w-5xl mx-auto" style={{ background: 'linear-gradient(90deg, transparent, #10B981 20%, #84CC16 80%, transparent)' }} />
-        <div className="flex justify-center">
-          <CTAButton className="py-4 px-10 text-base">See what they can do for you</CTAButton>
-        </div>
       </div>
     </section>
   );
