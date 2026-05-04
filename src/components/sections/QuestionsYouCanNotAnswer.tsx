@@ -3,150 +3,242 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { SectionPill } from '../ui/SectionPill';
 
-const PulseDot = ({ size = 6 }) => (
-  <div className="rounded-full animate-pulse" style={{ width: size, height: size, background: '#10B981', boxShadow: '0 0 8px #10B981' }} />
-);
-
-const GradientText = ({ children, italic = false, className = '' }: any) => (
-  <span className={`text-gradient ${italic ? 'italic' : ''} ${className}`}>{children}</span>
-);
-
-const SketchUnderline = ({ width = 180 }) => (
-  <svg width={width} height="12" viewBox="0 0 180 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M2 9.5C45.5 4.5 135 -2.5 178 8.5" stroke="#10B981" strokeWidth="3" strokeLinecap="round" />
-  </svg>
-);
+/* ─── CSS injected once ─────────────────────────────────────────── */
+const STYLES = `
+  .qflip-stage {
+    max-width: 520px;
+    min-height: 200px;
+    margin: 0 auto;
+    perspective: 1400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .qflip-wrap {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .qflip-card {
+    transform-style: preserve-3d;
+    transition: transform 600ms cubic-bezier(0.65, 0, 0.35, 1);
+    width: 100%;
+  }
+  .qflip-card.is-flipping {
+    transform: rotateX(-90deg);
+  }
+  .qflip-text {
+    font-family: 'DM Sans', sans-serif;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 1.35;
+    color: var(--ink, #0A2620);
+    text-align: center;
+    padding: 6px 10px 10px;
+    backface-visibility: hidden;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+  }
+  .marker-bg {
+    position: absolute;
+    left: -2px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: calc(100% + 4px);
+    height: 70%;
+    z-index: -1;
+    pointer-events: none;
+    overflow: visible;
+  }
+  .qflip-meta {
+    font-family: 'Geist Mono', 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-mute, #9DB4AE);
+    text-align: center;
+    margin: 16px 0 0;
+  }
+  .qflip-meta .q-num {
+    color: var(--mint-deep, #059669);
+    font-variant-numeric: tabular-nums;
+    transition: color 200ms;
+  }
+  .questions-tagline {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    text-align: center;
+    margin-top: 36px;
+    margin-bottom: 0;
+    color: var(--ink, #0A2620);
+  }
+  .questions-tagline .grad {
+    background: var(--grad-cta, linear-gradient(135deg, #10B981, #84CC16));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-style: italic;
+  }
+  .questions-sub {
+    font-size: 13.5px;
+    color: var(--ink-soft, #6B7F78);
+    text-align: center;
+    max-width: 38ch;
+    margin: 8px auto 0;
+  }
+  .questions-sub-mute {
+    font-size: 13px;
+    color: var(--ink-mute, #9DB4AE);
+    text-align: center;
+    max-width: 38ch;
+    margin: 18px auto 0;
+  }
+  .sec-head {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  .sec-head h2 {
+    font-size: clamp(30px, 4vw, 40px);
+    font-weight: 700;
+    color: var(--ink, #0A2620);
+    line-height: 1.2;
+    margin: 12px 0 0;
+  }
+  .sec-head h2 .grad-italic {
+    background: var(--grad-cta, linear-gradient(135deg, #10B981, #84CC16));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-style: italic;
+  }
+`;
 
 const QUESTIONS = [
   "How many calls did you miss last weekend?",
   "How many Instagram DMs are unread right now?",
-  "Which 3 customers almost booked, then ghosted?",
-  "What's your slowest response time this month?",
   "How many of your past customers haven't been contacted in 90 days?",
-  "Which platforms have your worst reviews?",
   "How many quotes are sitting open without follow-up?",
   "What's your conversion rate on Spanish-speaking inquiries?",
-  "Which of your cars made you the most money this month?",
-  "What's happening on your accounts right now while you read this?",
+  "How many bookings did you lose to a faster competitor last month?",
+  "What's your true cost of one missed phone call?",
+  "Which channel converts at your highest rate — and how do you know?",
+  "Which lead source has the highest close rate this quarter?",
+  "Does your brand show up when tourists ask ChatGPT for the best rentals?",
+  "Are your weekly numbers 100% accurate — or guesswork?",
+  "Do you know what's happening in your business while you sleep?",
+  "Still waiting on your team's reports to know what's happening?",
 ];
 
-export const QuestionsYouCanNotAnswer = () => {
-  const [activeQ, setActiveQ] = useState(2);
-  const [typedText, setTypedText] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
-  const [completedQs, setCompletedQs] = useState([0, 1]);
-  const typeRef = useRef<NodeJS.Timeout | number | null>(null);
+const TOTAL = QUESTIONS.length;
 
-  const startTyping = (qIdx: number) => {
-    const text = QUESTIONS[qIdx];
-    setTypedText(''); setIsTyping(true); let i = 0;
-    const type = () => {
-      i++; setTypedText(text.slice(0, i));
-      if (i < text.length) { typeRef.current = setTimeout(type, 30) as unknown as number; }
-      else {
-        setIsTyping(false);
-        typeRef.current = setTimeout(() => {
-          setCompletedQs(prev => [...prev, qIdx]);
-          setActiveQ((qIdx + 1) % QUESTIONS.length);
-        }, 2500) as unknown as number;
-      }
-    };
-    typeRef.current = setTimeout(type, 300) as unknown as number;
+/* Rough marker SVG paths that look hand-drawn */
+const MarkerBg = () => (
+  <svg className="marker-bg" viewBox="0 0 520 48" preserveAspectRatio="none" aria-hidden="true">
+    <path
+      d="M4 28 C60 18, 200 14, 340 20 C420 24, 490 26, 516 22 C490 34, 420 38, 340 34 C200 28, 60 32, 4 38 Z"
+      fill="rgba(167,243,208,0.55)"
+    />
+    <path
+      d="M8 30 C80 22, 220 18, 360 24 C440 28, 500 26, 514 24 C500 36, 440 40, 360 36 C220 30, 80 36, 8 40 Z"
+      fill="rgba(167,243,208,0.40)"
+    />
+  </svg>
+);
+
+export const QuestionsYouCanNotAnswer = () => {
+  const [current, setCurrent] = useState(0);
+  const [displayIdx, setDisplayIdx] = useState(0);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const flipToNext = () => {
+    const card = cardRef.current;
+    if (!card) return;
+
+    // Start flip (tip top toward viewer)
+    card.classList.add('is-flipping');
+
+    // At the midpoint (300ms), swap the text content
+    timerRef.current = setTimeout(() => {
+      setCurrent(prev => {
+        const next = (prev + 1) % TOTAL;
+        setDisplayIdx(next);
+        return next;
+      });
+      // Remove class so card flips back to upright
+      card.classList.remove('is-flipping');
+    }, 300);
   };
 
   useEffect(() => {
-    if (typeof typeRef.current === 'number') clearTimeout(typeRef.current);
-    startTyping(activeQ);
-    return () => clearTimeout(typeRef.current!);
-  }, [activeQ]);
+    // Hold for 5s, then flip
+    timerRef.current = setTimeout(flipToNext, 5000);
+    return () => { if (timerRef.current) clearTimeout(timerRef.current); };
+  }, [current]);
 
-  const windowQs = [];
-  for (let offset = -2; offset <= 2; offset++) {
-    const idx = ((activeQ + offset) % QUESTIONS.length + QUESTIONS.length) % QUESTIONS.length;
-    windowQs.push({ idx, offset });
-  }
+  const qNum = String(displayIdx + 1).padStart(2, '0');
 
   return (
-    <section className="py-16 md:py-20 bg-white overflow-hidden">
-      <div className="container mx-auto px-6 max-w-3xl">
-        <div className="flex justify-start mb-5">
-          <SectionPill>THE QUESTIONS YOU CAN NOT ANSWER</SectionPill>
-        </div>
-        <h2 className="font-sans font-bold mb-2" style={{ fontSize: 'clamp(28px,4vw,40px)', color: '#0A2620', lineHeight: 1.15 }}>
-          Be honest. <GradientText italic>How would you answer these?</GradientText>
-        </h2>
-        <div className="mb-3"><SketchUnderline width={280} /></div>
-        <p className="text-base mb-10" style={{ color: '#6B7F78' }}>
-          Aiaura answers every one of them automatically.
-        </p>
+    <>
+      <style dangerouslySetInnerHTML={{ __html: STYLES }} />
+      <section
+        id="questions"
+        style={{
+          background: '#FAFAF8',
+          padding: '56px 16px',
+          overflow: 'hidden',
+        }}
+      >
+        <div style={{ maxWidth: 600, margin: '0 auto' }}>
 
-        {/* Question stack */}
-        <div className="relative flex flex-col gap-4 mb-8 py-4 px-6 rounded-3xl" style={{ background: '#ffffff', border: '1px solid #E2E8F0', boxShadow: '0 4px 24px rgba(0,0,0,0.05)' }}>
-          {windowQs.map(({ idx, offset }) => {
-            const isActive = offset === 0;
-            const isCompleted = completedQs.includes(idx) && offset < 0;
-            let opacity = 1;
-            if (offset === -2) opacity = 0.2;
-            else if (offset === -1) opacity = 0.45;
-            else if (offset === 1) opacity = 0.3;
-            else if (offset === 2) opacity = 0.15;
-            const fontSize = isActive ? 22 : (Math.abs(offset) === 1 ? 16 : 13);
+          {/* Header */}
+          <div className="sec-head">
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 12 }}>
+              <SectionPill>AIAURA KNOWS</SectionPill>
+            </div>
+            <h2>
+              Be honest.{' '}
+              <span className="grad-italic">How would you answer these?</span>
+            </h2>
+          </div>
 
-            return (
-              <div key={`${idx}-${offset}`} className="relative flex items-start gap-3 transition-all duration-500" style={{ opacity }}>
-                <div className="flex-1 relative">
-                  {isActive && (
-                    <span className="absolute -inset-x-2 -inset-y-1 rounded-xl" style={{ background: 'rgba(16,185,129,0.06)', border: '1px solid rgba(16,185,129,0.15)', zIndex: 0 }} />
-                  )}
-                  <p className="font-sans italic relative z-10 leading-snug"
-                    style={{ fontSize, color: isActive ? '#0A2620' : '#6B7F78', fontWeight: isActive ? 600 : 400 }}>
-                    {isActive ? (
-                      <>{typedText}{isTyping && <span className="animate-pulse" style={{ color: '#10B981' }}>|</span>}</>
-                    ) : QUESTIONS[idx]}
-                  </p>
-                  {isActive && typedText.length > 8 && (
-                    <div className="mt-1"><SketchUnderline width={Math.min(typedText.length * 9, 320)} /></div>
-                  )}
+          {/* Flip card stage */}
+          <div className="qflip-stage">
+            <div className="qflip-wrap">
+              <div className="qflip-card" ref={cardRef} id="qflipCard">
+                <div className="qflip-text" id="qflipText">
+                  <MarkerBg />
+                  <span id="qflipLabel">{QUESTIONS[displayIdx]}</span>
                 </div>
-
-                {isCompleted && (
-                  <div className="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #10B981, #84CC16)' }}>
-                    <svg width="8" height="8" viewBox="0 0 12 12" fill="none"><polyline points="2 6 5 9 10 3" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                  </div>
-                )}
-                {isActive && (
-                  <div className="flex-shrink-0 flex items-center gap-1.5 px-2.5 py-1 rounded-full mt-1"
-                    style={{ background: '#F0FDF4', border: '1px solid #BBF7D0', whiteSpace: 'nowrap' }}>
-                    <PulseDot size={5} />
-                    <span className="text-xs font-mono font-bold" style={{ color: '#10B981' }}>AIAURA KNOWS →</span>
-                  </div>
-                )}
               </div>
-            );
-          })}
-        </div>
+            </div>
+          </div>
 
-        {/* Progress dots only — no label */}
-        <div className="flex items-center gap-1.5 justify-center mb-8">
-          {QUESTIONS.map((_, i) => (
-            <div key={i} className="rounded-full transition-all" style={{
-              width: i === activeQ ? 18 : 6, height: 6,
-              background: completedQs.includes(i) || i === activeQ ? 'linear-gradient(135deg, #10B981, #84CC16)' : '#CBD5E1',
-              boxShadow: i === activeQ ? '0 0 6px rgba(16,185,129,0.4)' : 'none',
-            }} />
-          ))}
-        </div>
+          {/* Progress label */}
+          <p className="qflip-meta">
+            <span className="q-num">{qNum}</span>
+            {' '}OF {TOTAL} QUESTIONS
+          </p>
 
-        {/* Tagline strip */}
-        <div className="rounded-2xl p-5" style={{ background: '#F8FFFE', border: '1px solid #D1FAE5' }}>
-          <p className="font-sans font-bold text-base" style={{ color: '#0A2620' }}>
-            You don't know. <GradientText>Aiaura does.</GradientText>
+          {/* Outro */}
+          <p className="questions-tagline">
+            You don't know.{' '}
+            <span className="grad">Aiaura does.</span>
           </p>
-          <p className="text-sm italic mt-1" style={{ color: '#6B7F78' }}>
-            Tracks every answer automatically across every channel, every customer, every booking.
+          <p className="questions-sub">
+            Aiaura answers every one of them. Within 60 days.
           </p>
+          <p className="questions-sub-mute">
+            Aiaura tracks every single thing automatically. And reports to you.
+          </p>
+
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
