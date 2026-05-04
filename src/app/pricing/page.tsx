@@ -159,15 +159,11 @@ export default function PricingPage() {
               </span>
             </div>
             
-            <h1 className="text-5xl md:text-6xl font-bold mb-4" style={{ color: '#0A2620' }}>
-              Choose your <span style={{ 
-                background: 'linear-gradient(135deg, #10B981, #84CC16)', 
-                WebkitBackgroundClip: 'text', 
-                WebkitTextFillColor: 'transparent' 
-              }}>plan</span>
+            <h1 className="font-sans font-bold mb-4" style={{ fontSize: 'clamp(40px, 5vw, 56px)', color: '#0A2620', lineHeight: 1.2 }}>
+              Choose your <span className="text-gradient">plan</span>
             </h1>
             
-            <p className="text-xl max-w-2xl mx-auto" style={{ color: '#64748B' }}>
+            <p className="text-xl max-w-2xl mx-auto" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
               No hidden fees. Cancel anytime. 14-day money back guarantee.
             </p>
           </div>
@@ -181,7 +177,7 @@ export default function PricingPage() {
 
           {/* FAQ Section */}
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl font-bold text-center mb-8" style={{ color: '#0A2620' }}>
+            <h2 className="font-sans font-bold text-3xl text-center mb-8" style={{ color: '#0A2620' }}>
               Frequently Asked Questions
             </h2>
             
@@ -209,10 +205,10 @@ export default function PricingPage() {
                   className="p-6 rounded-2xl"
                   style={{ background: '#FFFFFF', border: '1px solid #E2E8F0' }}
                 >
-                  <h3 className="font-bold text-lg mb-2" style={{ color: '#0A2620' }}>
+                  <h3 className="font-sans font-bold text-lg mb-2" style={{ color: '#0A2620' }}>
                     {faq.q}
                   </h3>
-                  <p style={{ color: '#64748B' }}>{faq.a}</p>
+                  <p className="text-base" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>{faq.a}</p>
                 </div>
               ))}
             </div>
@@ -226,10 +222,10 @@ export default function PricingPage() {
               border: '1px solid rgba(16,185,129,0.2)'
             }}
           >
-            <h2 className="text-3xl font-bold mb-4" style={{ color: '#0A2620' }}>
+            <h2 className="font-sans font-bold text-3xl mb-4" style={{ color: '#0A2620' }}>
               Still have questions?
             </h2>
-            <p className="text-lg mb-6" style={{ color: '#64748B' }}>
+            <p className="text-lg mb-6" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
               Our team is here to help you find the perfect plan for your fleet.
             </p>
             <button 

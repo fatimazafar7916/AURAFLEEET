@@ -25,13 +25,9 @@ export default function AboutPage() {
               </span>
             </div>
             
-            <h1 className="text-5xl md:text-6xl font-bold mb-6" style={{ color: '#0A2620' }}>
+            <h1 className="font-sans font-bold mb-6" style={{ fontSize: 'clamp(40px, 5vw, 56px)', color: '#0A2620', lineHeight: 1.2 }}>
               We're building the future of{' '}
-              <span style={{ 
-                background: 'linear-gradient(135deg, #10B981, #84CC16)', 
-                WebkitBackgroundClip: 'text', 
-                WebkitTextFillColor: 'transparent' 
-              }}>
+              <span className="text-gradient italic">
                 fleet management
               </span>
             </h1>
@@ -44,12 +40,12 @@ export default function AboutPage() {
 
           {/* Mission Section */}
           <div className="mb-16 p-10 rounded-3xl" style={{ background: '#FFFFFF', border: '1px solid #E2E8F0' }}>
-            <h2 className="text-3xl font-bold mb-4" style={{ color: '#0A2620' }}>Our Mission</h2>
-            <p className="text-lg leading-relaxed mb-4" style={{ color: '#475569' }}>
+            <h2 className="font-sans font-bold text-3xl mb-4" style={{ color: '#0A2620' }}>Our Mission</h2>
+            <p className="text-lg leading-relaxed mb-4" style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
               Every day, luxury car rental operators lose thousands of dollars because they can't respond fast enough. 
               A DM at 11 PM. A text while driving. An email during a delivery. By the time they reply, the customer has moved on.
             </p>
-            <p className="text-lg leading-relaxed" style={{ color: '#475569' }}>
+            <p className="text-lg leading-relaxed" style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
               We built Aiaura to solve this. Our AI receptionist answers every message, books every rental, 
               and handles every inquiry—instantly, 24/7, across every channel. No more missed opportunities. 
               No more lost revenue. Just pure, automated growth.
@@ -58,7 +54,7 @@ export default function AboutPage() {
 
           {/* Story Section */}
           <div className="mb-16">
-            <h2 className="text-3xl font-bold mb-6" style={{ color: '#0A2620' }}>The Story</h2>
+            <h2 className="font-sans font-bold text-3xl mb-6" style={{ color: '#0A2620' }}>The Story</h2>
             <div className="space-y-6">
               <div className="p-8 rounded-2xl" style={{ background: 'rgba(16,185,129,0.05)', border: '1px solid rgba(16,185,129,0.1)' }}>
                 <p className="text-lg leading-relaxed" style={{ color: '#475569' }}>
@@ -87,7 +83,7 @@ export default function AboutPage() {
 
           {/* Values Section */}
           <div className="mb-16">
-            <h2 className="text-3xl font-bold mb-8 text-center" style={{ color: '#0A2620' }}>Our Values</h2>
+            <h2 className="font-sans font-bold text-3xl mb-8 text-center" style={{ color: '#0A2620' }}>Our Values</h2>
             <div className="grid md:grid-cols-2 gap-6">
               {[
                 {
@@ -112,10 +108,10 @@ export default function AboutPage() {
                   className="p-6 rounded-2xl"
                   style={{ background: '#FFFFFF', border: '1px solid #E2E8F0' }}
                 >
-                  <h3 className="text-xl font-bold mb-2" style={{ color: '#0A2620' }}>
+                  <h3 className="font-sans font-bold text-xl mb-2" style={{ color: '#0A2620' }}>
                     {value.title}
                   </h3>
-                  <p style={{ color: '#64748B' }}>{value.description}</p>
+                  <p className="text-base" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>{value.description}</p>
                 </div>
               ))}
             </div>
@@ -129,7 +125,7 @@ export default function AboutPage() {
               border: '1px solid rgba(16,185,129,0.2)'
             }}
           >
-            <h2 className="text-3xl font-bold mb-8" style={{ color: '#0A2620' }}>By the Numbers</h2>
+            <h2 className="font-sans font-bold text-3xl mb-8" style={{ color: '#0A2620' }}>By the Numbers</h2>
             <div className="grid md:grid-cols-3 gap-8">
               {[
                 { number: "4.2s", label: "Average response time" },
@@ -157,10 +153,10 @@ export default function AboutPage() {
 
           {/* CTA Section */}
           <div className="text-center">
-            <h2 className="text-3xl font-bold mb-4" style={{ color: '#0A2620' }}>
+            <h2 className="font-sans font-bold text-3xl mb-4" style={{ color: '#0A2620' }}>
               Ready to transform your fleet?
             </h2>
-            <p className="text-lg mb-8" style={{ color: '#64748B' }}>
+            <p className="text-lg mb-8" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
               Join the operators who never miss a booking.
             </p>
             <button 
