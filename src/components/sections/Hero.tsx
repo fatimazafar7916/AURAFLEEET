@@ -95,7 +95,7 @@ function AiauraBadge({ responseTime }: { responseTime: string }) {
 }
 
 /* ─── CHANNEL TABS ─── */
-function ChannelTabs({ activeChannel }: { activeChannel: string }) {
+function ChannelTabs({ activeChannel, onChannelChange }: { activeChannel: string; onChannelChange: (channelId: string) => void }) {
   const tabs = [
     { id: 'instagram', label: 'INSTAGRAM' },
     { id: 'sms', label: 'TEXT' },
@@ -107,9 +107,10 @@ function ChannelTabs({ activeChannel }: { activeChannel: string }) {
   return (
     <div className="flex gap-2 mb-3 flex-wrap">
       {tabs.map(tab => (
-        <div
+        <button
           key={tab.id}
-          className="px-4 py-2 rounded-full text-xs font-bold tracking-wide transition-all"
+          onClick={() => onChannelChange(tab.id)}
+          className="px-4 py-2 rounded-full text-xs font-bold tracking-wide transition-all hover:scale-105 cursor-pointer"
           style={{
             background: tab.id === activeChannel 
               ? 'rgba(16,185,129,0.15)' 
@@ -123,17 +124,17 @@ function ChannelTabs({ activeChannel }: { activeChannel: string }) {
           }}
         >
           {tab.label}
-        </div>
+        </button>
       ))}
     </div>
   );
 }
 
 /* ─── INSTAGRAM DM ─── */
-function InstagramCard({ channel, step, typedText, isTyping }: any) {
+function InstagramCard({ channel, step, typedText, isTyping, onChannelChange }: any) {
   return (
     <div className="w-full">
-      <ChannelTabs activeChannel="instagram" />
+      <ChannelTabs activeChannel="instagram" onChannelChange={onChannelChange} />
       <div className="rounded-2xl overflow-hidden flex flex-col" style={{ background: '#000000', minHeight: 320, boxShadow: '0 8px 32px rgba(0,0,0,0.4)' }}>
         {/* Instagram DM header */}
         <div className="flex items-center gap-3 px-4 py-3" style={{ borderBottom: '1px solid #262626' }}>
@@ -188,10 +189,10 @@ function InstagramCard({ channel, step, typedText, isTyping }: any) {
 }
 
 /* ─── WHATSAPP ─── */
-function WhatsAppCard({ channel, step, typedText, isTyping }: any) {
+function WhatsAppCard({ channel, step, typedText, isTyping, onChannelChange }: any) {
   return (
     <div className="w-full">
-      <ChannelTabs activeChannel="whatsapp" />
+      <ChannelTabs activeChannel="whatsapp" onChannelChange={onChannelChange} />
       <div className="rounded-2xl overflow-hidden flex flex-col" style={{ background: '#0B141A', minHeight: 320, boxShadow: '0 8px 32px rgba(0,0,0,0.4)' }}>
       {/* WhatsApp header */}
       <div className="flex items-center gap-3 px-4 py-3" style={{ background: '#1F2C34', borderBottom: '1px solid #2A3942' }}>
@@ -251,10 +252,10 @@ function WhatsAppCard({ channel, step, typedText, isTyping }: any) {
 }
 
 /* ─── iMESSAGE / SMS ─── */
-function IMessageCard({ channel, step, typedText, isTyping }: any) {
+function IMessageCard({ channel, step, typedText, isTyping, onChannelChange }: any) {
   return (
     <div className="w-full">
-      <ChannelTabs activeChannel="sms" />
+      <ChannelTabs activeChannel="sms" onChannelChange={onChannelChange} />
       <div className="rounded-2xl overflow-hidden flex flex-col" style={{ background: '#000000', minHeight: 320, boxShadow: '0 8px 32px rgba(0,0,0,0.4)' }}>
       {/* iMessage header */}
       <div className="flex flex-col items-center py-3 px-4" style={{ background: '#1C1C1E', borderBottom: '1px solid #38383A' }}>
@@ -301,10 +302,10 @@ function IMessageCard({ channel, step, typedText, isTyping }: any) {
 }
 
 /* ─── PHONE CALL ─── */
-function PhoneCallCard({ channel, step, typedText, isTyping }: any) {
+function PhoneCallCard({ channel, step, typedText, isTyping, onChannelChange }: any) {
   return (
     <div className="w-full">
-      <ChannelTabs activeChannel="call" />
+      <ChannelTabs activeChannel="call" onChannelChange={onChannelChange} />
       <div className="rounded-2xl overflow-hidden flex flex-col" style={{ background: 'linear-gradient(180deg, #1C1C1E 0%, #0D1F17 100%)', minHeight: 320, boxShadow: '0 8px 32px rgba(0,0,0,0.5)' }}>
       {/* iOS call screen */}
       <div className="flex flex-col items-center pt-8 pb-4 px-4">
@@ -370,10 +371,10 @@ function PhoneCallCard({ channel, step, typedText, isTyping }: any) {
 }
 
 /* ─── GMAIL ─── */
-function GmailCard({ channel, step, typedText, isTyping }: any) {
+function GmailCard({ channel, step, typedText, isTyping, onChannelChange }: any) {
   return (
     <div className="w-full">
-      <ChannelTabs activeChannel="email" />
+      <ChannelTabs activeChannel="email" onChannelChange={onChannelChange} />
       <div className="rounded-2xl overflow-hidden flex flex-col" style={{ background: '#FFFFFF', minHeight: 320, boxShadow: '0 8px 32px rgba(0,0,0,0.12)' }}>
       {/* Gmail header */}
       <div className="flex items-center gap-3 px-4 py-3" style={{ background: '#FFFFFF', borderBottom: '1px solid #E8EAED' }}>
@@ -443,7 +444,7 @@ function GmailCard({ channel, step, typedText, isTyping }: any) {
   );
 }
 
-function ChannelCard({ channel }: { channel: any }) {
+function ChannelCard({ channel, onChannelChange }: { channel: any; onChannelChange: (channelId: string) => void }) {
   const [step, setStep] = useState(0);
   const [typedText, setTypedText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -473,11 +474,11 @@ function ChannelCard({ channel }: { channel: any }) {
     };
   }, [channel]);
 
-  if (channel.id === 'instagram') return <InstagramCard channel={channel} step={step} typedText={typedText} isTyping={isTyping} />;
-  if (channel.id === 'whatsapp') return <WhatsAppCard channel={channel} step={step} typedText={typedText} isTyping={isTyping} />;
-  if (channel.id === 'sms') return <IMessageCard channel={channel} step={step} typedText={typedText} isTyping={isTyping} />;
-  if (channel.id === 'call') return <PhoneCallCard channel={channel} step={step} typedText={typedText} isTyping={isTyping} />;
-  if (channel.id === 'email') return <GmailCard channel={channel} step={step} typedText={typedText} isTyping={isTyping} />;
+  if (channel.id === 'instagram') return <InstagramCard channel={channel} step={step} typedText={typedText} isTyping={isTyping} onChannelChange={onChannelChange} />;
+  if (channel.id === 'whatsapp') return <WhatsAppCard channel={channel} step={step} typedText={typedText} isTyping={isTyping} onChannelChange={onChannelChange} />;
+  if (channel.id === 'sms') return <IMessageCard channel={channel} step={step} typedText={typedText} isTyping={isTyping} onChannelChange={onChannelChange} />;
+  if (channel.id === 'call') return <PhoneCallCard channel={channel} step={step} typedText={typedText} isTyping={isTyping} onChannelChange={onChannelChange} />;
+  if (channel.id === 'email') return <GmailCard channel={channel} step={step} typedText={typedText} isTyping={isTyping} onChannelChange={onChannelChange} />;
   return null;
 }
 
@@ -598,7 +599,19 @@ export const Hero = () => {
           <div className="relative flex flex-col items-center justify-center">
             <div className="absolute inset-0 bg-mint/10 blur-[100px] rounded-full -z-10" />
             <div className="w-full" style={{ transition: 'opacity 0.45s ease', opacity: channelFade ? 1 : 0 }}>
-              <ChannelCard channel={CHANNELS[channelIdx]} />
+              <ChannelCard 
+                channel={CHANNELS[channelIdx]} 
+                onChannelChange={(channelId: string) => {
+                  const newIdx = CHANNELS.findIndex(ch => ch.id === channelId);
+                  if (newIdx !== -1 && newIdx !== channelIdx) {
+                    setChannelFade(false);
+                    setTimeout(() => {
+                      setChannelIdx(newIdx);
+                      setChannelFade(true);
+                    }, 300);
+                  }
+                }}
+              />
             </div>
             <div className="flex items-center justify-center gap-2 mt-4">
               {CHANNELS.map((_, i) => (
