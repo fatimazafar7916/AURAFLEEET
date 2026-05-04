@@ -260,7 +260,7 @@ interface CyclingLineProps {
   offset?: number;
 }
 
-function CyclingLine({ lines, offset = 0 }: CyclingLineProps) {
+function CyclingLine({ lines, offset = 0, active = false }: CyclingLineProps & { active?: boolean }) {
   const [idx, setIdx] = useState(offset % lines.length);
   const [visible, setVisible] = useState(true);
 
@@ -281,14 +281,14 @@ function CyclingLine({ lines, offset = 0 }: CyclingLineProps) {
 
   return (
     <p style={{
-      color: 'rgba(255,255,255,0.75)',
+      color: active ? 'rgba(16,185,129,0.85)' : 'rgba(255,255,255,0.75)',
       fontSize: 11,
       marginTop: 3,
       lineHeight: 1.4,
       minHeight: 16,
       opacity: visible ? 1 : 0,
       transform: visible ? 'translateY(0)' : 'translateY(4px)',
-      transition: 'opacity 0.25s ease, transform 0.25s ease',
+      transition: 'opacity 0.25s ease, transform 0.25s ease, color 0.2s ease',
     }}>
       {lines[idx]}
     </p>
@@ -320,35 +320,52 @@ interface AgentCardProps {
   cardIdx: number;
 }
 
-const AgentCard = ({ item, wide, cardIdx }: AgentCardProps) => (
-  <div style={{
-    gridColumn: wide ? 'span 2' : 'span 1',
-    background: 'rgba(255,255,255,0.18)',
-    border: '0.5px solid rgba(255,255,255,0.35)',
-    backdropFilter: 'blur(20px) saturate(140%)',
-    WebkitBackdropFilter: 'blur(20px) saturate(140%)',
-    borderRadius: 16,
-    padding: '14px 16px',
-    display: 'flex',
-    alignItems: 'flex-start',
-    gap: 12,
-  }}>
-    {/* Icon box */}
-    <div style={{
-      width: 32, height: 32, borderRadius: 8,
-      background: 'rgba(255,255,255,0.25)',
-      display: 'flex', alignItems: 'center', justifyContent: 'center',
-      flexShrink: 0,
-    }}>
-      {item.icon}
+const AgentCard = ({ item, wide, cardIdx }: AgentCardProps) => {
+  const [active, setActive] = useState(false);
+
+  return (
+    <div
+      onClick={() => setActive(a => !a)}
+      style={{
+        gridColumn: wide ? 'span 2' : 'span 1',
+        background: active ? 'white' : 'rgba(255,255,255,0.18)',
+        border: active ? '1.5px solid rgba(16,185,129,0.25)' : '0.5px solid rgba(255,255,255,0.35)',
+        backdropFilter: 'blur(20px) saturate(140%)',
+        WebkitBackdropFilter: 'blur(20px) saturate(140%)',
+        borderRadius: 16,
+        padding: '14px 16px',
+        display: 'flex',
+        alignItems: 'flex-start',
+        gap: 12,
+        cursor: 'pointer',
+        transition: 'background 0.2s ease, border 0.2s ease, box-shadow 0.2s ease',
+        boxShadow: active ? '0 4px 20px rgba(16,185,129,0.18)' : 'none',
+      }}
+    >
+      {/* Icon box */}
+      <div style={{
+        width: 32, height: 32, borderRadius: 8,
+        background: active ? 'linear-gradient(135deg, #10B981, #84CC16)' : 'rgba(255,255,255,0.25)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        flexShrink: 0,
+        transition: 'background 0.2s ease',
+      }}>
+        {item.icon}
+      </div>
+      {/* Text */}
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <p style={{
+          color: active ? '#065F46' : 'white',
+          fontWeight: 700, fontSize: 13, lineHeight: 1.3,
+          transition: 'color 0.2s ease',
+        }}>
+          {item.name}
+        </p>
+        <CyclingLine lines={item.lines} offset={cardIdx} active={active} />
+      </div>
     </div>
-    {/* Text */}
-    <div style={{ flex: 1, minWidth: 0 }}>
-      <p style={{ color: 'white', fontWeight: 700, fontSize: 13, lineHeight: 1.3 }}>{item.name}</p>
-      <CyclingLine lines={item.lines} offset={cardIdx} />
-    </div>
-  </div>
-);
+  );
+};
 
 // ── Main section ──────────────────────────────────────────────────────────
 export const MeetTheTeam = () => {
