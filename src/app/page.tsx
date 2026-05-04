@@ -8,6 +8,7 @@ import { HowYouGoLive } from "@/components/sections/HowYouGoLive";
 import { Integrations } from "@/components/sections/Integrations";
 import { QuestionsYouCanNotAnswer } from "@/components/sections/QuestionsYouCanNotAnswer";
 import { TrackEverywhere } from "@/components/sections/TrackEverywhere";
+import { FinalCTA } from "@/components/sections/FinalCTA";
 import { Footer } from "@/components/sections/Footer";
 
 export default function Home() {
@@ -23,6 +24,7 @@ export default function Home() {
       <Integrations />
       <QuestionsYouCanNotAnswer />
       <TrackEverywhere />
+      <FinalCTA />
       <Footer />
     </main>
   );
