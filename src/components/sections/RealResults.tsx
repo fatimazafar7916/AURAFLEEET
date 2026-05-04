@@ -6,14 +6,14 @@ import { SectionPill } from '../ui/SectionPill';
 // Live counter for conversations
 function LiveCounter() {
   const [count, setCount] = useState(376);
-  
+
   useEffect(() => {
     const interval = setInterval(() => {
-      setCount(prev => prev + Math.floor(Math.random() * 3)); // Increment by 0-2 randomly
-    }, 2000 + Math.random() * 3000); // Every 2-5 seconds
+      setCount(prev => prev + Math.floor(Math.random() * 3));
+    }, 2000 + Math.random() * 3000);
     return () => clearInterval(interval);
   }, []);
-  
+
   return (
     <span style={{ color: 'white', fontSize: 'clamp(28px,5vw,40px)', fontWeight: 800, lineHeight: 1 }}>
       {count.toLocaleString()}
@@ -37,15 +37,105 @@ const SketchUnderline = ({ width = 220 }) => (
   </svg>
 );
 
+// ── SVG Icons ────────────────────────────────────────────────────────────────
+const PhoneIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+  </svg>
+);
+const ChatIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+  </svg>
+);
+const BarIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+  </svg>
+);
+const RefreshIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="23 4 23 10 17 10"/>
+    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+  </svg>
+);
+const DocIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+    <polyline points="14 2 14 8 20 8"/>
+    <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+  </svg>
+);
+const StarIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+  </svg>
+);
+const CrownIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M2 20h20M5 20V10l7-7 7 7v10"/>
+  </svg>
+);
+const MailIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+    <polyline points="22,6 12,13 2,6"/>
+  </svg>
+);
+const SearchIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+  </svg>
+);
+const SocialIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+  </svg>
+);
+const HeartIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+  </svg>
+);
+const BotIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="3" width="18" height="18" rx="2"/>
+    <path d="M8 12h8"/><path d="M8 8h5"/>
+  </svg>
+);
+const ShieldIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+  </svg>
+);
+const GlobeIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="10"/>
+    <line x1="2" y1="12" x2="22" y2="12"/>
+    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+  </svg>
+);
+const CommentIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+  </svg>
+);
+const FilterIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+  </svg>
+);
+const ClockIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+  </svg>
+);
+
+// ── 30 Cards ─────────────────────────────────────────────────────────────────
 const RESULTS = [
-  // Card 1
   {
     product: 'AI RECEPTIONIST',
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
-      </svg>
-    ),
+    icon: <PhoneIcon />,
     amount: '$14,400',
     amountSuffix: 'SINGLE BOOKING',
     action: 'Booked from a 2:14 AM call',
@@ -54,14 +144,9 @@ const RESULTS = [
     stat1: { value: '2:14AM', label: 'CALL TIME' },
     stat2: { value: '$14,400', label: 'BOOKING VALUE' },
   },
-  // Card 2
   {
     product: 'AI OMNICHANNEL',
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-      </svg>
-    ),
+    icon: <ChatIcon />,
     amount: '$4,800',
     amountSuffix: 'WEEKEND RENTAL',
     action: 'Weekend rental closed in 4 minutes via Instagram DM',
@@ -70,16 +155,9 @@ const RESULTS = [
     stat1: { value: '4 min', label: 'CLOSE TIME' },
     stat2: { value: '$4,800', label: 'WEEKEND VALUE' },
   },
-  // Card 3
   {
     product: 'AI LEAD QUALIFIER',
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <line x1="18" y1="20" x2="18" y2="10"/>
-        <line x1="12" y1="20" x2="12" y2="4"/>
-        <line x1="6" y1="20" x2="6" y2="14"/>
-      </svg>
-    ),
+    icon: <BarIcon />,
     amount: '47',
     amountSuffix: 'HOT LEADS',
     action: 'Flagged from $2.1M of inquiries',
@@ -88,15 +166,9 @@ const RESULTS = [
     stat1: { value: '47', label: 'HOT LEADS' },
     stat2: { value: '$2.1M', label: 'INQUIRIES' },
   },
-  // Card 4
   {
     product: 'AI FOLLOW-UP',
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="23 4 23 10 17 10"/>
-        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
-      </svg>
-    ),
+    icon: <RefreshIcon />,
     amount: '$8,200',
     amountSuffix: 'RECOVERED',
     action: 'Recovered from a 9-day-old quote',
@@ -105,17 +177,9 @@ const RESULTS = [
     stat1: { value: '9 days', label: 'OLD QUOTE' },
     stat2: { value: '$8,200', label: 'RECOVERED' },
   },
-  // Card 5
   {
     product: 'AI QUOTE & BOOKING',
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-        <polyline points="14 2 14 8 20 8"/>
-        <line x1="16" y1="13" x2="8" y2="13"/>
-        <line x1="16" y1="17" x2="8" y2="17"/>
-      </svg>
-    ),
+    icon: <DocIcon />,
     amount: '11s',
     amountSuffix: 'QUOTE-TO-DEPOSIT',
     action: '312 contracts signed',
@@ -124,14 +188,9 @@ const RESULTS = [
     stat1: { value: '312', label: 'CONTRACTS' },
     stat2: { value: '$5,200', label: 'AVG VALUE' },
   },
-  // Card 6
   {
     product: 'AI REVIEW MANAGER',
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-      </svg>
-    ),
+    icon: <StarIcon />,
     amount: '184',
     amountSuffix: 'REVIEWS',
     action: '5-star Google reviews collected. 3 negatives intercepted',
@@ -140,14 +199,9 @@ const RESULTS = [
     stat1: { value: '184', label: '5-STAR REVIEWS' },
     stat2: { value: '4.9', label: 'NEW RATING' },
   },
-  // Card 7
   {
     product: 'AI VIP MANAGER',
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-      </svg>
-    ),
+    icon: <CrownIcon />,
     amount: '$26,400',
     amountSuffix: 'REACTIVATED',
     action: 'Reactivated a Platinum customer',
@@ -156,15 +210,9 @@ const RESULTS = [
     stat1: { value: '1', label: 'PLATINUM' },
     stat2: { value: '$26,400', label: 'REACTIVATED' },
   },
-  // Card 8
   {
     product: 'AI EMAIL + SMS',
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-        <polyline points="22,6 12,13 2,6"/>
-      </svg>
-    ),
+    icon: <MailIcon />,
     amount: '$47,000',
     amountSuffix: 'F1 CAMPAIGN',
     action: 'F1 weekend campaign · 247 past customers · 18 bookings',
@@ -173,15 +221,9 @@ const RESULTS = [
     stat1: { value: '18', label: 'BOOKINGS' },
     stat2: { value: '7.3%', label: 'CONVERSION' },
   },
-  // Card 9
   {
     product: 'AI LISTING OPTIMIZER',
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="11" cy="11" r="8"/>
-        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-      </svg>
-    ),
+    icon: <SearchIcon />,
     amount: '+31%',
     amountSuffix: 'GOOGLE CLICKS',
     action: 'Google Business clicks in 30 days',
@@ -190,14 +232,9 @@ const RESULTS = [
     stat1: { value: '+31%', label: 'CLICKS' },
     stat2: { value: '+2', label: 'POSITIONS' },
   },
-  // Card 10
   {
     product: 'AI SOCIAL MANAGER',
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-      </svg>
-    ),
+    icon: <SocialIcon />,
     amount: '2.1M',
     amountSuffix: 'VIEWS',
     action: '42 Instagram Reels posted in April',
@@ -206,14 +243,9 @@ const RESULTS = [
     stat1: { value: '42', label: 'REELS' },
     stat2: { value: '+4,800', label: 'FOLLOWERS' },
   },
-  // Card 11
   {
     product: 'AI CUSTOMER SUPPORT',
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-      </svg>
-    ),
+    icon: <HeartIcon />,
     amount: '1,400',
     amountSuffix: 'TICKETS',
     action: 'Mid-rental issues resolved · 90s avg',
@@ -222,16 +254,9 @@ const RESULTS = [
     stat1: { value: '1,400', label: 'TICKETS' },
     stat2: { value: '4.7/5', label: 'CSAT' },
   },
-  // Card 12
   {
     product: 'AI WEBSITE CHATBOT',
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="3" width="18" height="18" rx="2"/>
-        <path d="M8 12h8"/>
-        <path d="M8 8h5"/>
-      </svg>
-    ),
+    icon: <BotIcon />,
     amount: '$94,000',
     amountSuffix: 'CHAT BOOKINGS',
     action: 'Booked directly from website chat — no human touch',
@@ -240,12 +265,210 @@ const RESULTS = [
     stat1: { value: '$94K', label: 'CHAT REVENUE' },
     stat2: { value: '14%', label: 'CONVERSION' },
   },
+  // Cards 13–30 (duplicate set + new entries)
+  {
+    product: 'AI RECEPTIONIST',
+    icon: <PhoneIcon />,
+    amount: '22',
+    amountSuffix: 'LANGUAGES',
+    action: 'Calls handled in customer\'s native language',
+    attribution: 'Miami International · April',
+    tag: 'SPANISH DOMINANT: 38%',
+    stat1: { value: '22', label: 'LANGUAGES' },
+    stat2: { value: '38%', label: 'SPANISH' },
+  },
+  {
+    product: 'AI OMNICHANNEL',
+    icon: <CommentIcon />,
+    amount: '73',
+    amountSuffix: 'IG COMMENTS',
+    action: 'Auto-DM\'d in 4 seconds each',
+    attribution: 'Las Vegas Exotic · F1 weekend',
+    tag: '12 BOOKED FROM COMMENTS',
+    stat1: { value: '4s', label: 'AUTO-DM TIME' },
+    stat2: { value: '12', label: 'BOOKED' },
+  },
+  {
+    product: 'AI FOLLOW-UP',
+    icon: <RefreshIcon />,
+    amount: '$12,800',
+    amountSuffix: 'REACTIVATED',
+    action: '21-day reactivation — past customer booked again',
+    attribution: 'Scottsdale Luxury · April 30',
+    tag: 'WEEKEND RENTAL',
+    stat1: { value: '21 days', label: 'GAP' },
+    stat2: { value: '$12,800', label: 'VALUE' },
+  },
+  {
+    product: 'AI QUOTE & BOOKING',
+    icon: <ClockIcon />,
+    amount: '6s',
+    amountSuffix: 'FASTEST QUOTE',
+    action: 'Quote-to-send time on record',
+    attribution: 'MVP Miami · April 28',
+    tag: 'AVENTADOR · 2 DAYS',
+    stat1: { value: '6s', label: 'QUOTE TIME' },
+    stat2: { value: '$9,600', label: 'BOOKING' },
+  },
+  {
+    product: 'AI REVIEW MANAGER',
+    icon: <StarIcon />,
+    amount: '4.9',
+    amountSuffix: 'NEW RATING',
+    action: '5-star reviews pushed. Negatives intercepted pre-post',
+    attribution: 'Phoenix Premium · April',
+    tag: 'FROM 4.6 → 4.9',
+    stat1: { value: '4.6', label: 'WAS' },
+    stat2: { value: '4.9', label: 'NOW' },
+  },
+  {
+    product: 'AI VIP MANAGER',
+    icon: <CrownIcon />,
+    amount: '12',
+    amountSuffix: 'PLATINUM REACTIVATIONS',
+    action: 'Birthday + anniversary triggers fired',
+    attribution: 'LA Premium · April',
+    tag: '+$94K REPEAT BOOKINGS',
+    stat1: { value: '12', label: 'PLATINUM' },
+    stat2: { value: '$94K', label: 'REPEAT' },
+  },
+  {
+    product: 'AI EMAIL + SMS',
+    icon: <MailIcon />,
+    amount: '247',
+    amountSuffix: 'CONTACTS',
+    action: 'Texted for Coachella weekend campaign',
+    attribution: 'LA Exotic · April',
+    tag: '14% REPLY RATE',
+    stat1: { value: '247', label: 'SENT' },
+    stat2: { value: '14%', label: 'REPLY RATE' },
+  },
+  {
+    product: 'AI LISTING OPTIMIZER',
+    icon: <SearchIcon />,
+    amount: '+47%',
+    amountSuffix: 'IMPRESSIONS',
+    action: 'Google Maps + Yelp combined',
+    attribution: 'Phoenix Premium · April',
+    tag: 'NEW KEYWORD RANKING',
+    stat1: { value: '+47%', label: 'IMPRESSIONS' },
+    stat2: { value: '3', label: 'NEW KEYWORDS' },
+  },
+  {
+    product: 'AI SOCIAL MANAGER',
+    icon: <SocialIcon />,
+    amount: '+38%',
+    amountSuffix: 'ENGAGEMENT',
+    action: 'Instagram engagement vs March',
+    attribution: 'Miami Drive · April',
+    tag: '1,200 AUTO-REPLIES',
+    stat1: { value: '+38%', label: 'ENGAGEMENT' },
+    stat2: { value: '1,200', label: 'AUTO-REPLIES' },
+  },
+  {
+    product: 'AI CUSTOMER SUPPORT',
+    icon: <HeartIcon />,
+    amount: '90s',
+    amountSuffix: 'AVG RESOLUTION',
+    action: 'On 24/7 tickets',
+    attribution: 'NYC Luxury · April',
+    tag: '14% ESCALATED TO HUMAN',
+    stat1: { value: '90s', label: 'AVG TIME' },
+    stat2: { value: '14%', label: 'ESCALATED' },
+  },
+  {
+    product: 'AI WEBSITE CHATBOT',
+    icon: <BotIcon />,
+    amount: '14%',
+    amountSuffix: 'CONVERSION',
+    action: 'Visitors who chat → bookings',
+    attribution: 'Dallas Premium · April',
+    tag: 'INDUSTRY AVG: 2.4%',
+    stat1: { value: '14%', label: 'CHAT CVR' },
+    stat2: { value: '2.4%', label: 'INDUSTRY AVG' },
+  },
+  {
+    product: 'AI LEAD QUALIFIER',
+    icon: <FilterIcon />,
+    amount: '−$50K',
+    amountSuffix: 'JUNK FILTERED',
+    action: 'Junk leads filtered before sales touched them',
+    attribution: 'LA Premium · April',
+    tag: '14 HOURS SAVED',
+    stat1: { value: '$50K', label: 'FILTERED' },
+    stat2: { value: '14h', label: 'SAVED' },
+  },
+  {
+    product: 'AI RECEPTIONIST',
+    icon: <PhoneIcon />,
+    amount: '$6,200',
+    amountSuffix: 'OVERNIGHT BOOKING',
+    action: 'Captured while owner was asleep',
+    attribution: 'Austin Exotic · April 20',
+    tag: 'MCLAREN 720S',
+    stat1: { value: '3:47AM', label: 'CALL TIME' },
+    stat2: { value: '$6,200', label: 'VALUE' },
+  },
+  {
+    product: 'AI OMNICHANNEL',
+    icon: <GlobeIcon />,
+    amount: '8',
+    amountSuffix: 'CHANNELS',
+    action: 'Unified inbox — zero missed touchpoints',
+    attribution: 'Vegas Premier · April',
+    tag: 'IG · FB · WA · SMS · EMAIL',
+    stat1: { value: '8', label: 'CHANNELS' },
+    stat2: { value: '0', label: 'MISSED' },
+  },
+  {
+    product: 'AI FOLLOW-UP',
+    icon: <RefreshIcon />,
+    amount: '$21,600',
+    amountSuffix: 'WEEK RECOVERED',
+    action: 'Three stale quotes closed in one week',
+    attribution: 'Houston Premium · April',
+    tag: 'GHOST → BOOKED',
+    stat1: { value: '3', label: 'QUOTES' },
+    stat2: { value: '$21,600', label: 'TOTAL' },
+  },
+  {
+    product: 'AI VIP MANAGER',
+    icon: <CrownIcon />,
+    amount: '1,200',
+    amountSuffix: 'TRACKED',
+    action: 'Silver / Gold / Platinum tiers managed',
+    attribution: 'Atlanta Premium · April',
+    tag: 'AVG PLATINUM LTV: $42K',
+    stat1: { value: '1,200', label: 'CUSTOMERS' },
+    stat2: { value: '$42K', label: 'AVG LTV' },
+  },
+  {
+    product: 'AI BOOKING PROTECTOR',
+    icon: <ShieldIcon />,
+    amount: '−$12,000',
+    amountSuffix: 'FRAUD BLOCKED',
+    action: 'Fraud attempt flagged before deposit cleared',
+    attribution: 'Tampa Luxury · April 17',
+    tag: 'CHARGEBACK RISK',
+    stat1: { value: '$12K', label: 'BLOCKED' },
+    stat2: { value: '1', label: 'FRAUD FLAG' },
+  },
+  {
+    product: 'AI EMAIL + SMS',
+    icon: <MailIcon />,
+    amount: '$33,000',
+    amountSuffix: 'SPRING CAMPAIGN',
+    action: '182 contacts · 11 bookings · F1 follow-up',
+    attribution: 'Scottsdale Luxury · April',
+    tag: '6.1% CONVERSION',
+    stat1: { value: '11', label: 'BOOKINGS' },
+    stat2: { value: '6.1%', label: 'CVR' },
+  },
 ];
 
 export const RealResults = () => {
   const [current, setCurrent] = useState(0);
   const [animating, setAnimating] = useState(false);
-  const sectionRef = useRef<HTMLDivElement>(null);
   const total = RESULTS.length;
 
   useEffect(() => {
@@ -270,7 +493,7 @@ export const RealResults = () => {
 
   return (
     <section id="results" className="py-20 md:py-28 overflow-hidden" style={{ background: '#F5F7F2' }}>
-      <div ref={sectionRef} className="container mx-auto px-4 md:px-6 max-w-4xl">
+      <div className="container mx-auto px-4 md:px-6 max-w-4xl">
 
         {/* Header */}
         <div className="text-center mb-12">
@@ -291,13 +514,13 @@ export const RealResults = () => {
         {/* Carousel */}
         <div className="relative flex items-center justify-center gap-4 mb-6" style={{ minHeight: 340 }}>
 
-          {/* Prev card — blurred side */}
+          {/* Prev card */}
           <div
             className="hidden md:block flex-shrink-0 overflow-hidden cursor-pointer"
             style={{
               width: 180, height: 280,
               background: 'linear-gradient(135deg, #a8edca, #c3f0a0)',
-              opacity: 0.45, filter: 'blur(2px)',
+              opacity: 1, filter: 'blur(0.2px)',
               transform: 'scale(0.92)', transition: 'all 0.4s ease',
               borderRadius: 24,
             }}
@@ -351,13 +574,13 @@ export const RealResults = () => {
             </div>
           </div>
 
-          {/* Next card — blurred side */}
+          {/* Next card */}
           <div
             className="hidden md:block flex-shrink-0 overflow-hidden cursor-pointer"
             style={{
               width: 180, height: 280,
               background: 'linear-gradient(135deg, #a8edca, #c3f0a0)',
-              opacity: 0.45, filter: 'blur(2px)',
+              opacity: 1, filter: 'blur(0.2px)',
               transform: 'scale(0.92)', transition: 'all 0.4s ease',
               borderRadius: 24,
             }}
@@ -388,7 +611,7 @@ export const RealResults = () => {
           </span>
         </div>
 
-        {/* Fixed bottom stat boxes — US CLIENTS and CONVERSATIONS */}
+        {/* Anchor strip */}
         <div className="grid grid-cols-2 gap-4" style={{ maxWidth: 420, margin: '0 auto' }}>
           <div
             className="rounded-2xl flex flex-col items-center justify-center py-6"
