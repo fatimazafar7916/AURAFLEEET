@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface IconProps {
   children: React.ReactNode;
@@ -17,6 +18,7 @@ interface AgentItem {
   lines: string[];
   icon: React.ReactNode;
   wide?: boolean;
+  href?: string;
 }
 
 interface AgentGroup {
@@ -52,6 +54,7 @@ const AGENTS: AgentGroup[] = [
           'Handles 8 channels simultaneously',
         ],
         icon: <Icon><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></Icon>,
+        href: '/services/omnichannel',
       },
       {
         name: 'Website Chatbot',
@@ -322,11 +325,13 @@ interface AgentCardProps {
 
 const AgentCard = ({ item, wide, cardIdx }: AgentCardProps) => {
   const [hovered, setHovered] = useState(false);
+  const router = useRouter();
 
   return (
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onClick={() => item.href && router.push(item.href)}
       style={{
         gridColumn: wide ? 'span 2' : 'span 1',
         background: hovered ? 'white' : 'rgba(255,255,255,0.18)',
@@ -338,9 +343,10 @@ const AgentCard = ({ item, wide, cardIdx }: AgentCardProps) => {
         display: 'flex',
         alignItems: 'flex-start',
         gap: 12,
-        cursor: 'pointer',
+        cursor: item.href ? 'pointer' : 'default',
         transition: 'background 0.2s ease, border 0.2s ease, box-shadow 0.2s ease',
         boxShadow: hovered ? '0 4px 20px rgba(16,185,129,0.18)' : 'none',
+        position: 'relative',
       }}
     >
       {/* Icon box */}
@@ -359,8 +365,20 @@ const AgentCard = ({ item, wide, cardIdx }: AgentCardProps) => {
           color: hovered ? '#065F46' : 'white',
           fontWeight: 700, fontSize: 13, lineHeight: 1.3,
           transition: 'color 0.2s ease',
+          display: 'flex', alignItems: 'center', gap: 6,
         }}>
           {item.name}
+          {item.href && (
+            <span style={{
+              fontSize: 9, fontWeight: 800, letterSpacing: '0.06em',
+              padding: '2px 7px', borderRadius: 999,
+              background: hovered ? 'rgba(16,185,129,0.15)' : 'rgba(255,255,255,0.15)',
+              color: hovered ? '#10B981' : 'rgba(255,255,255,0.7)',
+              transition: 'all 0.2s',
+            }}>
+              VIEW →
+            </span>
+          )}
         </p>
         <CyclingLine lines={item.lines} offset={cardIdx} active={hovered} />
       </div>
