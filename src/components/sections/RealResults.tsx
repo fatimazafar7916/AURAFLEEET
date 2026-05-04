@@ -1,18 +1,29 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { SectionPill } from '../ui/SectionPill';
 
 // Live counter for conversations
 function LiveCounter() {
   const [count, setCount] = useState(376);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const interval = setInterval(() => {
       setCount(prev => prev + Math.floor(Math.random() * 3));
     }, 2000 + Math.random() * 3000);
     return () => clearInterval(interval);
   }, []);
+
+  // Prevent hydration mismatch by showing consistent value on first render
+  if (!mounted) {
+    return (
+      <span style={{ color: 'white', fontSize: 'clamp(28px,5vw,40px)', fontWeight: 800, lineHeight: 1 }}>
+        376
+      </span>
+    );
+  }
 
   return (
     <span style={{ color: 'white', fontSize: 'clamp(28px,5vw,40px)', fontWeight: 800, lineHeight: 1 }}>
