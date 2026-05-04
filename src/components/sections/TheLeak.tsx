@@ -1,240 +1,307 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { SectionPill } from '../ui/SectionPill';
-import { CTAButton } from '../ui/CTAButton';
-import { PhoneOff, Camera, Clock, Database, StarOff, MessageCircle, Headphones, TrendingDown, Globe, CreditCard, MapPin, Send } from 'lucide-react';
 
-const LEAK_ICONS: any = {
-  'MISSED CALLS': PhoneOff,
-  'INSTAGRAM DMs': Camera,
-  'SLOW QUOTES': Clock,
-  'DEAD CRM': Database,
-  'NO REVIEWS': StarOff,
-  'IG COMMENT LEAKS': MessageCircle,
-  'WEEKEND SUPPORT GAP': Headphones,
-  'MISSED UPSELLS': TrendingDown,
-  'NO MULTILINGUAL': Globe,
-  'CHARGEBACKS': CreditCard,
-  'STALE GOOGLE LISTING': MapPin,
-  'NO BOOKING FOLLOW-UP': Send,
-};
+const GradientText = ({ children, italic = false }: any) => (
+  <span style={{
+    background: 'linear-gradient(135deg, #10B981, #84CC16)',
+    WebkitBackgroundClip: 'text',
+    WebkitTextFillColor: 'transparent',
+    fontStyle: italic ? 'italic' : 'normal',
+    fontWeight: 800,
+  }}>{children}</span>
+);
 
-const FINANCIAL_LEAKS = [
-  { name: 'MISSED CALLS', tag: 'After hours', desc: "They call at 2 AM. You're asleep. Competitors aren't.", amount: 26800, iconKey: 'MISSED CALLS' },
-  { name: 'INSTAGRAM DMs', tag: 'Ghosted 4+ hours', desc: 'They message at midnight. You see it Monday morning.', amount: 18200, iconKey: 'INSTAGRAM DMs' },
-  { name: 'SLOW QUOTES', tag: '8 hours late', desc: 'First quote wins 78% of the time. Yours is too late.', amount: 11400, iconKey: 'SLOW QUOTES' },
-  { name: 'DEAD CRM', tag: '10K contacts ignored', desc: 'Past customers never hear from you. They book competitors.', amount: 14800, iconKey: 'DEAD CRM' },
-  { name: 'NO REVIEWS', tag: '3 in 6 months', desc: 'No new Google reviews. Ranking drops. Leads dry up.', amount: 13400, iconKey: 'NO REVIEWS' },
-  { name: 'IG COMMENT LEAKS', tag: "Never DM'd back", desc: '73 comments asking "price?" Zero auto-replies sent.', amount: 9800, iconKey: 'IG COMMENT LEAKS' },
-  { name: 'WEEKEND SUPPORT GAP', tag: 'Sat night silence', desc: 'Active renters need help. Nobody picks up. Bad reviews follow.', amount: 7600, iconKey: 'WEEKEND SUPPORT GAP' },
-  { name: 'MISSED UPSELLS', tag: 'Never offered', desc: 'Add-ons, multi-day discounts, insurance — left on the table.', amount: 8200, iconKey: 'MISSED UPSELLS' },
-  { name: 'NO MULTILINGUAL', tag: 'Spanish/Portuguese tourists', desc: 'Hispanic and Brazilian renters book competitors who speak their language.', amount: 11000, iconKey: 'NO MULTILINGUAL' },
-  { name: 'CHARGEBACKS', tag: 'International disputes', desc: "Tourist disputes you can't fight. $5K+ losses you eat silently.", amount: 5400, iconKey: 'CHARGEBACKS' },
-  { name: 'STALE GOOGLE LISTING', tag: 'Bad photos, no posts', desc: "Your Business Profile hasn't updated in 4 months. Click-through dropping.", amount: 4800, iconKey: 'STALE GOOGLE LISTING' },
-  { name: 'NO BOOKING FOLLOW-UP', tag: 'Quote sent. Crickets.', desc: 'You sent the quote. They went silent. You never chased. Booking = lost.', amount: 6200, iconKey: 'NO BOOKING FOLLOW-UP' },
+const LEAKS = [
+  {
+    name: 'Late-night forms',
+    tags: ['SUBMITTED AFTER 9 PM'],
+    desc: 'Website forms submitted at night. You see them Monday.',
+    amount: '$7,800/mo',
+  },
+  {
+    name: 'AI search invisibility',
+    tags: ['GPT / GEO LEAK'],
+    desc: "ChatGPT, Perplexity, Google AI Overviews don't list you when customers ask 'best luxury rental in [city]'.",
+    amount: '$4,200/mo',
+  },
+  {
+    name: 'No social presence',
+    tags: ['INSTAGRAM · TIKTOK'],
+    desc: 'Feed looks dead. Algorithm punishes inactive accounts. Reach drops, leads dry up.',
+    amount: '$3,800/mo',
+  },
 ];
 
 const REPUTATION_DAMAGES = [
-  { name: 'BRAND REPUTATION', desc: 'Forum threads and Reddit complaints pile up. Your name is mentioned wrong.', meter: 28, stat: '−72% TRUST' },
-  { name: 'VIP CUSTOMERS', desc: 'High-LTV repeat customers book a competitor once. They never come back.', meter: 32, stat: '−12 PLATINUM CUSTOMERS' },
-  { name: 'WORD OF MOUTH', desc: 'Happy customers tell 3 people. Unhappy ones tell 11. The math is brutal.', meter: 22, stat: '−47 REFERRALS LOST' },
-  { name: 'GOOGLE RANKING', desc: 'Page 1 to page 2. Your competitors moved up while you stood still.', meter: 35, stat: '−4 POSITIONS DROP' },
-  { name: 'INSTAGRAM CREDIBILITY', desc: 'Engagement rate drops. Algorithm punishes inactive responders.', meter: 30, stat: '−38% REACH' },
-  { name: 'REPEAT BOOKINGS', desc: 'Returning customer rate falls below industry average. They forget you.', meter: 25, stat: '−24% REPEAT RATE' },
-  { name: 'PRICING POWER', desc: "Without strong reviews, you can't charge premium. You discount to compete.", meter: 38, stat: '−18% AVG DAILY RATE' },
-  { name: 'STAFF MORALE', desc: 'Your team handles chaos manually. Turnover spikes. Hiring costs rise.', meter: 33, stat: '−2 STAFF QUIT THIS YEAR' },
+  {
+    title: 'VIP customers lost forever',
+    desc: 'High-LTV repeat customers book a competitor once. They never come back.',
+    meter: 38,
+    tag: '−12 PLATINUM',
+  },
+  {
+    title: 'Brand reputation eroding',
+    desc: 'Forum threads and Reddit complaints pile up. Your name is mentioned wrong.',
+    meter: 28,
+    tag: '−72% TRUST',
+  },
+  {
+    title: 'Word of mouth drying up',
+    desc: 'Happy customers tell 3 people. Unhappy ones tell 11. The math is brutal.',
+    meter: 22,
+    tag: '−47 REFERRALS',
+  },
+  {
+    title: 'Google ranking slipping',
+    desc: 'Page 1 to page 2. Your competitors moved up while you stood still.',
+    meter: 35,
+    tag: '−4 POSITIONS',
+  },
+  {
+    title: 'Instagram reach collapsing',
+    desc: 'Engagement rate drops. Algorithm punishes inactive responders.',
+    meter: 30,
+    tag: '−38% REACH',
+  },
 ];
 
-function DamageMeter({ percent, animate }: { percent: number, animate: boolean }) {
+function DamageMeter({ percent, animate }: { percent: number; animate: boolean }) {
   const [width, setWidth] = useState(0);
   useEffect(() => {
-    if (animate) { const t = setTimeout(() => setWidth(percent), 200); return () => clearTimeout(t); }
-    setWidth(percent);
+    if (animate) {
+      setWidth(0);
+      const t = setTimeout(() => setWidth(percent), 100);
+      return () => clearTimeout(t);
+    }
   }, [animate, percent]);
   return (
-    <div className="relative rounded-full overflow-hidden" style={{ height: 6, background: '#F1F5F9' }}>
-      <div className="h-full rounded-full" style={{ width: `${width}%`, background: 'linear-gradient(90deg, #10B981, #84CC16)', transition: animate ? 'width 1.2s cubic-bezier(0.16,1,0.3,1)' : 'none' }} />
+    <div style={{ height: 6, borderRadius: 40, background: '#E8F5F0', overflow: 'hidden' }}>
+      <div style={{
+        height: '100%', width: `${width}%`,
+        background: 'linear-gradient(90deg, #10B981, #84CC16)',
+        borderRadius: 40,
+        transition: animate ? 'width 1.2s cubic-bezier(0.16,1,0.3,1)' : 'none',
+      }} />
     </div>
   );
 }
 
+// Animated counter
+function useCountUp(target: number, duration = 1200, trigger: number) {
+  const [val, setVal] = useState(0);
+  useEffect(() => {
+    setVal(0);
+    const start = Date.now();
+    const tick = () => {
+      const p = Math.min((Date.now() - start) / duration, 1);
+      setVal(Math.floor((1 - Math.pow(1 - p, 3)) * target));
+      if (p < 1) requestAnimationFrame(tick);
+      else setVal(target);
+    };
+    requestAnimationFrame(tick);
+  }, [target, trigger]);
+  return val;
+}
+
 export const TheLeak = () => {
-  const [leakIdx, setLeakIdx] = useState(0);
   const [repIdx, setRepIdx] = useState(0);
-  const [total, setTotal] = useState(0);
-  const [visibleLeaks, setVisibleLeaks] = useState([0, 1, 2]);
-  const [leakAnimating, setLeakAnimating] = useState(false);
-  const [repAnimating, setRepAnimating] = useState(true);
+  const [repAnimate, setRepAnimate] = useState(true);
+  const [leakVisible, setLeakVisible] = useState(true);
+  const [totalTrigger, setTotalTrigger] = useState(0);
 
+  const TOTAL = 143400;
+  const displayTotal = useCountUp(TOTAL, 1400, totalTrigger);
+
+  // Cycle reputation damage cards
   useEffect(() => {
-    const interval = setInterval(() => {
-      setLeakAnimating(true);
+    const t = setInterval(() => {
+      setRepAnimate(false);
       setTimeout(() => {
-        const nextIdx = (leakIdx + 1) % FINANCIAL_LEAKS.length;
-        setLeakIdx(nextIdx);
-        setTotal(prev => prev + FINANCIAL_LEAKS[nextIdx].amount);
-        setVisibleLeaks(prev => [prev[1], prev[2], (prev[2] + 1) % FINANCIAL_LEAKS.length]);
-        setLeakAnimating(false);
-      }, 600);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [leakIdx, visibleLeaks]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setRepAnimating(false);
-      setTimeout(() => { setRepIdx(i => (i + 1) % REPUTATION_DAMAGES.length); setRepAnimating(true); }, 200);
+        setRepIdx(i => (i + 1) % REPUTATION_DAMAGES.length);
+        setRepAnimate(true);
+      }, 250);
     }, 4000);
-    return () => clearInterval(interval);
+    return () => clearInterval(t);
   }, []);
 
-  const currentRep = REPUTATION_DAMAGES[repIdx];
-  const formattedTotal = `−$${(84600 + total).toLocaleString()}`;
+  // Animate total on mount
+  useEffect(() => {
+    setTotalTrigger(1);
+  }, []);
+
+  const rep = REPUTATION_DAMAGES[repIdx];
 
   return (
-    <section className="py-16 md:py-20 bg-white overflow-hidden">
-      <div className="container mx-auto px-6">
+    <section className="py-16 md:py-24 overflow-hidden" style={{ background: '#F5F7F2' }}>
+      <div className="container mx-auto px-4 md:px-6" style={{ maxWidth: 560 }}>
 
-        {/* ── Section header ── */}
-        <div className="flex justify-center mb-4">
-          <SectionPill>THE LEAK</SectionPill>
-        </div>
-        <h2 className="font-sans font-bold text-center mb-2" style={{ fontSize: 'clamp(28px,4vw,42px)', color: '#0A2620', lineHeight: 1.15 }}>
-          Every month,{' '}
-          <span className="font-mono text-gradient font-extrabold">−$77,000</span>
-          {' '}walks out the back door.
+        {/* Heading */}
+        <h2 className="font-sans font-bold text-center mb-3" style={{ fontSize: 'clamp(28px,5vw,44px)', color: '#0A2620', lineHeight: 1.15 }}>
+          Every month, <GradientText italic>money walks out</GradientText> the back door.
         </h2>
-        <p className="text-center text-sm italic mb-8" style={{ color: '#6B7F78' }}>
+        <p className="text-center text-sm mb-10" style={{ color: '#6B7F78', lineHeight: 1.6 }}>
           Watch the leaks add up. Then watch what gets damaged.
         </p>
 
-        {/* ── 2-column desktop layout ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 items-start max-w-6xl mx-auto">
+        {/* ── Leak card ── */}
+        <div className="rounded-3xl overflow-hidden mb-3" style={{ background: '#ffffff', border: '1px solid #E2E8F0', boxShadow: '0 4px 24px rgba(0,0,0,0.05)' }}>
 
-          {/* LEFT — Financial leak calculator */}
-          <div className="rounded-3xl overflow-hidden h-full flex flex-col" style={{ background: '#ffffff', border: '1px solid #E2E8F0', boxShadow: '0 4px 24px rgba(16,185,129,0.07)' }}>
-            {/* Card header */}
-            <div className="flex items-center justify-between px-5 py-3 border-b" style={{ background: '#F8FFFE', borderColor: '#D1FAE5', flexShrink: 0 }}>
-              <span className="text-xs font-mono font-bold tracking-widest" style={{ color: '#10B981' }}>
-                PROBLEM · {leakIdx + 1}/{FINANCIAL_LEAKS.length}
-              </span>
-              <span className="text-xs font-mono px-2 py-0.5 rounded-full font-bold" style={{ background: '#FFF7ED', color: '#EA580C', border: '1px solid #FED7AA' }}>
-                AUTO
-              </span>
-            </div>
-
-            {/* Leak rows */}
-            <div className="flex-1">
-              {visibleLeaks.map((idx, pos) => {
-                const leak = FINANCIAL_LEAKS[idx % FINANCIAL_LEAKS.length];
-                const IconComp = LEAK_ICONS[leak.iconKey];
-                const isTop = pos === 0;
-                return (
-                  <div key={`${idx}-${pos}`}
-                    className="flex items-center gap-3 border-b"
-                    style={{
-                      borderColor: '#F1F5F9',
-                      padding: '14px 20px',
-                      opacity: isTop ? (leakAnimating ? 0 : 0.45) : 1,
-                      transform: leakAnimating && isTop ? 'translateY(-100%)' : 'translateY(0)',
-                      transition: 'all 0.5s cubic-bezier(0.16,1,0.3,1)',
-                    }}>
-                    <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-                      style={{ background: 'linear-gradient(135deg, rgba(16,185,129,0.1), rgba(132,204,22,0.07))', color: '#10B981' }}>
-                      {IconComp && <div style={{ width: 16, height: 16 }}><IconComp /></div>}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-1.5 flex-wrap mb-0.5">
-                        <span className="text-xs font-mono font-bold" style={{ color: '#0F172A' }}>{leak.name}</span>
-                        <span className="text-xs px-1.5 py-0.5 rounded-full" style={{ background: '#F0FDF4', color: '#10B981', border: '1px solid #BBF7D0', fontSize: 10 }}>{leak.tag}</span>
-                      </div>
-                      <p className="text-xs leading-snug truncate" style={{ color: '#64748B' }}>{leak.desc}</p>
-                    </div>
-                    <span className="font-mono font-bold text-sm flex-shrink-0 text-gradient ml-2">−${leak.amount.toLocaleString()}</span>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Total bar */}
-            <div className="mx-4 mb-4 mt-3 rounded-2xl p-4 flex items-center justify-between"
-              style={{ background: 'linear-gradient(135deg, #10B981 0%, #84CC16 100%)', flexShrink: 0 }}>
-              <div>
-                <div className="text-xs font-mono font-bold tracking-widest text-white opacity-90">TOTAL MONTHLY LEAK</div>
-                <div className="text-xs italic text-white opacity-70 mt-0.5">All 12 leaks · 8-car avg</div>
+          {/* Leak rows */}
+          {LEAKS.map((leak, i) => (
+            <div
+              key={i}
+              className="flex items-start gap-3 px-5 py-4"
+              style={{ borderBottom: i < LEAKS.length - 1 ? '1px solid #F1F5F9' : 'none' }}
+            >
+              {/* Icon */}
+              <div className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5"
+                style={{ background: 'linear-gradient(135deg, rgba(16,185,129,0.15), rgba(132,204,22,0.1))' }}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                  <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
               </div>
-              <div className="text-right">
-                <div className="font-mono font-extrabold text-white" style={{ fontSize: 26 }}>{formattedTotal}</div>
-                <div className="text-xs text-white opacity-70">growing</div>
-              </div>
-            </div>
-          </div>
 
-          {/* RIGHT — Reputation damage */}
-          <div className="rounded-3xl overflow-hidden h-full flex flex-col" style={{ background: '#ffffff', border: '1px solid #E2E8F0', boxShadow: '0 4px 24px rgba(0,0,0,0.05)' }}>
-            {/* Card header */}
-            <div className="flex items-center justify-between px-5 py-3 border-b" style={{ background: '#FFF7ED', borderColor: '#FED7AA', flexShrink: 0 }}>
-              <span className="text-xs font-mono font-bold tracking-widest" style={{ color: '#EA580C' }}>
-                OUTPUT LOSS · {repIdx + 1}/{REPUTATION_DAMAGES.length}
-              </span>
-              <span className="text-xs italic" style={{ color: '#94A3B8' }}>beyond dollars</span>
-            </div>
-
-            {/* Content */}
-            <div className="flex-1 p-5">
-              <div className="transition-all duration-500"
-                style={{ opacity: repAnimating ? 1 : 0.6, transform: repAnimating ? 'translateY(0)' : 'translateY(8px)' }}>
-                {/* Icon + title */}
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-11 h-11 rounded-2xl flex items-center justify-center flex-shrink-0"
-                    style={{ background: '#FFF7ED', color: '#EA580C' }}>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
-                      <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
-                    </svg>
-                  </div>
-                  <p className="font-sans font-bold text-base" style={{ color: '#0F172A' }}>{currentRep.name}</p>
+              {/* Content */}
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 flex-wrap mb-1">
+                  <span className="text-sm font-bold" style={{ color: '#0A2620' }}>{leak.name}</span>
+                  {leak.tags.map((tag, ti) => (
+                    <span key={ti} style={{
+                      fontSize: 9, fontWeight: 700, letterSpacing: '0.08em',
+                      padding: '2px 7px', borderRadius: 40,
+                      background: '#F0FDF4', color: '#10B981',
+                      border: '1px solid #BBF7D0',
+                    }}>{tag}</span>
+                  ))}
                 </div>
-
-                <p className="text-sm leading-relaxed mb-4" style={{ color: '#64748B' }}>{currentRep.desc}</p>
-
-                {/* Damage bar */}
-                <DamageMeter percent={currentRep.meter} animate={repAnimating} />
-                <div className="mt-2 font-mono font-bold text-sm text-gradient">{currentRep.stat}</div>
+                <p className="text-xs leading-relaxed" style={{ color: '#64748B' }}>{leak.desc}</p>
               </div>
 
-              {/* All items list — dimmed */}
-              <div className="mt-5 flex flex-col gap-2">
-                {REPUTATION_DAMAGES.map((r, i) => (
-                  <div key={i} className="flex items-center justify-between py-2 border-b transition-all"
-                    style={{ borderColor: '#F8F8F8', opacity: i === repIdx ? 1 : 0.35 }}>
-                    <div className="flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                        style={{ background: i === repIdx ? 'linear-gradient(135deg,#10B981,#84CC16)' : '#CBD5E1' }} />
-                      <span className="text-xs font-mono font-semibold" style={{ color: '#475569' }}>{r.name}</span>
-                    </div>
-                    <span className="text-xs font-mono font-bold" style={{ color: i === repIdx ? '#EA580C' : '#94A3B8' }}>{r.stat}</span>
-                  </div>
-                ))}
+              {/* Amount */}
+              <span className="font-mono font-bold text-sm flex-shrink-0 ml-2" style={{
+                background: 'linear-gradient(135deg, #10B981, #84CC16)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}>−{leak.amount}</span>
+            </div>
+          ))}
+
+          {/* Empty space to match screenshot */}
+          <div style={{ height: 48 }} />
+
+          {/* Total bar */}
+          <div className="mx-4 mb-4 rounded-2xl px-5 py-4 flex items-center justify-between"
+            style={{ background: 'linear-gradient(135deg, #10B981 0%, #84CC16 100%)' }}>
+            <div>
+              <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: 9, fontWeight: 700, letterSpacing: '0.12em' }}>MONTHLY LEAK TOTAL</p>
+              <div className="flex items-baseline gap-1 mt-1">
+                <span style={{ color: 'white', fontSize: 13, fontWeight: 700 }}>$</span>
+                <span style={{ color: 'white', fontSize: 'clamp(32px,6vw,44px)', fontWeight: 800, lineHeight: 1, fontFamily: 'monospace' }}>
+                  {displayTotal.toLocaleString()}
+                </span>
               </div>
             </div>
-
-            {/* Footer */}
-            <div className="px-5 pb-4 flex-shrink-0">
-              <p className="text-xs italic font-medium text-center py-3 rounded-2xl" style={{ color: '#EA580C', background: '#FFF7ED', border: '1px solid #FED7AA' }}>
-                Some things money can't buy back.
-              </p>
+            {/* Down arrow */}
+            <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
+              style={{ background: 'rgba(255,255,255,0.2)' }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/>
+              </svg>
             </div>
           </div>
         </div>
 
-        {/* CTA */}
-        <div className="mt-12 flex justify-center max-w-6xl mx-auto">
-          <CTAButton className="w-full max-w-md justify-center py-4 text-base">
-            Aiaura plugs every leak. Run my free audit
-          </CTAButton>
+        {/* Divider text */}
+        <p className="text-center text-xs italic mb-3" style={{ color: '#94A3B8' }}>
+          And money is not the only thing leaking...
+        </p>
+
+        {/* ── Reputation damage card ── */}
+        <div className="rounded-3xl overflow-hidden mb-5" style={{ background: '#ffffff', border: '1px solid #E2E8F0', boxShadow: '0 4px 24px rgba(0,0,0,0.05)' }}>
+
+          {/* Card header */}
+          <div className="flex items-center justify-between px-5 py-3" style={{ borderBottom: '1px solid #F1F5F9' }}>
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: '#10B981' }} />
+              <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.12em', color: '#6B7F78' }}>
+                REPUTATION DAMAGE · {String(repIdx + 1).padStart(2,'0')} OF {String(REPUTATION_DAMAGES.length).padStart(2,'0')}
+              </span>
+            </div>
+            <span style={{ fontSize: 9, color: '#94A3B8', fontStyle: 'italic' }}>can't be measured in dollars</span>
+          </div>
+
+          {/* Content */}
+          <div className="px-5 py-5"
+            style={{
+              opacity: repAnimate ? 1 : 0,
+              transform: repAnimate ? 'translateY(0)' : 'translateY(8px)',
+              transition: 'opacity 0.3s ease, transform 0.3s ease',
+            }}>
+
+            {/* Icon + title */}
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+                style={{ background: 'linear-gradient(135deg, rgba(16,185,129,0.12), rgba(132,204,22,0.08))' }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                  <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+              </div>
+              <p className="font-bold text-base" style={{ color: '#0A2620' }}>{rep.title}</p>
+            </div>
+
+            <p className="text-sm mb-4 leading-relaxed" style={{ color: '#64748B' }}>{rep.desc}</p>
+
+            {/* Meter */}
+            <DamageMeter percent={rep.meter} animate={repAnimate} />
+
+            {/* Tag */}
+            <div className="mt-3">
+              <span style={{
+                fontSize: 9, fontWeight: 700, letterSpacing: '0.1em',
+                padding: '3px 10px', borderRadius: 40,
+                background: '#F0FDF4', color: '#10B981',
+                border: '1px solid #BBF7D0',
+              }}>{rep.tag}</span>
+            </div>
+          </div>
+
+          {/* Footer */}
+          <div className="px-5 pb-5">
+            <p className="text-xs italic text-center py-3 rounded-2xl" style={{ color: '#94A3B8', background: '#F8FFFE', border: '1px solid #E8F5F0' }}>
+              Some things money can't buy back.
+            </p>
+
+            {/* Dot progress */}
+            <div className="flex items-center justify-center gap-1.5 mt-3">
+              {REPUTATION_DAMAGES.map((_, i) => (
+                <div key={i} style={{
+                  width: i === repIdx ? 20 : 6,
+                  height: 6, borderRadius: 40,
+                  background: i === repIdx ? 'linear-gradient(90deg,#10B981,#84CC16)' : '#D1FAE5',
+                  transition: 'all 0.3s ease',
+                }} />
+              ))}
+            </div>
+          </div>
         </div>
+
+        {/* ── Full-width CTA ── */}
+        <button
+          className="w-full py-5 rounded-2xl font-bold text-white text-base flex items-center justify-center gap-2"
+          style={{
+            background: 'linear-gradient(135deg, #10B981 0%, #84CC16 100%)',
+            boxShadow: '0 8px 32px rgba(16,185,129,0.35)',
+            border: 'none', cursor: 'pointer',
+            fontSize: 15, letterSpacing: '0.01em',
+          }}
+        >
+          Aiaura plugs every leak. Run my free audit
+          <span style={{ fontSize: 18 }}>→</span>
+        </button>
+
       </div>
     </section>
   );

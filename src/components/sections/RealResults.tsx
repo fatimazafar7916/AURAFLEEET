@@ -35,6 +35,8 @@ const RESULTS = [
     action: '312 contracts signed.',
     attribution: 'Atlanta Exotic · April',
     tag: 'AVG BOOKING VALUE $5,200',
+    stat1: { value: '312', label: 'CONTRACTS SIGNED' },
+    stat2: { value: '$5,200', label: 'AVG BOOKING VALUE' },
   },
   {
     product: 'AI REVIEW MANAGER',
@@ -48,6 +50,8 @@ const RESULTS = [
     action: '5-star Google reviews intercepted.',
     attribution: 'Scottsdale Luxury · April',
     tag: 'RATING: 4.8 → 4.9',
+    stat1: { value: '184', label: '5-STAR REVIEWS' },
+    stat2: { value: '4.9', label: 'NEW RATING' },
   },
   {
     product: 'AI RECEPTIONIST',
@@ -61,6 +65,8 @@ const RESULTS = [
     action: 'Booked from a 2:14 AM call.',
     attribution: 'Carlos M., MVP Miami · April',
     tag: 'LAMBO AVENTADOR',
+    stat1: { value: '2:14AM', label: 'CALL TIME' },
+    stat2: { value: '$14,400', label: 'BOOKING VALUE' },
   },
   {
     product: 'AI OMNICHANNEL',
@@ -74,6 +80,8 @@ const RESULTS = [
     action: '18 bookings from one campaign.',
     attribution: 'Miami Drive · April',
     tag: '7.3% CONVERSION',
+    stat1: { value: '18', label: 'BOOKINGS CLOSED' },
+    stat2: { value: '7.3%', label: 'CONVERSION RATE' },
   },
   {
     product: 'AI FOLLOW-UP',
@@ -88,6 +96,8 @@ const RESULTS = [
     action: 'Recovered from a 9-day-old quote.',
     attribution: 'Miami Drive · April',
     tag: 'RANGE ROVER SPORT',
+    stat1: { value: '9 days', label: 'OLD QUOTE' },
+    stat2: { value: '$8,200', label: 'RECOVERED' },
   },
   {
     product: 'AI LEAD QUALIFIER',
@@ -103,16 +113,18 @@ const RESULTS = [
     action: 'Flagged from $2.1M of inquiries.',
     attribution: 'LA Exotic · April',
     tag: 'LEADS SCORED TOTAL',
+    stat1: { value: '47', label: 'HOT LEADS' },
+    stat2: { value: '$2.1M', label: 'INQUIRIES SCORED' },
   },
 ];
 
 export const RealResults = () => {
   const [current, setCurrent] = useState(0);
   const [animating, setAnimating] = useState(false);
+  const [statsAnimating, setStatsAnimating] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const total = RESULTS.length;
 
-  // Auto-advance
   useEffect(() => {
     const timer = setInterval(() => {
       goTo((current + 1) % total);
@@ -123,9 +135,11 @@ export const RealResults = () => {
   const goTo = (idx: number) => {
     if (animating) return;
     setAnimating(true);
+    setStatsAnimating(true);
     setTimeout(() => {
       setCurrent(idx);
       setAnimating(false);
+      setTimeout(() => setStatsAnimating(false), 50);
     }, 300);
   };
 
@@ -158,15 +172,12 @@ export const RealResults = () => {
 
           {/* Prev card — blurred side */}
           <div
-            className="hidden md:block flex-shrink-0 rounded-3xl overflow-hidden cursor-pointer"
+            className="hidden md:block flex-shrink-0 overflow-hidden cursor-pointer"
             style={{
-              width: 180,
-              height: 280,
+              width: 180, height: 280,
               background: 'linear-gradient(135deg, #a8edca, #c3f0a0)',
-              opacity: 0.45,
-              filter: 'blur(2px)',
-              transform: 'scale(0.92)',
-              transition: 'all 0.4s ease',
+              opacity: 0.45, filter: 'blur(2px)',
+              transform: 'scale(0.92)', transition: 'all 0.4s ease',
               borderRadius: 24,
             }}
             onClick={() => goTo((current - 1 + total) % total)}
@@ -182,11 +193,9 @@ export const RealResults = () => {
 
           {/* Active card */}
           <div
-            className="flex-shrink-0 rounded-3xl flex flex-col p-7 md:p-8 relative overflow-hidden"
+            className="flex-shrink-0 flex flex-col p-7 md:p-8 relative overflow-hidden"
             style={{
-              width: '100%',
-              maxWidth: 420,
-              minHeight: 320,
+              width: '100%', maxWidth: 420, minHeight: 320,
               background: 'linear-gradient(135deg, #34d399 0%, #86efac 50%, #a3e635 100%)',
               boxShadow: '0 24px 60px rgba(16,185,129,0.25), 0 8px 24px rgba(0,0,0,0.08)',
               borderRadius: 28,
@@ -195,42 +204,25 @@ export const RealResults = () => {
               transition: 'opacity 0.3s ease, transform 0.3s ease',
             }}
           >
-            {/* Subtle glow blob */}
             <div style={{ position: 'absolute', top: -40, right: -40, width: 180, height: 180, borderRadius: '50%', background: 'rgba(255,255,255,0.15)', filter: 'blur(40px)' }} />
-
-            {/* Icon */}
             <div className="w-10 h-10 rounded-2xl flex items-center justify-center mb-5 relative z-10" style={{ background: 'rgba(255,255,255,0.25)' }}>
               {active.icon}
             </div>
-
-            {/* Product label */}
             <p className="relative z-10 mb-3" style={{ color: 'rgba(255,255,255,0.85)', fontSize: 10, fontWeight: 700, letterSpacing: '0.12em' }}>
               {active.product}
             </p>
-
-            {/* Big number */}
             <div className="flex items-baseline gap-3 mb-3 relative z-10">
               <span style={{ color: 'white', fontSize: 'clamp(44px,8vw,60px)', fontWeight: 800, lineHeight: 1 }}>{active.amount}</span>
               <span style={{ color: 'rgba(255,255,255,0.75)', fontSize: 10, fontWeight: 700, letterSpacing: '0.1em' }}>{active.amountSuffix}</span>
             </div>
-
-            {/* Action */}
             <p className="font-bold relative z-10 mb-1" style={{ color: 'white', fontSize: 15, lineHeight: 1.4 }}>{active.action}</p>
-
-            {/* Attribution */}
             <p className="relative z-10 mb-5" style={{ color: 'rgba(255,255,255,0.7)', fontSize: 12 }}>{active.attribution}</p>
-
-            {/* Tag pill */}
             <div className="relative z-10 mt-auto">
               <span style={{
                 display: 'inline-block',
-                background: 'rgba(255,255,255,0.2)',
-                color: 'white',
-                fontSize: 10,
-                fontWeight: 700,
-                letterSpacing: '0.1em',
-                padding: '6px 14px',
-                borderRadius: 40,
+                background: 'rgba(255,255,255,0.2)', color: 'white',
+                fontSize: 10, fontWeight: 700, letterSpacing: '0.1em',
+                padding: '6px 14px', borderRadius: 40,
                 border: '1px solid rgba(255,255,255,0.3)',
               }}>
                 {active.tag}
@@ -240,15 +232,12 @@ export const RealResults = () => {
 
           {/* Next card — blurred side */}
           <div
-            className="hidden md:block flex-shrink-0 rounded-3xl overflow-hidden cursor-pointer"
+            className="hidden md:block flex-shrink-0 overflow-hidden cursor-pointer"
             style={{
-              width: 180,
-              height: 280,
+              width: 180, height: 280,
               background: 'linear-gradient(135deg, #a8edca, #c3f0a0)',
-              opacity: 0.45,
-              filter: 'blur(2px)',
-              transform: 'scale(0.92)',
-              transition: 'all 0.4s ease',
+              opacity: 0.45, filter: 'blur(2px)',
+              transform: 'scale(0.92)', transition: 'all 0.4s ease',
               borderRadius: 24,
             }}
             onClick={() => goTo((current + 1) % total)}
@@ -264,39 +253,36 @@ export const RealResults = () => {
         </div>
 
         {/* Progress bar + counter */}
-        <div className="flex items-center gap-4 mb-10 px-2 md:px-0" style={{ maxWidth: 420, margin: '0 auto 40px' }}>
+        <div className="flex items-center gap-4 mb-8" style={{ maxWidth: 420, margin: '0 auto 32px' }}>
           <div className="flex-1 rounded-full overflow-hidden" style={{ height: 4, background: '#D1FAE5' }}>
-            <div
-              style={{
-                height: '100%',
-                width: `${((current + 1) / total) * 100}%`,
-                background: 'linear-gradient(90deg, #10B981, #84CC16)',
-                borderRadius: 40,
-                transition: 'width 0.4s ease',
-              }}
-            />
+            <div style={{
+              height: '100%',
+              width: `${((current + 1) / total) * 100}%`,
+              background: 'linear-gradient(90deg, #10B981, #84CC16)',
+              borderRadius: 40, transition: 'width 0.4s ease',
+            }} />
           </div>
           <span style={{ color: '#6B7F78', fontSize: 12, fontWeight: 700, whiteSpace: 'nowrap', fontFamily: 'monospace' }}>
             {String(current + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
           </span>
         </div>
 
-        {/* Bottom stat boxes */}
+        {/* Dynamic bottom stat boxes — change with active card */}
         <div className="grid grid-cols-2 gap-4" style={{ maxWidth: 420, margin: '0 auto' }}>
-          {[
-            { value: '16', label: 'US CLIENTS' },
-            { value: '376', label: '• CONVERSATIONS', live: true },
-          ].map((stat, i) => (
+          {[active.stat1, active.stat2].map((stat, i) => (
             <div
-              key={i}
+              key={`${current}-${i}`}
               className="rounded-2xl flex flex-col items-center justify-center py-6"
               style={{
                 background: 'linear-gradient(135deg, #34d399 0%, #86efac 50%, #a3e635 100%)',
                 boxShadow: '0 8px 24px rgba(16,185,129,0.2)',
+                opacity: statsAnimating ? 0 : 1,
+                transform: statsAnimating ? 'translateY(6px)' : 'translateY(0)',
+                transition: 'opacity 0.35s ease, transform 0.35s ease',
               }}
             >
-              <span style={{ color: 'white', fontSize: 'clamp(36px,6vw,48px)', fontWeight: 800, lineHeight: 1 }}>{stat.value}</span>
-              <span style={{ color: 'rgba(255,255,255,0.85)', fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', marginTop: 6 }}>{stat.label}</span>
+              <span style={{ color: 'white', fontSize: 'clamp(28px,5vw,40px)', fontWeight: 800, lineHeight: 1 }}>{stat.value}</span>
+              <span style={{ color: 'rgba(255,255,255,0.85)', fontSize: 9, fontWeight: 700, letterSpacing: '0.12em', marginTop: 6, textAlign: 'center', padding: '0 8px' }}>{stat.label}</span>
             </div>
           ))}
         </div>
