@@ -175,48 +175,9 @@ export default function PricingPage() {
             ))}
           </div>
 
-          {/* FAQ Section */}
-          <div className="max-w-3xl mx-auto">
-            <h2 className="font-sans font-bold text-3xl text-center mb-8" style={{ color: '#0A2620' }}>
-              Frequently Asked Questions
-            </h2>
-            
-            <div className="space-y-4">
-              {[
-                {
-                  q: "Can I change plans later?",
-                  a: "Yes! You can upgrade or downgrade your plan at any time. Changes take effect immediately."
-                },
-                {
-                  q: "What's included in the 14-day guarantee?",
-                  a: "If you're not satisfied within the first 14 days, we'll refund your payment in full. No questions asked."
-                },
-                {
-                  q: "Do you offer custom pricing?",
-                  a: "Yes! For fleets with 50+ vehicles or unique requirements, contact our sales team for custom pricing."
-                },
-                {
-                  q: "What payment methods do you accept?",
-                  a: "We accept all major credit cards, ACH transfers, and wire transfers for Enterprise plans."
-                }
-              ].map((faq, idx) => (
-                <div 
-                  key={idx} 
-                  className="p-6 rounded-2xl"
-                  style={{ background: '#FFFFFF', border: '1px solid #E2E8F0' }}
-                >
-                  <h3 className="font-sans font-bold text-lg mb-2" style={{ color: '#0A2620' }}>
-                    {faq.q}
-                  </h3>
-                  <p className="text-base" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>{faq.a}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
           {/* CTA Section */}
           <div 
-            className="mt-20 p-12 rounded-3xl text-center"
+            className="p-12 rounded-3xl text-center"
             style={{ 
               background: 'linear-gradient(135deg, rgba(16,185,129,0.08), rgba(132,204,22,0.04))',
               border: '1px solid rgba(16,185,129,0.2)'

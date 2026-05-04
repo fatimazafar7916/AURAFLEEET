@@ -18,9 +18,24 @@ const SketchUnderline = ({ width = 180 }) => (
 );
 
 const CARDS = [
-  { num: '01', title: 'Built only for car rentals', body: "Not a generic chat tool. Our AI knows insurance, mileage, pricing, damage policies — trained specifically for rental operators.", pill: 'AI that knows rentals' },
-  { num: '02', title: '60-day money-back promise', body: "If Aiaura doesn't pay for itself in your first 60 days, we refund every cent. No fine print. No locked-in contracts.", pill: 'No-Risk Promise' },
-  { num: '03', title: 'Live in 14 days or less', body: "We do the technical heavy lifting. You join one kickoff call and Aiaura is live while competitors take months to set up.", pill: 'Fast setup' },
+  { 
+    num: '01', 
+    title: 'Built only for car rentals.', 
+    body: "Knows insurance rules, mileage caps, deposit policies, and damage workflows out of the box. Not a generic chatbot retrofitted for rentals.", 
+    pill: 'Specific, not generic' 
+  },
+  { 
+    num: '02', 
+    title: 'Replaces 8+ vendors with one.', 
+    body: "One platform replaces your CRM, receptionist service, chatbot, review tool, follow-up system, and 6+ more. A-to-Z solution — everything your business needs in one place.", 
+    pill: 'Less stack, more time' 
+  },
+  { 
+    num: '03', 
+    title: 'Live in 14 days. No tech team needed.', 
+    body: "We provision channels, train your AI on your fleet, and go live in Test Mode with a built-in safety net. While others take months, we start in 14 days flat.", 
+    pill: 'Fast, with safety net' 
+  },
 ];
 
 function useCountUp(target: number, duration = 1800, start = false) {
@@ -64,49 +79,51 @@ export const WhyAiauraWins = () => {
           <div className="flex flex-col gap-6">
             <div>
               <h2 className="font-sans font-bold mb-3" style={{ fontSize: 'clamp(28px,4vw,42px)', color: '#0A2620', lineHeight: 1.15 }}>
-                Others promise help.{' '}
-                <span className="block"><GradientText>We give you real results.</GradientText></span>
+                The only AI staff trained for{' '}
+                <span className="block"><GradientText italic>US rental shops.</GradientText></span>
               </h2>
               <div className="mb-3"><SketchUnderline width={240} /></div>
-              <p className="text-base" style={{ color: '#2D4F47', lineHeight: 1.55 }}>
-                15+ US car rental owners chose Aiaura over generic AI tools. Here is the proof.
+              <p className="text-base" style={{ color: '#64748B', lineHeight: 1.55 }}>
+                60-day money-back if Aiaura doesn't pay for itself.
               </p>
             </div>
 
-            {/* Big stat block */}
+            {/* Big stat block - 60 DAYS */}
             <div className="rounded-3xl overflow-hidden" style={{ background: 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)', border: '1px solid rgba(16,185,129,0.15)' }}>
               {/* Accent line */}
               <div className="h-1" style={{ background: 'linear-gradient(90deg, #10B981, #84CC16)' }} />
-              <div className="flex flex-col items-center text-center px-8 py-8">
-                <svg viewBox="0 0 120 10" fill="none" className="block mx-auto mb-2" style={{ width: 80, height: 7 }}>
-                  <path d="M4 6 C30 2, 50 8, 80 5 C100 2, 110 7, 116 5" stroke="#10B981" strokeWidth="2" strokeLinecap="round" fill="none" />
-                </svg>
-
-                <span className="font-mono font-extrabold text-gradient block" style={{ fontSize: 'clamp(72px,12vw,96px)', lineHeight: 1 }}>
-                  {count}+
+              <div className="flex flex-col items-center text-center px-8 py-10">
+                <span className="font-sans font-extrabold text-gradient block mb-2" style={{ fontSize: 'clamp(80px,14vw,120px)', lineHeight: 0.9 }}>
+                  60
                 </span>
-
-                <svg viewBox="0 0 120 10" fill="none" className="block mx-auto mt-2 mb-4" style={{ width: 80, height: 7 }}>
-                  <path d="M4 4 C20 8, 50 2, 80 6 C100 9, 110 3, 116 5" stroke="#10B981" strokeWidth="2" strokeLinecap="round" fill="none" />
-                </svg>
-
-                <p className="font-sans font-bold text-lg mb-1.5" style={{ color: '#ffffff' }}>
-                  US Rental Owners Trust Aiaura
+                
+                <p className="font-sans font-bold text-2xl mb-2" style={{ color: '#ffffff' }}>
+                  DAYS
                 </p>
-                <p className="text-sm" style={{ color: '#94A3B8', maxWidth: 260 }}>
-                  Operators running 5–50 cars in Miami, LA, Las Vegas, Atlanta, and 11 more US cities.
+                
+                <p className="font-sans font-bold text-lg mb-3" style={{ color: '#ffffff' }}>
+                  Money-back guarantee.
                 </p>
-
-                <div className="flex items-center justify-center gap-2 mt-5 flex-wrap">
-                  {[{ highlight: '14 DAYS', rest: 'to go live' }, { highlight: '24/7', rest: 'AI coverage' }, { highlight: '12', rest: 'AI specialists' }].map((s, i) => (
-                    <div key={i} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full"
-                      style={{ background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.2)' }}>
-                      <span className="font-mono text-xs font-extrabold text-gradient">{s.highlight}</span>
-                      <span className="text-xs font-medium" style={{ color: '#94A3B8' }}>{s.rest}</span>
-                    </div>
-                  ))}
-                </div>
+                
+                <p className="text-sm leading-relaxed" style={{ color: '#94A3B8', maxWidth: 340 }}>
+                  Most operators recover 5–10x their subscription in captured bookings, follow-ups, and reactivations within 60 days. If yours doesn't, we refund every cent.
+                </p>
               </div>
+            </div>
+            
+            {/* Bottom CTA button */}
+            <div className="flex justify-center">
+              <button 
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm transition-all hover:scale-105"
+                style={{ 
+                  background: 'linear-gradient(135deg, #10B981, #84CC16)',
+                  color: 'white',
+                  boxShadow: '0 4px 20px rgba(16,185,129,0.3)'
+                }}
+              >
+                <PulseDot size={6} />
+                <span>MORE GUARANTEES COMING SOON</span>
+              </button>
             </div>
           </div>
 
@@ -149,20 +166,6 @@ export const WhyAiauraWins = () => {
                 </div>
               </div>
             ))}
-
-            {/* Social proof strip */}
-            <div className="rounded-2xl p-4 flex items-center gap-3 mt-1"
-              style={{ background: '#F8FFFE', border: '1px solid #D1FAE5' }}>
-              <div className="flex -space-x-2">
-                {['M','J','C','R','A'].map((l, i) => (
-                  <div key={i} className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white border-2 border-white"
-                    style={{ background: `hsl(${140 + i * 20}, 60%, ${40 + i * 5}%)` }}>{l}</div>
-                ))}
-              </div>
-              <p className="text-xs" style={{ color: '#475569' }}>
-                <span className="font-bold" style={{ color: '#0F172A' }}>15+ operators</span> joined in the last 90 days
-              </p>
-            </div>
           </div>
         </div>
       </div>
