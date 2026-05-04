@@ -276,8 +276,8 @@ export const TrackEverywhere = () => {
           5 tabs. Every metric. Real-time. Tap through the dashboard below.
         </p>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-          {/* Left — feature list */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          {/* Left — feature list + bottom info */}
           <div className="flex flex-col gap-4">
             {[
               { icon: <circle cx="12" cy="12" r="10"/>, title: 'Real-time revenue tracking', desc: 'Every booking reflects instantly — no refresh needed.' },
@@ -300,6 +300,16 @@ export const TrackEverywhere = () => {
                 {activeTab === NAV_TABS[i].id && <div className="ml-auto flex-shrink-0 w-1.5 h-1.5 rounded-full self-center" style={{ background: '#10B981' }} />}
               </div>
             ))}
+
+            {/* Run your fleet — moved up into left column */}
+            <div className="flex items-center justify-between px-5 py-4 rounded-2xl mt-2" style={{ background: '#F8FFFE', border: '1px solid #D1FAE5' }}>
+              <div>
+                <p className="font-bold text-base" style={{ color: '#0A2620' }}>Run your fleet from anywhere.</p>
+                <p className="text-sm italic mt-0.5" style={{ color: '#6B7F78' }}>iOS / Android / Web / Desktop</p>
+              </div>
+              <span className="text-xs font-mono font-bold px-3 py-1.5 rounded-full"
+                style={{ background: '#F0FDF4', color: '#10B981', border: '1px solid #BBF7D0', whiteSpace: 'nowrap' }}>ALL INCLUDED</span>
+            </div>
           </div>
 
           {/* Right — Device mockup with toggle */}
@@ -455,14 +465,7 @@ export const TrackEverywhere = () => {
           </div>
         </div>
 
-        <div className="mt-10 flex items-center justify-between px-6 py-4 rounded-2xl" style={{ background: '#F8FFFE', border: '1px solid #D1FAE5' }}>
-          <div>
-            <p className="font-tight font-bold text-base" style={{ color: '#0A2620' }}>Run your fleet from anywhere.</p>
-            <p className="text-sm italic mt-0.5" style={{ color: '#6B7F78' }}>iOS / Android / Web / Desktop</p>
-          </div>
-          <span className="text-xs font-mono font-bold px-3 py-1.5 rounded-full"
-            style={{ background: '#F0FDF4', color: '#10B981', border: '1px solid #BBF7D0', whiteSpace: 'nowrap' }}>ALL INCLUDED</span>
-        </div>
+
       </div>
     </section>
   );
