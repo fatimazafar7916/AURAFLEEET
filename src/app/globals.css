@@ -1,0 +1,97 @@
+@import "tailwindcss";
+@import "@fontsource/inter";
+@import "@fontsource/fraunces";
+@import "@fontsource/jetbrains-mono";
+
+:root {
+  --background: #FAFAF8;
+  --foreground: #0A2620;
+  
+  /* Aiaura Brand Palette */
+  --mint-primary: #10B981;
+  --lime-accent: #84CC16;
+  --deep-mint: #065F46;
+  --deep-ink: #0A2620;
+  --ink-soft: #2D4F47;
+  --ink-mute: #6B7F78;
+  --bg-paper: #FAFAF8;
+  --bg-mint: #F0FAF5;
+  --bg-mint-cream: #F8FCFA;
+  --mint-light: #A7F3D0;
+  --mint-ghost: #ECFDF5;
+  
+  /* Glassmorphism Defaults */
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-blur: 28px;
+  --glass-border: rgba(255, 255, 255, 0.5);
+}
+
+@theme inline {
+  --color-mint: var(--mint-primary);
+  --color-lime: var(--lime-accent);
+  --color-deep-mint: var(--deep-mint);
+  --color-deep-ink: var(--deep-ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-mute: var(--ink-mute);
+  --color-bg-paper: var(--bg-paper);
+  --color-bg-mint: var(--bg-mint);
+  --color-bg-mint-cream: var(--bg-mint-cream);
+  --color-mint-light: var(--mint-light);
+  --color-mint-ghost: var(--mint-ghost);
+
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-serif: "Fraunces", serif;
+  --font-mono: "JetBrains Mono", monospace;
+  
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 28px;
+}
+
+body {
+  background-color: var(--bg-paper);
+  color: var(--deep-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Glassmorphism Utilities */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(28px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px 0 rgba(16, 185, 129, 0.1);
+}
+
+/* Gradient Utilities */
+.text-gradient {
+  background: linear-gradient(135deg, var(--mint-primary) 0%, var(--lime-accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bg-gradient-aiaura {
+  background: linear-gradient(135deg, var(--mint-primary) 0%, var(--lime-accent) 100%);
+}
+
+/* Animation Utilities */
+.letter-fade {
+  display: inline-block;
+  animation: letterFade 0.4s ease-out;
+}
+
+@keyframes letterFade {
+  from { opacity: 0; filter: blur(4px); transform: translateY(4px); }
+  to { opacity: 1; filter: blur(0); transform: translateY(0); }
+}
+
