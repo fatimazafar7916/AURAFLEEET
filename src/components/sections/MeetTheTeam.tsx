@@ -327,7 +327,7 @@ export const MeetTheTeam = () => {
     <section
       id="features"
       style={{
-        background: 'linear-gradient(160deg, #34d399 0%, #4ade80 40%, #86efac 100%)',
+        background: 'linear-gradient(160deg, #10B981 0%, #0ea572 40%, #059669 100%)',
         padding: '56px 0 48px',
         overflow: 'hidden',
       }}
@@ -398,3 +398,4 @@ export const MeetTheTeam = () => {
     </section>
   );
 };
+
