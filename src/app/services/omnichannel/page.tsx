@@ -5,7 +5,6 @@ import React, { useState, useEffect, useRef } from "react";
    GLOBAL STYLES
 ============================================================ */
 const OMNI_CSS = `
-@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap');
 :root {
   --mint:       #10B981;
   --mint-mid:   #34D399;
@@ -17,9 +16,9 @@ const OMNI_CSS = `
   --hairline:   rgba(16,185,129,0.16);
   --grad-cta:   linear-gradient(135deg, #10B981 0%, #84CC16 100%);
   --grad-text:  linear-gradient(135deg, #10B981 0%, #84CC16 100%);
-  --dark-bg:    #080F0C;
-  --dark-surf:  #0F1A14;
-  --dark-card:  #142019;
+  --light-bg:   #F0FDF4;
+  --card-bg:    #FFFFFF;
+  --dark-bg:    #0A2620;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 .omni-grad-text {
@@ -34,7 +33,7 @@ const OMNI_CSS = `
   background: rgba(16,185,129,0.1);
   border: 1px solid rgba(16,185,129,0.25);
   color: #10B981;
-  font-family: 'Geist Mono', monospace;
+  font-family: 'JetBrains Mono', 'Geist Mono', monospace;
   font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
 }
 .omni-pill-dot {
@@ -47,7 +46,7 @@ const OMNI_CSS = `
   display: inline-flex; align-items: center; gap: 8px;
   padding: 13px 28px; border-radius: 999px; border: none; cursor: pointer;
   background: var(--grad-cta); color: white;
-  font-family: 'Geist Mono', monospace; font-size: 13px; font-weight: 700;
+  font-family: 'JetBrains Mono', 'Geist Mono', monospace; font-size: 13px; font-weight: 700;
   letter-spacing: 0.04em;
   box-shadow: 0 4px 24px rgba(16,185,129,0.35);
   transition: transform 0.18s, box-shadow 0.18s;
@@ -56,12 +55,12 @@ const OMNI_CSS = `
 .omni-btn-outline {
   display: inline-flex; align-items: center; gap: 8px;
   padding: 13px 28px; border-radius: 999px; cursor: pointer;
-  background: transparent; color: rgba(255,255,255,0.8);
-  border: 1px solid rgba(255,255,255,0.18);
-  font-family: 'Geist Mono', monospace; font-size: 13px; font-weight: 600;
+  background: white; color: var(--ink);
+  border: 1px solid rgba(16,185,129,0.3);
+  font-family: 'JetBrains Mono', 'Geist Mono', monospace; font-size: 13px; font-weight: 600;
   transition: border-color 0.18s, background 0.18s;
 }
-.omni-btn-outline:hover { border-color: var(--mint); background: rgba(16,185,129,0.08); color: #fff; }
+.omni-btn-outline:hover { border-color: var(--mint); background: rgba(16,185,129,0.08); }
 .msg-bubble {
   display: inline-flex; align-items: flex-start; gap: 8px;
   padding: 10px 14px; border-radius: 16px;
@@ -70,10 +69,11 @@ const OMNI_CSS = `
 }
 .notif-card {
   animation: notif-in 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
-  background: rgba(255,255,255,0.07);
-  border: 0.5px solid rgba(255,255,255,0.12);
+  background: white;
+  border: 1px solid rgba(16,185,129,0.15);
   border-radius: 14px; padding: 11px 14px;
   display: flex; align-items: center; gap: 10px;
+  box-shadow: 0 2px 8px rgba(16,185,129,0.08);
 }
 .notif-icon {
   width: 32px; height: 32px; border-radius: 9px; flex-shrink: 0;
@@ -87,8 +87,8 @@ const OMNI_CSS = `
 @keyframes count-bump { 0%,100%{transform:scale(1)} 50%{transform:scale(1.12)} }
 .live-counter { animation: count-bump 0.4s ease; }
 .big-stat {
-  font-family: 'Geist Mono', monospace;
-  font-size: clamp(52px, 7vw, 80px);
+  font-family: 'JetBrains Mono', 'Geist Mono', monospace;
+  font-size: clamp(42px, 7vw, 80px);
   font-weight: 800;
   letter-spacing: -0.04em;
   line-height: 0.9;
@@ -100,11 +100,11 @@ const OMNI_CSS = `
   transition: opacity 0.65s ease, transform 0.65s ease;
 }
 .omni-reveal.visible { opacity: 1; transform: translateY(0); }
-.dark-hero { background: var(--dark-bg); position: relative; overflow: hidden; }
+.light-hero { background: var(--page-bg); position: relative; overflow: hidden; }
 .grid-bg {
   position:absolute; inset:0; pointer-events:none;
-  background-image:linear-gradient(rgba(16,185,129,0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(16,185,129,0.05) 1px, transparent 1px);
+  background-image:linear-gradient(rgba(16,185,129,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16,185,129,0.08) 1px, transparent 1px);
   background-size: 48px 48px;
 }
 .hero-orb { position:absolute; border-radius:50%; filter:blur(80px); pointer-events:none; }
@@ -123,7 +123,7 @@ const OMNI_CSS = `
   width:100%; background:none; border:none; cursor:pointer;
   display:flex; justify-content:space-between; align-items:center;
   padding: 18px 0; text-align:left;
-  font-family:'Geist Mono',monospace; font-size:13.5px; font-weight:700; color:var(--ink);
+  font-family:'JetBrains Mono', 'Geist Mono', monospace; font-size:13.5px; font-weight:700; color:var(--ink);
 }
 .faq-chevron {
   width:22px; height:22px; border-radius:50%;
@@ -141,6 +141,16 @@ const OMNI_CSS = `
 .float-anim { animation: float-y 4s ease-in-out infinite; }
 @keyframes cursor-blink { 0%,100%{opacity:1} 50%{opacity:0} }
 .cursor { display:inline-block; width:2px; height:1em; background:var(--mint); vertical-align:middle; animation:cursor-blink 1s step-end infinite; margin-left:1px; }
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .big-stat { font-size: clamp(32px, 10vw, 52px); }
+  .omni-btn-primary, .omni-btn-outline { padding: 11px 20px; font-size: 12px; }
+  .omni-pill { font-size: 10px; padding: 4px 12px; }
+  .tcard { padding: 20px 18px; border-radius: 18px; }
+  .faq-btn { font-size: 12.5px; padding: 14px 0; }
+  .notif-card { padding: 9px 12px; }
+}
 `;
 
 function InjectOmniStyles() {
@@ -228,31 +238,31 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="dark-hero" style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", padding: "80px 0 140px" }}>
+    <section className="light-hero" style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", padding: "clamp(60px, 10vh, 80px) 0 clamp(80px, 12vh, 140px)" }}>
       <div className="grid-bg" />
-      <div className="hero-orb" style={{ width: 500, height: 500, background: "rgba(16,185,129,0.12)", top: -100, right: -100 }} />
-      <div className="hero-orb" style={{ width: 300, height: 300, background: "rgba(132,204,22,0.08)", bottom: 100, left: -80 }} />
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 32px", position: "relative", zIndex: 2 }}>
-        <div style={{ marginBottom: 32 }}>
-          <span className="omni-pill" style={{ background: "rgba(16,185,129,0.12)", borderColor: "rgba(16,185,129,0.3)" }}>
+      <div className="hero-orb" style={{ width: 500, height: 500, background: "rgba(16,185,129,0.08)", top: -100, right: -100 }} />
+      <div className="hero-orb" style={{ width: 300, height: 300, background: "rgba(132,204,22,0.05)", bottom: 100, left: -80 }} />
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 clamp(20px, 5vw, 32px)", position: "relative", zIndex: 2 }}>
+        <div style={{ marginBottom: "clamp(20px, 4vw, 32px)" }}>
+          <span className="omni-pill">
             <span className="omni-pill-dot" />AI SOLUTIONS — OMNICHANNEL RESPONDER
           </span>
         </div>
-        <div style={{ marginBottom: 28 }}>
-          <h1 style={{ fontSize: "clamp(48px, 7vw, 92px)", fontWeight: 800, lineHeight: 1.0, letterSpacing: "-0.04em", color: "white", fontFamily: "'Geist Mono', monospace" }}>
+        <div style={{ marginBottom: "clamp(20px, 3vw, 28px)" }}>
+          <h1 style={{ fontSize: "clamp(36px, 7vw, 92px)", fontWeight: 800, lineHeight: 1.0, letterSpacing: "-0.04em", color: "var(--ink)", fontFamily: "'JetBrains Mono', 'Geist Mono', monospace" }}>
             8 channels.<br />
-            <span style={{ fontFamily: "'DM Serif Display', serif", fontStyle: "italic", fontWeight: 400, letterSpacing: "-0.02em" }}>One{" "}</span>
-            <span className="omni-grad-text" style={{ fontFamily: "'DM Serif Display', serif", fontStyle: "italic", fontWeight: 400 }}>AI voice.</span>
+            <span style={{ fontFamily: "'Fraunces', 'DM Serif Display', serif", fontStyle: "italic", fontWeight: 400, letterSpacing: "-0.02em" }}>One{" "}</span>
+            <span className="omni-grad-text" style={{ fontFamily: "'Fraunces', 'DM Serif Display', serif", fontStyle: "italic", fontWeight: 400 }}>AI voice.</span>
           </h1>
         </div>
-        <div style={{ marginBottom: 44 }}>
-          <p style={{ fontSize: "clamp(15px,1.6vw,19px)", color: "rgba(255,255,255,0.55)", lineHeight: 1.6, maxWidth: 560, fontFamily: "'Geist Mono', monospace", fontWeight: 400 }}>
+        <div style={{ marginBottom: "clamp(28px, 5vw, 44px)" }}>
+          <p style={{ fontSize: "clamp(14px,1.6vw,19px)", color: "var(--ink-soft)", lineHeight: 1.6, maxWidth: 560, fontFamily: "'Inter', sans-serif", fontWeight: 400 }}>
             Replies on Instagram, WhatsApp, SMS, and Email — all at once, all in your voice, all within seconds. Closes bookings inside the conversation. No human needed.
           </p>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1.1fr", gap: 56, alignItems: "start" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "clamp(32px, 6vw, 56px)", alignItems: "start" }}>
           <div>
-            <div style={{ display: "flex", gap: 28, marginBottom: 44, flexWrap: "wrap" }}>
+            <div style={{ display: "flex", gap: "clamp(16px, 3vw, 28px)", marginBottom: "clamp(28px, 5vw, 44px)", flexWrap: "wrap" }}>
               {[
                 { num: "8",  label: "Channels handled\nsimultaneously", suffix: "" },
                 { num: "4",  label: "Second auto-DM\non Instagram",     suffix: "s" },
@@ -261,24 +271,24 @@ const HeroSection = () => {
                 <div key={s.label}>
                   <div style={{ display: "flex", alignItems: "baseline", gap: 1 }}>
                     <span className="big-stat">{s.num}</span>
-                    {s.suffix && <span style={{ fontSize: "clamp(22px,3vw,36px)", fontWeight: 800, background: "var(--grad-text)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", letterSpacing: "-0.04em" }}>{s.suffix}</span>}
+                    {s.suffix && <span style={{ fontSize: "clamp(18px,3vw,36px)", fontWeight: 800, background: "var(--grad-text)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", letterSpacing: "-0.04em" }}>{s.suffix}</span>}
                   </div>
-                  <p style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", fontFamily: "'Geist Mono', monospace", fontWeight: 600, letterSpacing: "0.04em", marginTop: 4, lineHeight: 1.4, whiteSpace: "pre-line" }}>{s.label}</p>
+                  <p style={{ fontSize: "clamp(10px, 2vw, 11px)", color: "var(--ink-soft)", fontFamily: "'JetBrains Mono', 'Geist Mono', monospace", fontWeight: 600, letterSpacing: "0.04em", marginTop: 4, lineHeight: 1.4, whiteSpace: "pre-line" }}>{s.label}</p>
                 </div>
               ))}
             </div>
-            <div style={{ marginBottom: 36 }}>
-              <div style={{ display: "inline-flex", alignItems: "center", gap: 14, padding: "14px 20px", borderRadius: 16, background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.2)" }}>
+            <div style={{ marginBottom: "clamp(24px, 4vw, 36px)" }}>
+              <div style={{ display: "inline-flex", alignItems: "center", gap: "clamp(10px, 2vw, 14px)", padding: "clamp(10px, 2vw, 14px) clamp(14px, 3vw, 20px)", borderRadius: 16, background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.2)" }}>
                 <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                  <span key={msgCount} className="live-counter" style={{ fontSize: 28, fontWeight: 800, fontFamily: "'Geist Mono', monospace", background: "var(--grad-text)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", lineHeight: 1 }}>{msgCount.toLocaleString()}</span>
-                  <span style={{ fontSize: 9, color: "rgba(255,255,255,0.3)", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase" }}>Messages today</span>
+                  <span key={msgCount} className="live-counter" style={{ fontSize: "clamp(22px, 4vw, 28px)", fontWeight: 800, fontFamily: "'JetBrains Mono', 'Geist Mono', monospace", background: "var(--grad-text)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", lineHeight: 1 }}>{msgCount.toLocaleString()}</span>
+                  <span style={{ fontSize: "clamp(8px, 1.5vw, 9px)", color: "var(--ink-soft)", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase" }}>Messages today</span>
                 </div>
-                <div style={{ width: 1, height: 36, background: "rgba(255,255,255,0.08)" }} />
+                <div style={{ width: 1, height: "clamp(28px, 5vw, 36px)", background: "rgba(16,185,129,0.2)" }} />
                 <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
                   {CHANNELS.map(ch => (
                     <div key={ch.name} style={{ display: "flex", alignItems: "center", gap: 6 }}>
                       <div style={{ width: 6, height: 6, borderRadius: "50%", background: ch.color, boxShadow: `0 0 5px ${ch.color}` }} />
-                      <span style={{ fontSize: 10, color: "rgba(255,255,255,0.45)", fontFamily: "'Geist Mono', monospace", fontWeight: 600 }}>{ch.name}</span>
+                      <span style={{ fontSize: "clamp(9px, 1.8vw, 10px)", color: "var(--ink-soft)", fontFamily: "'JetBrains Mono', 'Geist Mono', monospace", fontWeight: 600 }}>{ch.name}</span>
                     </div>
                   ))}
                 </div>
@@ -291,30 +301,30 @@ const HeroSection = () => {
           </div>
           <div>
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              <div style={{ background: "rgba(255,255,255,0.03)", border: "0.5px solid rgba(255,255,255,0.08)", borderRadius: 18, padding: "16px 16px 10px" }}>
+              <div style={{ background: "white", border: "1px solid rgba(16,185,129,0.15)", borderRadius: 18, padding: "clamp(12px, 2vw, 16px)", boxShadow: "0 4px 16px rgba(16,185,129,0.08)" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
-                  <span style={{ fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: "0.08em", fontFamily: "'Geist Mono', monospace" }}>LIVE ACTIVITY</span>
+                  <span style={{ fontSize: "clamp(9px, 1.8vw, 10px)", fontWeight: 700, color: "var(--ink-soft)", letterSpacing: "0.08em", fontFamily: "'JetBrains Mono', 'Geist Mono', monospace" }}>LIVE ACTIVITY</span>
                   <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
                     <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#10B981", boxShadow: "0 0 8px #10B981", animation: "omni-blink 1.5s infinite" }} />
-                    <span style={{ fontSize: 9, color: "#10B981", fontWeight: 700, letterSpacing: "0.06em" }}>LIVE</span>
+                    <span style={{ fontSize: "clamp(8px, 1.6vw, 9px)", color: "#10B981", fontWeight: 700, letterSpacing: "0.06em" }}>LIVE</span>
                   </div>
                 </div>
                 {NOTIFS.map((n, i) => (
-                  <div key={i} className="notif-card" style={{ marginBottom: i < NOTIFS.length - 1 ? 8 : 0, opacity: activeNotif === i ? 1 : 0.4, transform: `scale(${activeNotif === i ? 1 : 0.98})`, transition: "opacity 0.3s, transform 0.3s", border: activeNotif === i ? `0.5px solid ${n.color}44` : "0.5px solid rgba(255,255,255,0.06)" }}>
+                  <div key={i} className="notif-card" style={{ marginBottom: i < NOTIFS.length - 1 ? 8 : 0, opacity: activeNotif === i ? 1 : 0.5, transform: `scale(${activeNotif === i ? 1 : 0.98})`, transition: "opacity 0.3s, transform 0.3s", border: activeNotif === i ? `1px solid ${n.color}44` : "1px solid rgba(16,185,129,0.1)" }}>
                     <div className="notif-icon" style={{ background: n.bg }}>{n.icon}</div>
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 2 }}>
-                        <span style={{ fontSize: 10, fontWeight: 800, color: n.color, letterSpacing: "0.04em" }}>{n.channel}</span>
-                        <span style={{ fontSize: 9, color: "rgba(255,255,255,0.25)", fontFamily: "'Geist Mono', monospace" }}>{n.time}</span>
+                        <span style={{ fontSize: "clamp(9px, 1.8vw, 10px)", fontWeight: 800, color: n.color, letterSpacing: "0.04em" }}>{n.channel}</span>
+                        <span style={{ fontSize: "clamp(8px, 1.6vw, 9px)", color: "var(--ink-soft)", fontFamily: "'JetBrains Mono', 'Geist Mono', monospace" }}>{n.time}</span>
                       </div>
-                      <p style={{ fontSize: 12, color: "rgba(255,255,255,0.75)", fontWeight: 500, lineHeight: 1.35 }}>{n.text}</p>
+                      <p style={{ fontSize: "clamp(11px, 2vw, 12px)", color: "var(--ink)", fontWeight: 500, lineHeight: 1.35 }}>{n.text}</p>
                     </div>
                   </div>
                 ))}
               </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "12px 16px", background: "rgba(16,185,129,0.08)", border: "0.5px solid rgba(16,185,129,0.25)", borderRadius: 14 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "clamp(10px, 2vw, 12px) clamp(12px, 2.5vw, 16px)", background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.25)", borderRadius: 14 }}>
                 <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#10B981", animation: "omni-blink 1s infinite" }} />
-                <span style={{ fontSize: 11.5, color: "rgba(255,255,255,0.7)", fontFamily: "'Geist Mono', monospace", fontWeight: 600 }}>
+                <span style={{ fontSize: "clamp(10px, 2vw, 11.5px)", color: "var(--ink)", fontFamily: "'JetBrains Mono', 'Geist Mono', monospace", fontWeight: 600 }}>
                   Responding to {CHANNELS[activeNotif].name} in real-time<span className="cursor" />
                 </span>
               </div>
@@ -623,27 +633,27 @@ const FAQSection = () => {
 
 /* ── BOTTOM CTA ── */
 const BottomCTASection = () => (
-  <section style={{ background: "var(--dark-bg)", padding: "120px 0", position: "relative", overflow: "hidden" }}>
-    <div className="grid-bg" />
-    <div className="hero-orb" style={{ width: 700, height: 500, background: "rgba(16,185,129,0.1)", top: "50%", left: "50%", transform: "translate(-50%,-50%)", filter: "blur(120px)" }} />
-    <div style={{ maxWidth: 900, margin: "0 auto", padding: "0 32px", textAlign: "center", position: "relative", zIndex: 1 }}>
-      <div style={{ display: "flex", justifyContent: "center", gap: 12, marginBottom: 36 }}>
+  <section style={{ background: "linear-gradient(135deg, #F0FDF4 0%, #ECFDF5 100%)", padding: "clamp(80px, 12vh, 120px) 0", position: "relative", overflow: "hidden", borderTop: "1px solid rgba(16,185,129,0.15)" }}>
+    <div className="grid-bg" style={{ opacity: 0.4 }} />
+    <div className="hero-orb" style={{ width: 700, height: 500, background: "rgba(16,185,129,0.08)", top: "50%", left: "50%", transform: "translate(-50%,-50%)", filter: "blur(120px)" }} />
+    <div style={{ maxWidth: 900, margin: "0 auto", padding: "0 clamp(20px, 5vw, 32px)", textAlign: "center", position: "relative", zIndex: 1 }}>
+      <div style={{ display: "flex", justifyContent: "center", gap: "clamp(8px, 2vw, 12px)", marginBottom: "clamp(28px, 5vh, 36px)", flexWrap: "wrap" }}>
         {CHANNELS.map((ch, i) => (
-          <div key={ch.name} className="float-anim" style={{ width: 44, height: 44, borderRadius: 12, background: ch.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, boxShadow: `0 8px 24px ${ch.color}44`, animationDelay: `${i * 0.4}s` }}>{ch.emoji}</div>
+          <div key={ch.name} className="float-anim" style={{ width: "clamp(36px, 7vw, 44px)", height: "clamp(36px, 7vw, 44px)", borderRadius: 12, background: ch.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "clamp(16px, 3.5vw, 20px)", boxShadow: `0 8px 24px ${ch.color}44`, animationDelay: `${i * 0.4}s` }}>{ch.emoji}</div>
         ))}
       </div>
-      <h2 style={{ fontSize: "clamp(36px,6vw,72px)", fontWeight: 800, color: "white", letterSpacing: "-0.04em", lineHeight: 1.0, marginBottom: 20 }}>
+      <h2 style={{ fontSize: "clamp(32px,6vw,72px)", fontWeight: 800, color: "var(--ink)", letterSpacing: "-0.04em", lineHeight: 1.0, marginBottom: "clamp(16px, 3vh, 20px)", fontFamily: "'JetBrains Mono', 'Geist Mono', monospace" }}>
         Every message.<br />
-        <span className="omni-grad-text" style={{ fontFamily: "'DM Serif Display', serif", fontStyle: "italic", fontWeight: 400, fontSize: "clamp(40px,6.5vw,78px)" }}>Every channel.</span>
+        <span className="omni-grad-text" style={{ fontFamily: "'Fraunces', 'DM Serif Display', serif", fontStyle: "italic", fontWeight: 400, fontSize: "clamp(36px,6.5vw,78px)" }}>Every channel.</span>
       </h2>
-      <p style={{ fontSize: "clamp(14px,1.6vw,18px)", color: "rgba(255,255,255,0.4)", lineHeight: 1.65, maxWidth: 520, margin: "0 auto 48px", fontFamily: "'Geist Mono', monospace" }}>
+      <p style={{ fontSize: "clamp(13px,1.6vw,18px)", color: "var(--ink-soft)", lineHeight: 1.65, maxWidth: 520, margin: "0 auto clamp(36px, 6vh, 48px)", fontFamily: "'Inter', sans-serif" }}>
         Stop losing bookings to slow replies. Aiaura responds in seconds — Instagram, WhatsApp, SMS, Email — all in your voice, all the time.
       </p>
-      <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap", marginBottom: 24 }}>
-        <button className="omni-btn-primary" style={{ fontSize: 14, padding: "16px 36px" }}><span className="omni-pill-dot" />Start Free Trial</button>
-        <button className="omni-btn-outline" style={{ fontSize: 13, padding: "16px 28px" }}>Hear It Respond Live →</button>
+      <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap", marginBottom: "clamp(20px, 3vh, 24px)" }}>
+        <button className="omni-btn-primary" style={{ fontSize: "clamp(12px, 2.2vw, 14px)", padding: "clamp(14px, 2.5vw, 16px) clamp(28px, 5vw, 36px)" }}><span className="omni-pill-dot" />Start Free Trial</button>
+        <button className="omni-btn-outline" style={{ fontSize: "clamp(11px, 2vw, 13px)", padding: "clamp(14px, 2.5vw, 16px) clamp(22px, 4vw, 28px)" }}>Hear It Respond Live →</button>
       </div>
-      <p style={{ fontSize: 11, color: "rgba(255,255,255,0.2)", letterSpacing: "0.06em", fontFamily: "'Geist Mono', monospace", fontWeight: 700 }}>60-DAY MONEY-BACK · LIVE IN 14 DAYS · NO TECH TEAM</p>
+      <p style={{ fontSize: "clamp(9px, 1.8vw, 11px)", color: "var(--ink-soft)", letterSpacing: "0.06em", fontFamily: "'JetBrains Mono', 'Geist Mono', monospace", fontWeight: 700 }}>60-DAY MONEY-BACK · LIVE IN 14 DAYS · NO TECH TEAM</p>
     </div>
   </section>
 );
@@ -653,7 +663,7 @@ export default function OmnichannelPage() {
   return (
     <>
       <InjectOmniStyles />
-      <div style={{ fontFamily: "'Geist Mono', ui-monospace, monospace" }}>
+      <div style={{ fontFamily: "'Inter', 'JetBrains Mono', ui-monospace, sans-serif" }}>
         <HeroSection />
         <ChannelShowcaseSection />
         <BentoSection />
