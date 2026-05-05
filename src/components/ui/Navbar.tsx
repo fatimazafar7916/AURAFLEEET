@@ -22,14 +22,12 @@ export const Navbar = () => {
         {
           name: "Receptionist",
           description: "Handles voicemail follow-up",
-          href: "/services/receptionist",
-          badge: "24/7"
+          href: "/services/receptionist"
         },
         {
           name: "Omnichannel Responder",
           description: "Handles 8 channels simultaneously",
-          href: "/services/omnichannel",
-          badge: "VIEW →"
+          href: "/services/omnichannel"
         },
         {
           name: "Website Chatbot",
@@ -119,8 +117,7 @@ export const Navbar = () => {
         {
           name: "Finance & Insurance Verification",
           description: "Instant document verification and fraud detection",
-          href: "/services/finance-insurance",
-          badge: "NEW"
+          href: "/services/finance-insurance"
         }
       ]
     }
@@ -200,15 +197,6 @@ export const Navbar = () => {
                                       style={{ color: '#0A2620' }}>
                                       {item.name}
                                     </span>
-                                    {item.badge && (
-                                      <span className="text-xs px-2 py-0.5 rounded-full font-bold"
-                                        style={{ 
-                                          background: item.badge === 'NEW' ? '#10B981' : 'rgba(16,185,129,0.1)', 
-                                          color: item.badge === 'NEW' ? 'white' : '#10B981' 
-                                        }}>
-                                        {item.badge}
-                                      </span>
-                                    )}
                                   </div>
                                   <p className="text-xs mt-1 leading-relaxed"
                                     style={{ color: '#64748B' }}>

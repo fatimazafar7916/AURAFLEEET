@@ -110,6 +110,32 @@ const FINANCE_CSS = `
   .finance-btn-primary, .finance-btn-outline { padding: 11px 20px; font-size: 12px; }
   .finance-pill { font-size: 10px; padding: 4px 12px; }
   .feature-card { padding: 20px 18px; border-radius: 18px; }
+  .process-step { padding: 18px; border-radius: 16px; }
+  
+  /* Grid fixes for mobile */
+  .hero-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+  .features-grid { grid-template-columns: 1fr !important; gap: 20px !important; }
+  .process-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 16px !important; }
+  
+  /* Container and padding fixes */
+  body { overflow-x: hidden; }
+  .container { max-width: 100% !important; padding: 0 16px !important; }
+  .section-padding { padding: 56px 0 !important; }
+  
+  /* Button fixes */
+  .cta-buttons { flex-direction: column !important; gap: 12px !important; }
+  .finance-btn-primary, .finance-btn-outline { width: 100%; justify-content: center; }
+}
+
+@media (max-width: 480px) {
+  .container { padding: 0 12px !important; }
+  .section-padding { padding: 40px 0 !important; }
+  .feature-card { padding: 16px; }
+  .process-step { padding: 16px; }
+}
+  .finance-pill { font-size: 10px; padding: 4px 12px; }
+  .feature-card { padding: 20px 18px; border-radius: 18px; }
   .process-step { padding: 18px; }
 }
 `;

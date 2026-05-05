@@ -279,11 +279,26 @@ MOBILE RESPONSIVE — ≤ 768px
 
   /* Comparison font */
   .cmp-table td, .cmp-table th { padding: 10px 12px; font-size: 12px; }
+
+  /* Additional mobile fixes */
+  .dark-card { margin: 0 !important; }
+  .glass-card { margin: 0 !important; }
+  
+  /* Ensure no horizontal overflow */
+  body { overflow-x: hidden; }
+  .container { max-width: 100% !important; }
 }
 
 @media (max-width: 480px) {
   .stat-badge-num { font-size: 20px; }
-  .faq-q { font-size: 13.5px; }
+  .faq-q { font-size: 12px; padding: 12px 0; }
+  .faq-a { font-size: 12px; }
+  .faq-icon { width: 20px; height: 20px; font-size: 12px; }
+  
+  /* Extra small mobile adjustments */
+  .container { padding: 0 12px !important; }
+  .sec-pad { padding: 40px 0 !important; }
+  .cta-card-inner { padding: 24px 16px !important; }
 }
 `;
 
@@ -1055,14 +1070,14 @@ const FAQSection = () => {
   ];
 
   return (
-    <section className="sec-pad" style={{ background: "#F8FAFC", padding: "80px 0", borderTop: "1px solid #E2E8F0" }}>
-      <div className="container" style={{ maxWidth: 720, margin: "0 auto", padding: "0 24px" }}>
-        <div style={{ textAlign: "center", marginBottom: 44 }}>
+    <section className="sec-pad" style={{ background: "#F8FAFC", padding: "clamp(60px, 8vh, 80px) 0", borderTop: "1px solid #E2E8F0" }}>
+      <div className="container" style={{ maxWidth: 720, margin: "0 auto", padding: "0 clamp(16px, 4vw, 24px)" }}>
+        <div style={{ textAlign: "center", marginBottom: "clamp(32px, 6vh, 44px)" }}>
           <span className="sec-pill" style={{ marginBottom: 14, display: "inline-flex" }}>
             <span className="sec-pill-dot" />
             FAQ
           </span>
-          <h2 style={{ fontFamily: "var(--font-brand)", fontSize: "clamp(22px,3.5vw,36px)", fontWeight: 800, color: "var(--ink)", letterSpacing: "-0.03em", lineHeight: 1.12, marginTop: 12 }}>
+          <h2 style={{ fontFamily: "var(--font-brand)", fontSize: "clamp(20px,3.5vw,36px)", fontWeight: 800, color: "var(--ink)", letterSpacing: "-0.03em", lineHeight: 1.12, marginTop: 12 }}>
             Common questions answered.
           </h2>
         </div>
@@ -1071,7 +1086,7 @@ const FAQSection = () => {
           {FAQS.map((f, i) => (
             <div key={i} className="faq-item">
               <button className="faq-q" onClick={() => setOpen(open === i ? null : i)}>
-                <span style={{ paddingRight: 16 }}>{f.q}</span>
+                <span style={{ paddingRight: "clamp(8px, 2vw, 16px)", flex: 1, textAlign: "left" }}>{f.q}</span>
                 <div className="faq-icon" style={{ transform: open === i ? "rotate(45deg)" : "none" }}>
                   +
                 </div>

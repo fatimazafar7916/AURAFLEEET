@@ -149,8 +149,26 @@ const OMNI_CSS = `
   .omni-btn-primary, .omni-btn-outline { padding: 11px 20px; font-size: 12px; }
   .omni-pill { font-size: 10px; padding: 4px 12px; }
   .tcard { padding: 20px 18px; border-radius: 18px; }
-  .faq-btn { font-size: 12.5px; padding: 14px 0; }
+  .faq-btn { font-size: 12px; padding: 12px 0; }
+  .faq-body { font-size: 12px; }
+  .faq-chevron { width: 20px; height: 20px; font-size: 12px; }
   .notif-card { padding: 9px 12px; }
+  
+  /* Additional mobile fixes */
+  body { overflow-x: hidden; }
+  .container { max-width: 100% !important; padding: 0 16px !important; }
+  
+  /* Grid fixes */
+  .hero-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+  .caps-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
+  .how-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+  .testi-grid { grid-template-columns: 1fr !important; }
+  .pricing-grid { grid-template-columns: 1fr !important; }
+}
+
+@media (max-width: 480px) {
+  .container { padding: 0 12px !important; }
+  .sec-pad { padding: 40px 0 !important; }
 }
 `;
 
@@ -612,16 +630,16 @@ const FAQSection = () => {
     { q: "How long until it's live?", a: "14 days or less from signup. We handle the integrations, train the AI on your business, and run a Test Mode period so you can review responses before it goes fully live." },
   ];
   return (
-    <section style={{ background: "var(--page-bg)", padding: "100px 0" }}>
-      <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 32px" }}>
-        <div style={{ textAlign: "center", marginBottom: 56 }}>
+    <section style={{ background: "var(--page-bg)", padding: "clamp(60px, 8vh, 100px) 0" }}>
+      <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 clamp(16px, 4vw, 32px)" }}>
+        <div style={{ textAlign: "center", marginBottom: "clamp(32px, 6vh, 56px)" }}>
           <span className="omni-pill" style={{ marginBottom: 14, display: "inline-flex" }}><span className="omni-pill-dot" />FAQ</span>
-          <h2 style={{ fontSize: "clamp(26px,4vw,40px)", fontWeight: 800, color: "var(--ink)", letterSpacing: "-0.035em", lineHeight: 1.1, marginTop: 12 }}>Questions, answered.</h2>
+          <h2 style={{ fontSize: "clamp(24px,4vw,40px)", fontWeight: 800, color: "var(--ink)", letterSpacing: "-0.035em", lineHeight: 1.1, marginTop: 12 }}>Questions, answered.</h2>
         </div>
         {FAQS.map((f, i) => (
           <div key={i} className="faq-row">
             <button className="faq-btn" onClick={() => setOpen(open === i ? null : i)}>
-              {f.q}
+              <span style={{ paddingRight: "clamp(8px, 2vw, 16px)", flex: 1, textAlign: "left" }}>{f.q}</span>
               <div className="faq-chevron" style={{ transform: open === i ? "rotate(45deg)" : "none" }}>+</div>
             </button>
             <div className={`faq-body${open === i ? " open" : ""}`}>{f.a}</div>
