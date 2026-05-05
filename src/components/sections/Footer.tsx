@@ -55,24 +55,24 @@ function FAQItem({ item, idx, open, onToggle }: any) {
     if (e.key === 'Escape' && open) onToggle(idx);
   };
   return (
-    <div className="rounded-2xl overflow-hidden transition-all"
+    <div className="rounded-xl md:rounded-2xl overflow-hidden transition-all"
       style={{ background: '#ffffff', border: open ? '1px solid #BBF7D0' : '1px solid #E2E8F0', boxShadow: open ? '0 4px 20px rgba(16,185,129,0.08)' : 'none' }}>
       <button
-        className="w-full flex items-center justify-between px-6 py-4 text-left gap-4 transition-colors hover:bg-slate-50"
+        className="w-full flex items-center justify-between px-4 md:px-6 py-3 md:py-4 text-left gap-3 md:gap-4 transition-colors hover:bg-slate-50"
         onClick={() => onToggle(idx)}
         onKeyDown={handleKeyDown}
         aria-expanded={open}
         aria-controls={`faq-answer-${idx}`}
-        style={{ minHeight: 64 }}>
-        <span className="font-sans font-semibold text-sm leading-snug" style={{ color: '#0A2620' }}>{item.q}</span>
-        <div className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 transition-all"
+        style={{ minHeight: 56 }}>
+        <span className="font-sans font-semibold text-xs md:text-sm leading-snug" style={{ color: '#0A2620' }}>{item.q}</span>
+        <div className="w-6 h-6 md:w-7 md:h-7 rounded-full flex items-center justify-center flex-shrink-0 transition-all"
           style={{ background: open ? 'linear-gradient(135deg, #10B981, #84CC16)' : '#F1F5F9', border: open ? 'none' : '1px solid #E2E8F0', transform: open ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s ease, background 0.2s ease' }}>
-          <ChevronDown size={14} color={open ? 'white' : '#6B7F78'} />
+          <ChevronDown size={12} color={open ? 'white' : '#6B7F78'} />
         </div>
       </button>
       <div id={`faq-answer-${idx}`} role="region" style={{ maxHeight: open ? 400 : 0, overflow: 'hidden', transition: 'max-height 0.3s cubic-bezier(0.16,1,0.3,1)' }}>
-        <div className="px-6 pb-5 pt-1">
-          <p className="text-sm leading-relaxed" style={{ color: '#2D4F47', lineHeight: 1.65 }}>{item.a}</p>
+        <div className="px-4 md:px-6 pb-4 md:pb-5 pt-1">
+          <p className="text-xs md:text-sm leading-relaxed" style={{ color: '#2D4F47', lineHeight: 1.65 }}>{item.a}</p>
         </div>
       </div>
     </div>
@@ -85,25 +85,25 @@ export const Footer = () => {
   return (
     <>
       {/* FAQ Section */}
-      <section id="faq" className="py-16 md:py-20 bg-bg-paper overflow-hidden">
-        <div className="container mx-auto px-6 max-w-3xl">
-          <div className="flex justify-center mb-5">
+      <section id="faq" className="py-12 md:py-16 lg:py-20 bg-bg-paper overflow-hidden">
+        <div className="container mx-auto px-4 sm:px-6 max-w-3xl">
+          <div className="flex justify-center mb-4 md:mb-5">
             <SectionPill>COMMON QUESTIONS</SectionPill>
           </div>
-          <h2 className="font-sans font-bold text-center mb-2" style={{ fontSize: 'clamp(24px,4vw,36px)', color: '#0A2620', lineHeight: 1.2 }}>
+          <h2 className="font-sans font-bold text-center mb-2" style={{ fontSize: 'clamp(20px,4vw,36px)', color: '#0A2620', lineHeight: 1.2 }}>
             Common questions, <GradientText italic>straight answers.</GradientText>
           </h2>
-          <p className="text-base text-center mb-4" style={{ color: '#6B7F78' }}>
+          <p className="text-sm md:text-base text-center mb-3 md:mb-4" style={{ color: '#6B7F78' }}>
             Still have questions? Book a 20-minute call — no sales pressure, just answers.
           </p>
-          <div className="flex justify-center mb-8">
-            <a href="#audit" className="flex items-center gap-2 px-5 py-2.5 rounded-full transition-all hover:scale-105"
+          <div className="flex justify-center mb-6 md:mb-8">
+            <a href="#audit" className="flex items-center gap-2 px-4 md:px-5 py-2 md:py-2.5 rounded-full transition-all hover:scale-105"
               style={{ background: '#F0FDF4', border: '1px solid #BBF7D0' }}>
               <PulseDot size={6} />
-              <span className="text-sm font-semibold" style={{ color: '#10B981' }}>Talk to Us →</span>
+              <span className="text-xs md:text-sm font-semibold" style={{ color: '#10B981' }}>Talk to Us →</span>
             </a>
           </div>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-1.5 md:gap-2">
             {FAQS.map((item, idx) => (
               <FAQItem key={idx} item={item} idx={idx} open={openFaq === idx} onToggle={(i: number) => setOpenFaq(p => p === i ? null : i)} />
             ))}
@@ -112,15 +112,15 @@ export const Footer = () => {
       </section>
 
       {/* Final CTA */}
-      <section id="audit" className="py-16 md:py-24" style={{ background: '#FAFAF8' }}>
-        <div className="container mx-auto px-6 max-w-3xl text-center">
-          <h2 className="font-sans font-bold mb-5" style={{ fontSize: 'clamp(28px, 5vw, 48px)', color: '#0A2620', lineHeight: 1.15, letterSpacing: '-0.02em' }}>
+      <section id="audit" className="py-12 md:py-16 lg:py-24" style={{ background: '#FAFAF8' }}>
+        <div className="container mx-auto px-4 sm:px-6 max-w-3xl text-center">
+          <h2 className="font-sans font-bold mb-4 md:mb-5" style={{ fontSize: 'clamp(24px, 5vw, 48px)', color: '#0A2620', lineHeight: 1.15, letterSpacing: '-0.02em' }}>
             Ready to see{' '}
             <span style={{ background: 'linear-gradient(135deg, #10B981 0%, #4ADE5C 50%, #84CC16 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', fontStyle: 'italic', fontWeight: 800 }}>
               what you're missing?
             </span>
           </h2>
-          <p className="mx-auto mb-10" style={{ color: '#6B7F78', fontSize: 'clamp(15px, 2.5vw, 18px)', lineHeight: 1.65, maxWidth: 520 }}>
+          <p className="mx-auto mb-8 md:mb-10" style={{ color: '#6B7F78', fontSize: 'clamp(14px, 2.5vw, 18px)', lineHeight: 1.65, maxWidth: 520 }}>
             Free 20-minute audit. We'll show you the exact bookings, calls, and reviews you're losing this month.
           </p>
           <div className="flex justify-center">
@@ -128,9 +128,9 @@ export const Footer = () => {
               style={{
                 background: 'linear-gradient(135deg, #10B981 0%, #4ADE5C 50%, #84CC16 100%)',
                 color: 'white',
-                fontSize: 'clamp(16px, 2.5vw, 18px)',
+                fontSize: 'clamp(14px, 2.5vw, 18px)',
                 fontWeight: 700,
-                padding: 'clamp(16px, 2vw, 20px) clamp(48px, 8vw, 72px)',
+                padding: 'clamp(14px, 2vw, 20px) clamp(32px, 8vw, 72px)',
                 borderRadius: 999,
                 border: 'none',
                 cursor: 'pointer',
@@ -138,7 +138,7 @@ export const Footer = () => {
                 transition: 'all 0.3s ease',
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: 10,
+                gap: 8,
                 letterSpacing: '0.01em',
               }}
               onMouseEnter={(e) => {
@@ -159,12 +159,12 @@ export const Footer = () => {
 
       {/* Footer */}
       <footer style={{ background: '#0F172A', borderTop: '1px solid #1E293B' }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 py-14">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-10 mb-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-16 py-10 md:py-14">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 md:gap-10 mb-8 md:mb-10">
             {/* Brand */}
-            <div className="col-span-2">
-              <div className="flex items-center gap-2.5 mb-4">
-                <svg width="30" height="30" viewBox="0 0 36 36" fill="none">
+            <div className="col-span-1 sm:col-span-2">
+              <div className="flex items-center gap-2.5 mb-3 md:mb-4">
+                <svg width="28" height="28" viewBox="0 0 36 36" fill="none">
                   <ellipse cx="18" cy="10" rx="5" ry="9" fill="url(#fpl1)" opacity="0.9" transform="rotate(0 18 18)"/>
                   <ellipse cx="18" cy="10" rx="5" ry="9" fill="url(#fpl2)" opacity="0.75" transform="rotate(72 18 18)"/>
                   <ellipse cx="18" cy="10" rx="5" ry="9" fill="url(#fpl3)" opacity="0.7" transform="rotate(144 18 18)"/>
@@ -179,12 +179,12 @@ export const Footer = () => {
                     <linearGradient id="fpl5" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#84CC16"/><stop offset="1" stopColor="#10B981"/></linearGradient>
                   </defs>
                 </svg>
-                <span className="font-sans font-bold text-lg">
+                <span className="font-sans font-bold text-base md:text-lg">
                   <span style={{ color: '#ffffff' }}>Aiaura</span>
                   <span style={{ color: '#10B981' }}> Fleets</span>
                 </span>
               </div>
-              <p className="text-sm leading-relaxed" style={{ color: '#94A3B8', maxWidth: 240 }}>
+              <p className="text-xs md:text-sm leading-relaxed" style={{ color: '#94A3B8', maxWidth: 240 }}>
                 AI staff for US car rental operators with 5–50 cars. Built to never miss a booking.
               </p>
             </div>
@@ -196,22 +196,22 @@ export const Footer = () => {
               { heading: 'Legal', links: ['Privacy', 'Terms'] },
             ].map(col => (
               <div key={col.heading}>
-                <p className="text-xs font-mono font-bold tracking-widest mb-4" style={{ color: '#10B981' }}>{col.heading}</p>
+                <p className="text-xs font-mono font-bold tracking-widest mb-3 md:mb-4" style={{ color: '#10B981' }}>{col.heading}</p>
                 {col.links.map(link => (
-                  <a key={link} href="#" className="block text-sm mb-2.5 transition-colors hover:text-white" style={{ color: '#94A3B8' }}>{link}</a>
+                  <a key={link} href="#" className="block text-xs md:text-sm mb-2 md:mb-2.5 transition-colors hover:text-white" style={{ color: '#94A3B8' }}>{link}</a>
                 ))}
               </div>
             ))}
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-between pt-8 border-t gap-4" style={{ borderColor: '#1E293B' }}>
-            <p className="text-sm" style={{ color: '#94A3B8' }}>
+          <div className="flex flex-col sm:flex-row items-center justify-between pt-6 md:pt-8 border-t gap-3 md:gap-4" style={{ borderColor: '#1E293B' }}>
+            <p className="text-xs md:text-sm text-center sm:text-left" style={{ color: '#94A3B8' }}>
               © 2026 Aiaura Fleets. Built for US car rental operators.
             </p>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3 md:gap-4">
               {[LinkedinIcon, TwitterIcon, YoutubeIcon].map((Icon, i) => (
                 <a key={i} href="#" className="transition-all hover:scale-110">
-                  <Icon size={18} color="#10B981" />
+                  <Icon size={16} color="#10B981" />
                 </a>
               ))}
             </div>

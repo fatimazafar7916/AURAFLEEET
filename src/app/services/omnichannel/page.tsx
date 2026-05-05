@@ -146,7 +146,7 @@ const OMNI_CSS = `
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
   .big-stat { font-size: clamp(32px, 10vw, 52px); }
-  .omni-btn-primary, .omni-btn-outline { padding: 11px 20px; font-size: 12px; }
+  .omni-btn-primary, .omni-btn-outline { padding: 11px 20px; font-size: 12px; width: 100%; justify-content: center; }
   .omni-pill { font-size: 10px; padding: 4px 12px; }
   .tcard { padding: 20px 18px; border-radius: 18px; }
   .faq-btn { font-size: 12px; padding: 12px 0; }
@@ -154,21 +154,45 @@ const OMNI_CSS = `
   .faq-chevron { width: 20px; height: 20px; font-size: 12px; }
   .notif-card { padding: 9px 12px; }
   
-  /* Additional mobile fixes */
-  body { overflow-x: hidden; }
+  /* Critical mobile fixes */
+  body { overflow-x: hidden !important; }
+  * { max-width: 100% !important; }
+  
+  /* Container fixes */
   .container { max-width: 100% !important; padding: 0 16px !important; }
   
   /* Grid fixes */
   .hero-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
   .caps-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
   .how-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
-  .testi-grid { grid-template-columns: 1fr !important; }
-  .pricing-grid { grid-template-columns: 1fr !important; }
+  .testi-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
+  .pricing-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
+  
+  /* Section padding fixes */
+  section { padding: clamp(40px, 8vh, 80px) 0 !important; }
+  
+  /* Button fixes */
+  .cta-buttons { flex-direction: column !important; gap: 12px !important; }
+  
+  /* Text and spacing fixes */
+  h1, h2, h3 { text-align: center !important; }
+  p { text-align: left !important; }
+  
+  /* Hide complex elements on mobile */
+  .hero-right { display: none !important; }
+  
+  /* Ensure proper spacing */
+  .omni-reveal { margin: 0 !important; }
 }
 
 @media (max-width: 480px) {
   .container { padding: 0 12px !important; }
   .sec-pad { padding: 40px 0 !important; }
+  section { padding: clamp(32px, 6vh, 60px) 0 !important; }
+  
+  /* Extra small adjustments */
+  .omni-btn-primary, .omni-btn-outline { padding: 10px 16px; font-size: 11px; }
+  .big-stat { font-size: clamp(28px, 8vw, 40px); }
 }
 `;
 
@@ -257,46 +281,46 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="light-hero" style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", padding: "clamp(60px, 10vh, 80px) 0 clamp(80px, 12vh, 140px)" }}>
+    <section className="light-hero" style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", padding: "clamp(60px, 10vh, 80px) 0 clamp(80px, 12vh, 140px)", position: "relative", overflow: "hidden" }}>
       <div className="grid-bg" />
       <div className="hero-orb" style={{ width: 500, height: 500, background: "rgba(16,185,129,0.08)", top: -100, right: -100 }} />
       <div className="hero-orb" style={{ width: 300, height: 300, background: "rgba(132,204,22,0.05)", bottom: 100, left: -80 }} />
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 clamp(20px, 5vw, 32px)", position: "relative", zIndex: 2 }}>
-        <div style={{ marginBottom: "clamp(20px, 4vw, 32px)" }}>
-          <span className="omni-pill">
-            <span className="omni-pill-dot" />AI SOLUTIONS — OMNICHANNEL RESPONDER
-          </span>
-        </div>
-        <div style={{ marginBottom: "clamp(20px, 3vw, 28px)" }}>
-          <h1 style={{ fontSize: "clamp(36px, 7vw, 92px)", fontWeight: 800, lineHeight: 1.0, letterSpacing: "-0.04em", color: "var(--ink)", fontFamily: "'JetBrains Mono', 'Geist Mono', monospace" }}>
-            8 channels.<br />
-            <span style={{ fontFamily: "'Fraunces', 'DM Serif Display', serif", fontStyle: "italic", fontWeight: 400, letterSpacing: "-0.02em" }}>One{" "}</span>
-            <span className="omni-grad-text" style={{ fontFamily: "'Fraunces', 'DM Serif Display', serif", fontStyle: "italic", fontWeight: 400 }}>AI voice.</span>
-          </h1>
-        </div>
-        <div style={{ marginBottom: "clamp(28px, 5vw, 44px)" }}>
-          <p style={{ fontSize: "clamp(14px,1.6vw,19px)", color: "var(--ink-soft)", lineHeight: 1.6, maxWidth: 560, fontFamily: "'Inter', sans-serif", fontWeight: 400 }}>
-            Replies on Instagram, WhatsApp, SMS, and Email — all at once, all in your voice, all within seconds. Closes bookings inside the conversation. No human needed.
-          </p>
-        </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "clamp(32px, 6vw, 56px)", alignItems: "start" }}>
-          <div>
-            <div style={{ display: "flex", gap: "clamp(16px, 3vw, 28px)", marginBottom: "clamp(28px, 5vw, 44px)", flexWrap: "wrap" }}>
-              {[
-                { num: "8",  label: "Channels handled\nsimultaneously", suffix: "" },
-                { num: "4",  label: "Second auto-DM\non Instagram",     suffix: "s" },
-                { num: "24", label: "Hours a day,\n7 days a week",      suffix: "/7" },
-              ].map((s) => (
-                <div key={s.label}>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: 1 }}>
-                    <span className="big-stat">{s.num}</span>
-                    {s.suffix && <span style={{ fontSize: "clamp(18px,3vw,36px)", fontWeight: 800, background: "var(--grad-text)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", letterSpacing: "-0.04em" }}>{s.suffix}</span>}
-                  </div>
-                  <p style={{ fontSize: "clamp(10px, 2vw, 11px)", color: "var(--ink-soft)", fontFamily: "'JetBrains Mono', 'Geist Mono', monospace", fontWeight: 600, letterSpacing: "0.04em", marginTop: 4, lineHeight: 1.4, whiteSpace: "pre-line" }}>{s.label}</p>
-                </div>
-              ))}
+      <div className="container" style={{ maxWidth: 1200, margin: "0 auto", padding: "0 clamp(16px, 4vw, 32px)", position: "relative", zIndex: 2 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "clamp(32px, 6vw, 56px)", alignItems: "start" }}>
+          <div style={{ textAlign: "center" }}>
+            <div style={{ marginBottom: "clamp(20px, 4vw, 32px)" }}>
+              <span className="omni-pill">
+                <span className="omni-pill-dot" />AI SOLUTIONS — OMNICHANNEL RESPONDER
+              </span>
             </div>
-            <div style={{ marginBottom: "clamp(24px, 4vw, 36px)" }}>
+            <div style={{ marginBottom: "clamp(20px, 3vw, 28px)" }}>
+              <h1 style={{ fontSize: "clamp(28px, 7vw, 72px)", fontWeight: 800, lineHeight: 1.0, letterSpacing: "-0.04em", color: "var(--ink)", fontFamily: "'JetBrains Mono', 'Geist Mono', monospace" }}>
+                8 channels.<br />
+                <span style={{ fontFamily: "'Fraunces', 'DM Serif Display', serif", fontStyle: "italic", fontWeight: 400, letterSpacing: "-0.02em" }}>One{" "}</span>
+                <span className="omni-grad-text" style={{ fontFamily: "'Fraunces', 'DM Serif Display', serif", fontStyle: "italic", fontWeight: 400 }}>AI voice.</span>
+              </h1>
+            </div>
+            <div style={{ marginBottom: "clamp(28px, 5vw, 44px)" }}>
+              <p style={{ fontSize: "clamp(14px,1.6vw,18px)", color: "var(--ink-soft)", lineHeight: 1.6, maxWidth: 560, fontFamily: "'Inter', sans-serif", fontWeight: 400, margin: "0 auto" }}>
+                Replies on Instagram, WhatsApp, SMS, and Email — all at once, all in your voice, all within seconds. Closes bookings inside the conversation. No human needed.
+              </p>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: "clamp(24px, 4vw, 32px)", alignItems: "center", marginBottom: "clamp(28px, 5vw, 44px)" }}>
+              <div style={{ display: "flex", gap: "clamp(16px, 3vw, 28px)", flexWrap: "wrap", justifyContent: "center" }}>
+                {[
+                  { num: "8",  label: "Channels handled\nsimultaneously", suffix: "" },
+                  { num: "4",  label: "Second auto-DM\non Instagram",     suffix: "s" },
+                  { num: "24", label: "Hours a day,\n7 days a week",      suffix: "/7" },
+                ].map((s) => (
+                  <div key={s.label} style={{ textAlign: "center" }}>
+                    <div style={{ display: "flex", alignItems: "baseline", gap: 1, justifyContent: "center" }}>
+                      <span className="big-stat">{s.num}</span>
+                      {s.suffix && <span style={{ fontSize: "clamp(18px,3vw,36px)", fontWeight: 800, background: "var(--grad-text)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", letterSpacing: "-0.04em" }}>{s.suffix}</span>}
+                    </div>
+                    <p style={{ fontSize: "clamp(10px, 2vw, 11px)", color: "var(--ink-soft)", fontFamily: "'JetBrains Mono', 'Geist Mono', monospace", fontWeight: 600, letterSpacing: "0.04em", marginTop: 4, lineHeight: 1.4, whiteSpace: "pre-line" }}>{s.label}</p>
+                  </div>
+                ))}
+              </div>
               <div style={{ display: "inline-flex", alignItems: "center", gap: "clamp(10px, 2vw, 14px)", padding: "clamp(10px, 2vw, 14px) clamp(14px, 3vw, 20px)", borderRadius: 16, background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.2)" }}>
                 <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                   <span key={msgCount} className="live-counter" style={{ fontSize: "clamp(22px, 4vw, 28px)", fontWeight: 800, fontFamily: "'JetBrains Mono', 'Geist Mono', monospace", background: "var(--grad-text)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", lineHeight: 1 }}>{msgCount.toLocaleString()}</span>
@@ -313,40 +337,9 @@ const HeroSection = () => {
                 </div>
               </div>
             </div>
-            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+            <div className="cta-buttons" style={{ display: "flex", gap: 12, flexWrap: "wrap", justifyContent: "center" }}>
               <button className="omni-btn-primary"><span className="omni-pill-dot" />See It Live</button>
               <button className="omni-btn-outline">Book a Demo →</button>
-            </div>
-          </div>
-          <div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              <div style={{ background: "white", border: "1px solid rgba(16,185,129,0.15)", borderRadius: 18, padding: "clamp(12px, 2vw, 16px)", boxShadow: "0 4px 16px rgba(16,185,129,0.08)" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
-                  <span style={{ fontSize: "clamp(9px, 1.8vw, 10px)", fontWeight: 700, color: "var(--ink-soft)", letterSpacing: "0.08em", fontFamily: "'JetBrains Mono', 'Geist Mono', monospace" }}>LIVE ACTIVITY</span>
-                  <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
-                    <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#10B981", boxShadow: "0 0 8px #10B981", animation: "omni-blink 1.5s infinite" }} />
-                    <span style={{ fontSize: "clamp(8px, 1.6vw, 9px)", color: "#10B981", fontWeight: 700, letterSpacing: "0.06em" }}>LIVE</span>
-                  </div>
-                </div>
-                {NOTIFS.map((n, i) => (
-                  <div key={i} className="notif-card" style={{ marginBottom: i < NOTIFS.length - 1 ? 8 : 0, opacity: activeNotif === i ? 1 : 0.5, transform: `scale(${activeNotif === i ? 1 : 0.98})`, transition: "opacity 0.3s, transform 0.3s", border: activeNotif === i ? `1px solid ${n.color}44` : "1px solid rgba(16,185,129,0.1)" }}>
-                    <div className="notif-icon" style={{ background: n.bg }}></div>
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 2 }}>
-                        <span style={{ fontSize: "clamp(9px, 1.8vw, 10px)", fontWeight: 800, color: n.color, letterSpacing: "0.04em" }}>{n.channel}</span>
-                        <span style={{ fontSize: "clamp(8px, 1.6vw, 9px)", color: "var(--ink-soft)", fontFamily: "'JetBrains Mono', 'Geist Mono', monospace" }}>{n.time}</span>
-                      </div>
-                      <p style={{ fontSize: "clamp(11px, 2vw, 12px)", color: "var(--ink)", fontWeight: 500, lineHeight: 1.35 }}>{n.text}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "clamp(10px, 2vw, 12px) clamp(12px, 2.5vw, 16px)", background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.25)", borderRadius: 14 }}>
-                <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#10B981", animation: "omni-blink 1s infinite" }} />
-                <span style={{ fontSize: "clamp(10px, 2vw, 11.5px)", color: "var(--ink)", fontFamily: "'JetBrains Mono', 'Geist Mono', monospace", fontWeight: 600 }}>
-                  Responding to {CHANNELS[activeNotif].name} in real-time<span className="cursor" />
-                </span>
-              </div>
             </div>
           </div>
         </div>
@@ -634,17 +627,19 @@ const FAQSection = () => {
       <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 clamp(16px, 4vw, 32px)" }}>
         <div style={{ textAlign: "center", marginBottom: "clamp(32px, 6vh, 56px)" }}>
           <span className="omni-pill" style={{ marginBottom: 14, display: "inline-flex" }}><span className="omni-pill-dot" />FAQ</span>
-          <h2 style={{ fontSize: "clamp(24px,4vw,40px)", fontWeight: 800, color: "var(--ink)", letterSpacing: "-0.035em", lineHeight: 1.1, marginTop: 12 }}>Questions, answered.</h2>
+          <h2 style={{ fontSize: "clamp(20px,4vw,40px)", fontWeight: 800, color: "var(--ink)", letterSpacing: "-0.035em", lineHeight: 1.1, marginTop: 12 }}>Questions, answered.</h2>
         </div>
-        {FAQS.map((f, i) => (
-          <div key={i} className="faq-row">
-            <button className="faq-btn" onClick={() => setOpen(open === i ? null : i)}>
-              <span style={{ paddingRight: "clamp(8px, 2vw, 16px)", flex: 1, textAlign: "left" }}>{f.q}</span>
-              <div className="faq-chevron" style={{ transform: open === i ? "rotate(45deg)" : "none" }}>+</div>
-            </button>
-            <div className={`faq-body${open === i ? " open" : ""}`}>{f.a}</div>
-          </div>
-        ))}
+        <div style={{ display: "flex", flexDirection: "column", gap: "clamp(8px, 2vw, 12px)" }}>
+          {FAQS.map((f, i) => (
+            <div key={i} className="faq-row" style={{ background: "white", borderRadius: "clamp(12px, 2vw, 16px)", border: "1px solid rgba(16,185,129,0.1)", overflow: "hidden" }}>
+              <button className="faq-btn" onClick={() => setOpen(open === i ? null : i)} style={{ padding: "clamp(12px, 3vw, 18px) clamp(16px, 4vw, 24px)" }}>
+                <span style={{ paddingRight: "clamp(8px, 2vw, 16px)", flex: 1, textAlign: "left", fontSize: "clamp(12px, 2.5vw, 13.5px)" }}>{f.q}</span>
+                <div className="faq-chevron" style={{ transform: open === i ? "rotate(45deg)" : "none", width: "clamp(18px, 4vw, 22px)", height: "clamp(18px, 4vw, 22px)", fontSize: "clamp(12px, 2.5vw, 14px)" }}>+</div>
+              </button>
+              <div className={`faq-body${open === i ? " open" : ""}`} style={{ padding: open === i ? `0 clamp(16px, 4vw, 24px) clamp(12px, 3vw, 16px)` : "0", fontSize: "clamp(11px, 2.2vw, 13px)" }}>{f.a}</div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

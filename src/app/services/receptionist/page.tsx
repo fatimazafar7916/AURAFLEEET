@@ -234,17 +234,21 @@ body { background: var(--page-bg); font-family: var(--font-brand); }
 MOBILE RESPONSIVE — ≤ 768px
 ══════════════════════════════════════════════════════════ */
 @media (max-width: 768px) {
+  /* Critical mobile fixes */
+  body { overflow-x: hidden !important; }
+  * { max-width: 100% !important; }
+  
   /* Hero grid → single column */
   .hero-grid   { grid-template-columns: 1fr !important; gap: 32px !important; }
   .hero-right  { display: none !important; } /* hide big call card on mobile */
 
   /* Stats row → 2×2 wrap */
-  .stats-row   { gap: 8px !important; }
-  .stat-badge  { flex: 1 1 calc(50% - 8px); min-width: 0; }
+  .stats-row   { gap: 8px !important; justify-content: center !important; }
+  .stat-badge  { flex: 1 1 calc(50% - 8px); min-width: 0; max-width: 150px; }
 
   /* CTA row → stack */
   .cta-row     { flex-direction: column !important; gap: 10px !important; }
-  .btn-primary, .btn-ghost { width: 100%; justify-content: center; }
+  .btn-primary, .btn-ghost { width: 100%; justify-content: center; max-width: 300px; margin: 0 auto; }
 
   /* Capabilities tabs → scroll */
   .caps-tabs   { overflow-x: auto; -webkit-overflow-scrolling: touch; justify-content: flex-start !important; flex-wrap: nowrap !important; padding-bottom: 4px; }
@@ -259,20 +263,20 @@ MOBILE RESPONSIVE — ≤ 768px
   .cmp-table   { min-width: 540px; }
 
   /* Testimonials → single col */
-  .testi-grid  { grid-template-columns: 1fr !important; }
+  .testi-grid  { grid-template-columns: 1fr !important; gap: 16px !important; }
 
   /* Pricing → single col */
-  .pricing-grid { grid-template-columns: 1fr !important; }
+  .pricing-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
 
   /* Bottom CTA card padding */
   .cta-card-inner { padding: 36px 24px !important; }
 
   /* Section padding */
-  .sec-pad { padding: 56px 0 !important; }
+  .sec-pad { padding: clamp(40px, 8vh, 80px) 0 !important; }
   .sec-pad-sm { padding: 40px 0 !important; }
 
   /* General container */
-  .container { padding: 0 16px !important; }
+  .container { padding: 0 16px !important; max-width: 100% !important; }
 
   /* Ticker font */
   .ticker-item { font-size: 10px; padding: 0 18px; }
@@ -284,21 +288,26 @@ MOBILE RESPONSIVE — ≤ 768px
   .dark-card { margin: 0 !important; }
   .glass-card { margin: 0 !important; }
   
-  /* Ensure no horizontal overflow */
-  body { overflow-x: hidden; }
-  .container { max-width: 100% !important; }
+  /* Text alignment */
+  h1, h2, h3 { text-align: center !important; }
+  
+  /* FAQ improvements */
+  .faq-q { font-size: 12px; padding: 12px 0; }
+  .faq-a { font-size: 12px; }
+  .faq-icon { width: 20px; height: 20px; font-size: 12px; }
 }
 
 @media (max-width: 480px) {
   .stat-badge-num { font-size: 20px; }
-  .faq-q { font-size: 12px; padding: 12px 0; }
-  .faq-a { font-size: 12px; }
-  .faq-icon { width: 20px; height: 20px; font-size: 12px; }
   
   /* Extra small mobile adjustments */
   .container { padding: 0 12px !important; }
-  .sec-pad { padding: 40px 0 !important; }
+  .sec-pad { padding: clamp(32px, 6vh, 60px) 0 !important; }
   .cta-card-inner { padding: 24px 16px !important; }
+  
+  /* Button adjustments */
+  .btn-primary, .btn-ghost { padding: 10px 20px; font-size: 13px; }
+  .stat-badge { flex: 1 1 100%; max-width: none; }
 }
 `;
 
