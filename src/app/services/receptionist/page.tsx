@@ -1,5 +1,6 @@
 ﻿"use client";
 import React, { useState, useEffect } from "react";
+import { ServicePageTemplate } from "@/components/templates/ServicePageTemplate";
 
 /* ============================================================
 INJECT GLOBAL STYLES
@@ -58,7 +59,7 @@ body { background: var(--page-bg); font-family: var(--font-brand); }
 }
 
 @keyframes pilldot { 0%,100%{opacity:1}50%{opacity:0.35} }
-`;
+
 /* ── Buttons ── */
 .btn-primary {
   display: inline-flex; align-items: center; gap: 8px;
@@ -1111,24 +1112,17 @@ const BottomCTASection = () => (
         </p>
 
         <div className="cta-row" style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap", marginBottom: 20 }}>
-          <button className="btn-primary" style={{ fontSize: 15, padding: "14px 32px" }}>
+          <button className="btn-primary" style={{ fontSize: 15, padding: "15px 32px" }}>
             <span className="live-dot" />
-            Start Free Trial
+            Hear Aiaura Live
           </button>
-          <button style={{ 
-            display: "inline-flex", alignItems: "center", gap: 8, 
-            padding: "14px 26px", borderRadius: 999, cursor: "pointer", 
-            background: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.75)", 
-            border: "1px solid rgba(255,255,255,0.15)", 
-            fontFamily: "var(--font-brand)", fontSize: 15, fontWeight: 600, 
-            transition: "all 0.18s" 
-          }}>
-            Hear Aiaura Live →
+          <button className="btn-ghost" style={{ fontSize: 15, padding: "15px 32px", background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.8)" }}>
+            Book a Demo →
           </button>
         </div>
 
-        <p style={{ ...mono, fontSize: 10, color: "rgba(255,255,255,0.3)", letterSpacing: "0.05em", fontWeight: 600 }}>
-          60-DAY MONEY-BACK GUARANTEE · LIVE IN 14 DAYS · NO TECH TEAM NEEDED
+        <p style={{ ...mono, fontSize: 11, color: "rgba(255,255,255,0.35)", fontWeight: 700, letterSpacing: "0.06em" }}>
+          60-DAY MONEY-BACK · LIVE IN 14 DAYS · NO TECH TEAM
         </p>
       </div>
     </div>
@@ -1143,17 +1137,19 @@ export default function ReceptionistPage() {
   return (
     <>
       <InjectStyles />
-      <div style={{ fontFamily: "var(--font-brand)" }}>
-        <HeroSection />
-        <TickerSection />
-        <CapabilitiesSection />
-        <HowItWorksSection />
-        <ComparisonSection />
-        <TestimonialsSection />
-        <PricingSection />
-        <FAQSection />
-        <BottomCTASection />
-      </div>
+      <ServicePageTemplate>
+        <div style={{ fontFamily: "var(--font-brand)" }}>
+          <HeroSection />
+          <TickerSection />
+          <CapabilitiesSection />
+          <HowItWorksSection />
+          <ComparisonSection />
+          <TestimonialsSection />
+          <PricingSection />
+          <FAQSection />
+          <BottomCTASection />
+        </div>
+      </ServicePageTemplate>
     </>
   );
 }
