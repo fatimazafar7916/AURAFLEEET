@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
+import { ServicePageTemplate } from "@/components/templates/ServicePageTemplate";
 
 /* ============================================================
    GLOBAL STYLES
@@ -182,34 +183,34 @@ function useReveal() {
 const CHANNELS = [
   {
     name: "Instagram", color: "#E1306C",
-    bg: "linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)", emoji: "📸",
+    bg: "linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)", emoji: "",
     convo: [
       { dir: "in",  text: "Hey! Is the Mustang still available this Saturday?", meta: "Comment on post" },
       { dir: "out", text: "Hi! Yes, the Mustang GT is available Saturday ✅ Sending you a booking link now!", meta: "Auto-DM in 4s" },
       { dir: "in",  text: "Amazing, just paid!", meta: "3 mins later" },
-      { dir: "out", text: "Booking confirmed 🎉 Contract sent to your email. See you Saturday at 9 AM!", meta: "Instant" },
+      { dir: "out", text: "Booking confirmed. Contract sent to your email. See you Saturday at 9 AM!", meta: "Instant" },
     ],
   },
   {
-    name: "WhatsApp", color: "#25D366", bg: "#25D366", emoji: "💬",
+    name: "WhatsApp", color: "#25D366", bg: "#25D366", emoji: "",
     convo: [
       { dir: "in",  text: "Do you have any luxury cars available next weekend?", meta: "Inbound" },
       { dir: "out", text: "We have a Mercedes S-Class and BMW 7 Series available. Both start at $249/day. Which interests you?", meta: "2s reply" },
       { dir: "in",  text: "The Benz! Can I pay a deposit now?", meta: "" },
-      { dir: "out", text: "Absolutely — here's your secure deposit link: pay.aiaura.io/apex/s241 💳", meta: "Instant" },
+      { dir: "out", text: "Absolutely — here's your secure deposit link: pay.aiaura.io/apex/s241", meta: "Instant" },
     ],
   },
   {
-    name: "SMS", color: "#34C759", bg: "#34C759", emoji: "📱",
+    name: "SMS", color: "#34C759", bg: "#34C759", emoji: "",
     convo: [
       { dir: "in",  text: "hi do u have corvettes", meta: "Inbound text" },
       { dir: "out", text: "Hey! Yes — 2024 Corvette Stingray available. $289/day. Want me to hold it for you?", meta: "4s" },
       { dir: "in",  text: "yes please for fri-sun", meta: "" },
-      { dir: "out", text: "Done! Holding it for Fri–Sun. Sending contract & payment link now 🚀", meta: "Instant" },
+      { dir: "out", text: "Done! Holding it for Fri–Sun. Sending contract & payment link now", meta: "Instant" },
     ],
   },
   {
-    name: "Email", color: "#EA4335", bg: "#EA4335", emoji: "📧",
+    name: "Email", color: "#EA4335", bg: "#EA4335", emoji: "",
     convo: [
       { dir: "in",  text: "Hello, I'm looking for a fleet of 5 vehicles for a corporate event on the 18th.", meta: "Email inquiry" },
       { dir: "out", text: "Hello! We'd love to accommodate your corporate booking. I'm preparing a custom fleet quote for 5 vehicles on the 18th — you'll receive it within 10 minutes.", meta: "Immediate" },
@@ -224,10 +225,10 @@ const HeroSection = () => {
   const [activeNotif, setActiveNotif] = useState(0);
   const [msgCount, setMsgCount] = useState(247);
   const NOTIFS = [
-    { channel: "Instagram", color: "#E1306C", bg: "linear-gradient(135deg,#f09433,#dc2743,#bc1888)", icon: "📸", text: "New comment booking — Mustang GT, Saturday", time: "just now" },
-    { channel: "WhatsApp",  color: "#25D366", bg: "#25D366", icon: "💬", text: "Payment received — Mercedes S-Class, $498", time: "12s ago" },
-    { channel: "SMS",       color: "#34C759", bg: "#34C759", icon: "📱", text: "Lead captured — Corvette inquiry, hot 🔥", time: "34s ago" },
-    { channel: "Email",     color: "#EA4335", bg: "#EA4335", icon: "📧", text: "Corporate fleet inquiry — 5 vehicles, $2,000 budget", time: "1 min ago" },
+    { channel: "Instagram", color: "#E1306C", bg: "linear-gradient(135deg,#f09433,#dc2743,#bc1888)", icon: "", text: "New comment booking — Mustang GT, Saturday", time: "just now" },
+    { channel: "WhatsApp",  color: "#25D366", bg: "#25D366", icon: "", text: "Payment received — Mercedes S-Class, $498", time: "12s ago" },
+    { channel: "SMS",       color: "#34C759", bg: "#34C759", icon: "", text: "Lead captured — Corvette inquiry, hot", time: "34s ago" },
+    { channel: "Email",     color: "#EA4335", bg: "#EA4335", icon: "", text: "Corporate fleet inquiry — 5 vehicles, $2,000 budget", time: "1 min ago" },
   ];
   useEffect(() => {
     const t = setInterval(() => {
@@ -311,7 +312,7 @@ const HeroSection = () => {
                 </div>
                 {NOTIFS.map((n, i) => (
                   <div key={i} className="notif-card" style={{ marginBottom: i < NOTIFS.length - 1 ? 8 : 0, opacity: activeNotif === i ? 1 : 0.5, transform: `scale(${activeNotif === i ? 1 : 0.98})`, transition: "opacity 0.3s, transform 0.3s", border: activeNotif === i ? `1px solid ${n.color}44` : "1px solid rgba(16,185,129,0.1)" }}>
-                    <div className="notif-icon" style={{ background: n.bg }}>{n.icon}</div>
+                    <div className="notif-icon" style={{ background: n.bg }}></div>
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 2 }}>
                         <span style={{ fontSize: "clamp(9px, 1.8vw, 10px)", fontWeight: 800, color: n.color, letterSpacing: "0.04em" }}>{n.channel}</span>
@@ -381,7 +382,7 @@ const ChannelShowcaseSection = () => {
           <div style={{ display: "flex", gap: 8 }}>
             {CHANNELS.map((c, i) => (
               <button key={c.name} onClick={() => setActive(i)} style={{ padding: "8px 16px", borderRadius: 999, cursor: "pointer", fontFamily: "'Geist Mono', monospace", fontSize: 11, fontWeight: 700, background: active === i ? c.color : "white", color: active === i ? "white" : "var(--ink-soft)", border: active === i ? "none" : "1px solid #E2E8F0", transition: "all 0.2s", boxShadow: active === i ? `0 4px 16px ${c.color}44` : "none" }}>
-                {c.emoji} {c.name}
+                {c.name}
               </button>
             ))}
           </div>
@@ -389,7 +390,7 @@ const ChannelShowcaseSection = () => {
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1.2fr", gap: 40, alignItems: "center" }}>
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 24 }}>
-              <div style={{ width: 48, height: 48, borderRadius: 14, background: ch.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22 }}>{ch.emoji}</div>
+              <div style={{ width: 48, height: 48, borderRadius: 14, background: ch.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22 }}></div>
               <div>
                 <h3 style={{ fontSize: 22, fontWeight: 800, color: "var(--ink)", letterSpacing: "-0.02em" }}>{ch.name} Responder</h3>
                 <p style={{ fontSize: 12, color: "var(--ink-soft)", fontWeight: 600 }}>AI-powered · Always on · Closes bookings</p>
@@ -410,7 +411,7 @@ const ChannelShowcaseSection = () => {
           <div>
             <div style={{ background: "var(--dark-bg)", borderRadius: 24, overflow: "hidden", border: `1px solid ${ch.color}33` }}>
               <div style={{ background: ch.bg, padding: "12px 18px", display: "flex", alignItems: "center", gap: 10 }}>
-                <div style={{ fontSize: 18 }}>{ch.emoji}</div>
+                <div style={{ fontSize: 18 }}></div>
                 <div>
                   <p style={{ color: "white", fontWeight: 800, fontSize: 13, margin: 0 }}>{ch.name}</p>
                   <p style={{ color: "rgba(255,255,255,0.75)", fontSize: 10, margin: 0 }}>AI Responder — Online</p>
@@ -527,7 +528,7 @@ const BentoSection = () => {
           {/* Unified inbox */}
           <div style={{ background: "white", border: "1px solid rgba(16,185,129,0.15)", borderRadius: 22, padding: "28px 24px" }}>
             <p style={{ fontSize: 11, fontWeight: 700, color: "var(--ink-soft)", letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 18 }}>Unified inbox view</p>
-            {[{ ch: "Instagram", color: "#E1306C", msg: "Mustang confirmed ✓", t: "2m", unread: 0 }, { ch: "WhatsApp", color: "#25D366", msg: "Payment received 💳", t: "4m", unread: 2 }, { ch: "SMS", color: "#34C759", msg: "Corvette, Fri–Sun", t: "6m", unread: 0 }, { ch: "Email", color: "#EA4335", msg: "Fleet quote sent", t: "9m", unread: 1 }].map((m) => (
+            {[{ ch: "Instagram", color: "#E1306C", msg: "Mustang confirmed", t: "2m", unread: 0 }, { ch: "WhatsApp", color: "#25D366", msg: "Payment received", t: "4m", unread: 2 }, { ch: "SMS", color: "#34C759", msg: "Corvette, Fri–Sun", t: "6m", unread: 0 }, { ch: "Email", color: "#EA4335", msg: "Fleet quote sent", t: "9m", unread: 1 }].map((m) => (
               <div key={m.ch} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 0", borderBottom: "1px solid #F8FAFC" }}>
                 <div style={{ width: 8, height: 8, borderRadius: "50%", background: m.color, flexShrink: 0 }} />
                 <span style={{ fontSize: 11, fontWeight: 700, color: "var(--ink)", minWidth: 64 }}>{m.ch}</span>
@@ -639,7 +640,7 @@ const BottomCTASection = () => (
     <div style={{ maxWidth: 900, margin: "0 auto", padding: "0 clamp(20px, 5vw, 32px)", textAlign: "center", position: "relative", zIndex: 1 }}>
       <div style={{ display: "flex", justifyContent: "center", gap: "clamp(8px, 2vw, 12px)", marginBottom: "clamp(28px, 5vh, 36px)", flexWrap: "wrap" }}>
         {CHANNELS.map((ch, i) => (
-          <div key={ch.name} className="float-anim" style={{ width: "clamp(36px, 7vw, 44px)", height: "clamp(36px, 7vw, 44px)", borderRadius: 12, background: ch.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "clamp(16px, 3.5vw, 20px)", boxShadow: `0 8px 24px ${ch.color}44`, animationDelay: `${i * 0.4}s` }}>{ch.emoji}</div>
+          <div key={ch.name} className="float-anim" style={{ width: "clamp(36px, 7vw, 44px)", height: "clamp(36px, 7vw, 44px)", borderRadius: 12, background: ch.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "clamp(16px, 3.5vw, 20px)", boxShadow: `0 8px 24px ${ch.color}44`, animationDelay: `${i * 0.4}s` }}></div>
         ))}
       </div>
       <h2 style={{ fontSize: "clamp(32px,6vw,72px)", fontWeight: 800, color: "var(--ink)", letterSpacing: "-0.04em", lineHeight: 1.0, marginBottom: "clamp(16px, 3vh, 20px)", fontFamily: "'JetBrains Mono', 'Geist Mono', monospace" }}>
@@ -663,14 +664,16 @@ export default function OmnichannelPage() {
   return (
     <>
       <InjectOmniStyles />
-      <div style={{ fontFamily: "'Inter', 'JetBrains Mono', ui-monospace, sans-serif" }}>
-        <HeroSection />
-        <ChannelShowcaseSection />
-        <BentoSection />
-        <ProofWallSection />
-        <FAQSection />
-        <BottomCTASection />
-      </div>
+      <ServicePageTemplate>
+        <div style={{ fontFamily: "'Inter', 'JetBrains Mono', ui-monospace, sans-serif" }}>
+          <HeroSection />
+          <ChannelShowcaseSection />
+          <BentoSection />
+          <ProofWallSection />
+          <FAQSection />
+          <BottomCTASection />
+        </div>
+      </ServicePageTemplate>
     </>
   );
 }
