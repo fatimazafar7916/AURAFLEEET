@@ -159,13 +159,14 @@ body { background: var(--page-bg); font-family: var(--font-brand); }
   position:relative; z-index:1;
 }
 
-/* ── Pricing featured ── */
-.pricing-card-featured {
-  background:var(--grad-dark); border:2px solid var(--mint);
-  border-radius:28px; position:relative; overflow:hidden;
+/* ── Comparison table ── */
+.cmp-table { width:100%; border-collapse:collapse; }
+.cmp-table th {
+  padding:12px 14px; font-family:var(--font-mono); font-size:10px; font-weight:700;
+  letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-soft); background:#F8FAFC;
 }
-
-/* ── Animations ── */
+.cmp-table td { padding:12px 14px; font-family:var(--font-brand); font-size:13px; border-top:1px solid #F1F5F9; }
+.cmp-row-hl  { background:rgba(16,185,129,0.03); }
 @keyframes fadeup  { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
 @keyframes scalein { from{opacity:0;transform:scale(0.95)}      to{opacity:1;transform:scale(1)} }
 @keyframes wave    { 0%,100%{height:8px} 50%{height:22px} }
@@ -244,9 +245,6 @@ MOBILE RESPONSIVE — ≤ 768px
 
   /* Testimonials → single col */
   .testi-grid  { grid-template-columns: 1fr !important; gap: 16px !important; }
-
-  /* Pricing → single col */
-  .pricing-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
 
   /* Bottom CTA card padding */
   .cta-card-inner { padding: 36px 24px !important; }
@@ -945,144 +943,6 @@ const TestimonialsSection = () => {
 };
 
 /* ============================================================
-SECTION 7 — PRICING
-============================================================ */
-
-const PricingSection = () => {
-  const PLANS = [
-    { name: "Starter", price: "$149", period: "/mo", desc: "Perfect for single-location shops under 100 calls/month.", features: ["Up to 200 inbound minutes/mo", "Booking & quote handling", "SMS confirmation dispatch", "English + 1 language", "Call transcripts (30 days)", "Email support"], cta: "Start Free Trial", featured: false },
-    { name: "Growth", price: "$349", period: "/mo", desc: "The most popular plan for growing rental shops.", features: ["Unlimited inbound minutes", "All Starter features", "22+ languages", "Live VIP transfer", "Sentiment detection", "CRM sync (Pipedrive / HQ)", "Transcripts — 90 days", "Priority support"], cta: "Start Free Trial", badge: "Most Popular", featured: true },
-    { name: "Enterprise", price: "Custom", period: "", desc: "For multi-location operators and fleets of 50+ vehicles.", features: ["All Growth features", "Multiple location numbers", "White-glove onboarding", "Custom voice & persona", "Dedicated account manager", "SLA guarantee"], cta: "Book a Call", featured: false },
-  ];
-
-  return (
-    <section className="sec-pad" style={{ background: "var(--page-bg)", padding: "80px 0" }}>
-      <div className="container" style={{ maxWidth: 1100, margin: "0 auto", padding: "0 24px" }}>
-        <div style={{ textAlign: "center", marginBottom: 44 }}>
-          <span className="sec-pill" style={{ marginBottom: 14, display: "inline-flex" }}>
-            <span className="sec-pill-dot" />
-            PRICING
-          </span>
-          <h2 style={{ fontFamily: "var(--font-brand)", fontSize: "clamp(24px,3.5vw,38px)", fontWeight: 800, color: "var(--ink)", letterSpacing: "-0.03em", lineHeight: 1.12, marginTop: 12 }}>
-            Flat rate. No surprises.
-          </h2>
-          <p style={{ fontFamily: "var(--font-brand)", fontSize: 14, color: "var(--ink-soft)", marginTop: 8 }}>
-            60-day money-back guarantee. Cancel anytime.
-          </p>
-        </div>
-
-        <div className="pricing-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 18, alignItems: "start" }}>
-          {PLANS.map((p) => (
-            <div key={p.name} className={p.featured ? "pricing-card-featured" : "glass-card"} style={{ padding: "26px 22px" }}>
-              {p.featured && <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: "var(--grad-cta)" }} />}
-              
-              {p.badge && (
-                <div style={{ marginBottom: 10 }}>
-                  <span style={{ ...mono, fontSize: 10, fontWeight: 800, padding: "4px 12px", borderRadius: 999, background: "rgba(16,185,129,0.2)", color: "#34D399", letterSpacing: "0.06em" }}>
-                    ✦ {p.badge}
-                  </span>
-                </div>
-              )}
-
-              <p style={{ fontFamily: "var(--font-brand)", fontSize: 14, fontWeight: 700, color: p.featured ? "rgba(255,255,255,0.6)" : "var(--ink-soft)", marginBottom: 6 }}>
-                {p.name}
-              </p>
-
-              <div style={{ display: "flex", alignItems: "baseline", gap: 4, marginBottom: 8 }}>
-                <span style={{ 
-                  fontFamily: "var(--font-brand)", fontSize: 38, fontWeight: 800, lineHeight: 1, letterSpacing: "-0.04em", 
-                  color: p.featured ? "white" : undefined, 
-                  background: p.featured ? "none" : "var(--grad-text)", 
-                  WebkitBackgroundClip: p.featured ? "unset" : "text", 
-                  WebkitTextFillColor: p.featured ? "white" : "transparent", 
-                  backgroundClip: p.featured ? "unset" : "text" 
-                }}>
-                  {p.price}
-                </span>
-                {p.period && (
-                  <span style={{ fontFamily: "var(--font-brand)", fontSize: 14, color: p.featured ? "rgba(255,255,255,0.5)" : "var(--ink-soft)", fontWeight: 600 }}>
-                    {p.period}
-                  </span>
-                )}
-              </div>
-
-              <p style={{ fontFamily: "var(--font-brand)", fontSize: 13, color: p.featured ? "rgba(255,255,255,0.55)" : "var(--ink-soft)", marginBottom: 20, lineHeight: 1.5 }}>
-                {p.desc}
-              </p>
-
-              <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 22 }}>
-                {p.features.map((f) => 
-                  <div key={f} style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                    <GreenCheck />
-                    <span style={{ fontFamily: "var(--font-brand)", fontSize: 13, fontWeight: 600, color: p.featured ? "rgba(255,255,255,0.8)" : "var(--ink)" }}>
-                      {f}
-                    </span>
-                  </div>
-                )}
-              </div>
-
-              <button style={{ 
-                width: "100%", padding: "13px", borderRadius: 12, cursor: "pointer", 
-                fontFamily: "var(--font-brand)", fontSize: 14, fontWeight: 700, 
-                background: p.featured ? "linear-gradient(135deg,#10B981,#84CC16)" : "transparent", 
-                color: p.featured ? "white" : "var(--ink)", 
-                border: p.featured ? "none" : "1.5px solid rgba(10,38,32,0.2)", 
-                boxShadow: p.featured ? "0 4px 20px rgba(16,185,129,0.35)" : "none", 
-                transition: "all 0.18s" 
-              }}>
-                {p.cta}
-              </button>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-/* ============================================================
-/* ============================================================
-SECTION 9 — BOTTOM CTA
-============================================================ */
-
-const BottomCTASection = () => (
-  <section style={{ background: "var(--page-bg)", padding: "72px 0 96px" }}>
-    <div className="container" style={{ maxWidth: 700, margin: "0 auto", padding: "0 24px", textAlign: "center" }}>
-      <div className="dark-card cta-card-inner" style={{ padding: "52px 40px" }}>
-        <div className="dark-card-accent" />
-        
-        <div style={{ width: 72, height: 72, borderRadius: "50%", background: "linear-gradient(135deg,rgba(16,185,129,0.25),rgba(132,204,22,0.12))", margin: "0 auto 22px", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 0 40px rgba(16,185,129,0.25)" }}>
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-          </svg>
-        </div>
-
-        <h2 style={{ fontFamily: "var(--font-brand)", fontSize: "clamp(26px,4vw,42px)", fontWeight: 800, color: "white", letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: 14 }}>
-          Your next call is <span className="grad-text">already ringing.</span>
-        </h2>
-
-        <p style={{ fontFamily: "var(--font-brand)", fontSize: 15, color: "rgba(255,255,255,0.55)", lineHeight: 1.65, maxWidth: 420, margin: "0 auto 32px" }}>
-          Stop sending customers to voicemail. Aiaura answers every call, books every rental, and pays for itself — guaranteed.
-        </p>
-
-        <div className="cta-row" style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap", marginBottom: 20 }}>
-          <button className="btn-primary" style={{ fontSize: 15, padding: "15px 32px" }}>
-            <span className="live-dot" />
-            Hear Aiaura Live
-          </button>
-          <button className="btn-ghost" style={{ fontSize: 15, padding: "15px 32px", background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.8)" }}>
-            Book a Demo →
-          </button>
-        </div>
-
-        <p style={{ ...mono, fontSize: 11, color: "rgba(255,255,255,0.35)", fontWeight: 700, letterSpacing: "0.06em" }}>
-          60-DAY MONEY-BACK · LIVE IN 14 DAYS · NO TECH TEAM
-        </p>
-      </div>
-    </div>
-  </section>
-);
-
-/* ============================================================
 PAGE ROOT
 ============================================================ */
 
@@ -1098,8 +958,6 @@ export default function ReceptionistPage() {
           <HowItWorksSection />
           <ComparisonSection />
           <TestimonialsSection />
-          <PricingSection />
-          <BottomCTASection />
         </div>
       </ServicePageTemplate>
     </>

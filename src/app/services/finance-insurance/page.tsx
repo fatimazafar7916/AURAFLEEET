@@ -398,28 +398,6 @@ const FeaturesSection = () => {
   );
 };
 
-/* ── CTA SECTION ── */
-const CTASection = () => (
-  <section style={{ background: "linear-gradient(135deg, #F0FDF4 0%, #ECFDF5 100%)", padding: "clamp(80px, 12vh, 120px) 0", position: "relative", overflow: "hidden", borderTop: "1px solid rgba(16,185,129,0.15)" }}>
-    <div className="grid-bg" style={{ opacity: 0.4 }} />
-    <div className="hero-orb" style={{ width: 700, height: 500, background: "rgba(16,185,129,0.08)", top: "50%", left: "50%", transform: "translate(-50%,-50%)", filter: "blur(120px)" }} />
-    <div style={{ maxWidth: 900, margin: "0 auto", padding: "0 clamp(20px, 5vw, 32px)", textAlign: "center", position: "relative", zIndex: 1 }}>
-      <h2 style={{ fontSize: "clamp(32px,6vw,72px)", fontWeight: 800, color: "var(--ink)", letterSpacing: "-0.04em", lineHeight: 1.0, marginBottom: "clamp(16px, 3vh, 20px)", fontFamily: "'JetBrains Mono', monospace" }}>
-        Ready to verify<br />
-        <span className="finance-grad-text" style={{ fontFamily: "'Fraunces', serif", fontStyle: "italic", fontWeight: 400, fontSize: "clamp(36px,6.5vw,78px)" }}>instantly?</span>
-      </h2>
-      <p style={{ fontSize: "clamp(13px,1.6vw,18px)", color: "var(--ink-soft)", lineHeight: 1.65, maxWidth: 520, margin: "0 auto clamp(36px, 6vh, 48px)", fontFamily: "'Inter', sans-serif" }}>
-        Start processing verifications in seconds. Reduce fraud, speed approvals, close more deals.
-      </p>
-      <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap", marginBottom: "clamp(20px, 3vh, 24px)" }}>
-        <button className="finance-btn-primary" style={{ fontSize: "clamp(12px, 2.2vw, 14px)", padding: "clamp(14px, 2.5vw, 16px) clamp(28px, 5vw, 36px)" }}><span className="finance-pill-dot" />Start Verifying</button>
-        <button className="finance-btn-outline" style={{ fontSize: "clamp(11px, 2vw, 13px)", padding: "clamp(14px, 2.5vw, 16px) clamp(22px, 4vw, 28px)" }}>Request Demo →</button>
-      </div>
-      <p style={{ fontSize: "clamp(9px, 1.8vw, 11px)", color: "var(--ink-soft)", letterSpacing: "0.06em", fontFamily: "'JetBrains Mono', monospace", fontWeight: 700 }}>FCRA COMPLIANT · INSTANT SETUP · 99.7% ACCURACY</p>
-    </div>
-  </section>
-);
-
 /* ── PAGE ROOT ── */
 export default function FinanceInsurancePage() {
   return (
@@ -430,7 +408,6 @@ export default function FinanceInsurancePage() {
           <HeroSection />
           <ProcessSection />
           <FeaturesSection />
-          <CTASection />
         </div>
       </ServicePageTemplate>
     </>

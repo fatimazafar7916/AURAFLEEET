@@ -548,76 +548,6 @@ const BentoSection = () => {
   );
 };
 
-/* ── PROOF WALL ── */
-const ProofWallSection = () => {
-  const ref = useReveal();
-  const TESTIMONIALS = [
-    { quote: "We run 8 channels now with zero extra staff. Aiaura replies faster than any human we've hired.", name: "Troy Mendes", role: "Apex Exotics, Phoenix", metric: "+$14K/mo", avatar: "TM", stars: 5 },
-    { quote: "The Instagram DM feature alone paid for a year of Aiaura in 3 weeks. Booked 23 cars from comments.", name: "Kezia Obi", role: "KO Luxury Rentals, Houston", metric: "23 bookings", avatar: "KO", stars: 5 },
-    { quote: "My Spanish-speaking customers now get instant replies in Spanish. Retention is up, complaints are down.", name: "Carlos Vega", role: "SunSet Cars, Miami", metric: "+31% retention", avatar: "CV", stars: 5 },
-    { quote: "I replaced a $2,800/month answering service and a $1,200/month chatbot with one Aiaura plan.", name: "Diana Park", role: "Park Premium, LA", metric: "$4K/mo saved", avatar: "DP", stars: 5 },
-    { quote: "Every channel, one inbox, one AI voice. My brand is consistent whether it's 2pm or 2am.", name: "Leon Baptiste", role: "LB Fleet, New York", metric: "24/7 coverage", avatar: "LB", stars: 5 },
-    { quote: "Response times went from 4 hours to 4 seconds. Our Google reviews jumped from 4.1 to 4.8 in 60 days.", name: "Sandra Kwon", role: "Velocity Rentals, Chicago", metric: "4.1→4.8 ★", avatar: "SK", stars: 5 },
-  ];
-  return (
-    <section style={{ background: "var(--page-bg)", padding: "100px 0" }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 32px" }}>
-        <div style={{ textAlign: "center", marginBottom: 56 }}>
-          <span className="omni-pill" style={{ marginBottom: 14, display: "inline-flex" }}><span className="omni-pill-dot" />RESULTS</span>
-          <h2 style={{ fontSize: "clamp(28px,4vw,46px)", fontWeight: 800, color: "var(--ink)", letterSpacing: "-0.035em", lineHeight: 1.1, marginTop: 12 }}>
-            Operators who <span className="omni-grad-text">never miss a message.</span>
-          </h2>
-        </div>
-        <div ref={ref} className="omni-reveal" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
-          {TESTIMONIALS.map((t) => (
-            <div key={t.name} className="tcard">
-              <div style={{ display: "flex", gap: 2, marginBottom: 14 }}>{Array(t.stars).fill(0).map((_, i) => <span key={i} style={{ color: "#F59E0B", fontSize: 13 }}>★</span>)}</div>
-              <p style={{ fontSize: 13.5, lineHeight: 1.65, color: "var(--ink-soft)", fontStyle: "italic", marginBottom: 18 }}>"{t.quote}"</p>
-              <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "8px 14px", background: "rgba(16,185,129,0.06)", borderRadius: 10, border: "1px solid rgba(16,185,129,0.15)", marginBottom: 16 }}>
-                <span style={{ fontSize: 16, fontWeight: 800, background: "var(--grad-text)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>{t.metric}</span>
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <div style={{ width: 34, height: 34, borderRadius: "50%", background: "var(--grad-cta)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 800, color: "white", flexShrink: 0 }}>{t.avatar}</div>
-                <div>
-                  <p style={{ fontSize: 13, fontWeight: 700, color: "var(--ink)" }}>{t.name}</p>
-                  <p style={{ fontSize: 11, color: "var(--ink-soft)" }}>{t.role}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
-/* ── BOTTOM CTA ── */
-const BottomCTASection = () => (
-  <section style={{ background: "linear-gradient(135deg, #F0FDF4 0%, #ECFDF5 100%)", padding: "clamp(80px, 12vh, 120px) 0", position: "relative", overflow: "hidden", borderTop: "1px solid rgba(16,185,129,0.15)" }}>
-    <div className="grid-bg" style={{ opacity: 0.4 }} />
-    <div className="hero-orb" style={{ width: 700, height: 500, background: "rgba(16,185,129,0.08)", top: "50%", left: "50%", transform: "translate(-50%,-50%)", filter: "blur(120px)" }} />
-    <div style={{ maxWidth: 900, margin: "0 auto", padding: "0 clamp(20px, 5vw, 32px)", textAlign: "center", position: "relative", zIndex: 1 }}>
-      <div style={{ display: "flex", justifyContent: "center", gap: "clamp(8px, 2vw, 12px)", marginBottom: "clamp(28px, 5vh, 36px)", flexWrap: "wrap" }}>
-        {CHANNELS.map((ch, i) => (
-          <div key={ch.name} className="float-anim" style={{ width: "clamp(36px, 7vw, 44px)", height: "clamp(36px, 7vw, 44px)", borderRadius: 12, background: ch.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "clamp(16px, 3.5vw, 20px)", boxShadow: `0 8px 24px ${ch.color}44`, animationDelay: `${i * 0.4}s` }}></div>
-        ))}
-      </div>
-      <h2 style={{ fontSize: "clamp(32px,6vw,72px)", fontWeight: 800, color: "var(--ink)", letterSpacing: "-0.04em", lineHeight: 1.0, marginBottom: "clamp(16px, 3vh, 20px)", fontFamily: "'JetBrains Mono', 'Geist Mono', monospace" }}>
-        Every message.<br />
-        <span className="omni-grad-text" style={{ fontFamily: "'Fraunces', 'DM Serif Display', serif", fontStyle: "italic", fontWeight: 400, fontSize: "clamp(36px,6.5vw,78px)" }}>Every channel.</span>
-      </h2>
-      <p style={{ fontSize: "clamp(13px,1.6vw,18px)", color: "var(--ink-soft)", lineHeight: 1.65, maxWidth: 520, margin: "0 auto clamp(36px, 6vh, 48px)", fontFamily: "'Inter', sans-serif" }}>
-        Stop losing bookings to slow replies. Aiaura responds in seconds — Instagram, WhatsApp, SMS, Email — all in your voice, all the time.
-      </p>
-      <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap", marginBottom: "clamp(20px, 3vh, 24px)" }}>
-        <button className="omni-btn-primary" style={{ fontSize: "clamp(12px, 2.2vw, 14px)", padding: "clamp(14px, 2.5vw, 16px) clamp(28px, 5vw, 36px)" }}><span className="omni-pill-dot" />Start Free Trial</button>
-        <button className="omni-btn-outline" style={{ fontSize: "clamp(11px, 2vw, 13px)", padding: "clamp(14px, 2.5vw, 16px) clamp(22px, 4vw, 28px)" }}>Hear It Respond Live →</button>
-      </div>
-      <p style={{ fontSize: "clamp(9px, 1.8vw, 11px)", color: "var(--ink-soft)", letterSpacing: "0.06em", fontFamily: "'JetBrains Mono', 'Geist Mono', monospace", fontWeight: 700 }}>60-DAY MONEY-BACK · LIVE IN 14 DAYS · NO TECH TEAM</p>
-    </div>
-  </section>
-);
-
 /* ── PAGE ROOT ── */
 export default function OmnichannelPage() {
   return (
@@ -628,8 +558,6 @@ export default function OmnichannelPage() {
           <HeroSection />
           <ChannelShowcaseSection />
           <BentoSection />
-          <ProofWallSection />
-          <BottomCTASection />
         </div>
       </ServicePageTemplate>
     </>
