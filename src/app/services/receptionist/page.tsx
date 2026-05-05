@@ -1,10 +1,9 @@
 ﻿"use client";
-
 import React, { useState, useEffect } from "react";
 
 /* ============================================================
-   INJECT GLOBAL STYLES
-   ============================================================ */
+INJECT GLOBAL STYLES
+============================================================ */
 
 const PAGE_CSS = `
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600;1,700;1,800&family=Geist+Mono:wght@400;600;700;800&display=swap');
@@ -32,3 +31,11 @@ const PAGE_CSS = `
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { -webkit-text-size-adjust: 100%; }
 body { background: var(--page-bg); font-family: var(--font-brand); }
+
+/* ── Gradient text ── */
+.grad-text {
+  background: var(--grad-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
