@@ -195,27 +195,7 @@ body { background: var(--page-bg); font-family: var(--font-brand); }
 .cmp-table td { padding:12px 14px; font-family:var(--font-brand); font-size:13px; border-top:1px solid #F1F5F9; }
 .cmp-row-hl  { background:rgba(16,185,129,0.03); }
 
-/* ── FAQ ── */
-.faq-item { border-bottom:1px solid var(--hairline); }
-.faq-q {
-  width:100%; background:none; border:none; cursor:pointer;
-  display:flex; justify-content:space-between; align-items:center;
-  padding:18px 0; text-align:left;
-  font-family:var(--font-brand); font-size:15px; font-weight:700; color:var(--ink);
-}
-.faq-icon {
-  width:24px; height:24px; border-radius:50%; flex-shrink:0;
-  background:rgba(16,185,129,0.1);
-  display:flex; align-items:center; justify-content:center;
-  font-size:15px; font-weight:800; color:var(--mint);
-  transition:transform 0.2s;
-}
-.faq-a {
-  font-family:var(--font-brand); font-size:14px; line-height:1.65; color:var(--ink-soft);
-  padding-bottom:0; max-height:0; overflow:hidden;
-  transition:max-height 0.35s ease, padding-bottom 0.35s ease;
-}
-.faq-a.open { max-height:300px; padding-bottom:18px; }
+
 
 /* ── Live dot ── */
 .live-dot {
@@ -291,10 +271,7 @@ MOBILE RESPONSIVE — ≤ 768px
   /* Text alignment */
   h1, h2, h3 { text-align: center !important; }
   
-  /* FAQ improvements */
-  .faq-q { font-size: 12px; padding: 12px 0; }
-  .faq-a { font-size: 12px; }
-  .faq-icon { width: 20px; height: 20px; font-size: 12px; }
+
 }
 
 @media (max-width: 480px) {
@@ -1063,54 +1040,6 @@ const PricingSection = () => {
   );
 };
 /* ============================================================
-SECTION 8 — FAQ
-============================================================ */
-
-const FAQSection = () => {
-  const [open, setOpen] = useState<number | null>(null);
-
-  const FAQS = [
-    { q: "Will customers know they're talking to AI?", a: "Aiaura introduces herself by name but we never hide that she's AI — and most customers don't care. What they care about is getting answered fast, getting answers, and getting booked. Aiaura does all three better than voicemail." },
-    { q: "What if Aiaura can't answer a question?", a: "Aiaura is trained on your specific fleet and policies. For anything outside her knowledge, she takes a message and schedules a callback — she never guesses or gives wrong information. You get a notification instantly." },
-    { q: "Can I customize her voice and name?", a: "Yes. On the Growth and Enterprise plans you can choose from multiple voice options and give Aiaura any name you like. She'll introduce herself as your brand's receptionist." },
-    { q: "What happens to calls when I want to talk to the customer?", a: "Aiaura can live-transfer any caller to you or another team member at any point. She announces the transfer, gives you context on who's calling and why, and connects the call seamlessly." },
-    { q: "Does it work with my existing phone number?", a: "Yes. We set up call forwarding on your existing number — no porting, no new hardware, no downtime. Your number stays yours. Setup takes about 15 minutes." },
-    { q: "How long does setup take?", a: "Most shops are fully live in 14 days or less. We handle training, setup, and Test Mode. You review and approve everything before Aiaura handles a single live call." },
-  ];
-
-  return (
-    <section className="sec-pad" style={{ background: "#F8FAFC", padding: "clamp(60px, 8vh, 80px) 0", borderTop: "1px solid #E2E8F0" }}>
-      <div className="container" style={{ maxWidth: 720, margin: "0 auto", padding: "0 clamp(16px, 4vw, 24px)" }}>
-        <div style={{ textAlign: "center", marginBottom: "clamp(32px, 6vh, 44px)" }}>
-          <span className="sec-pill" style={{ marginBottom: 14, display: "inline-flex" }}>
-            <span className="sec-pill-dot" />
-            FAQ
-          </span>
-          <h2 style={{ fontFamily: "var(--font-brand)", fontSize: "clamp(20px,3.5vw,36px)", fontWeight: 800, color: "var(--ink)", letterSpacing: "-0.03em", lineHeight: 1.12, marginTop: 12 }}>
-            Common questions answered.
-          </h2>
-        </div>
-
-        <div>
-          {FAQS.map((f, i) => (
-            <div key={i} className="faq-item">
-              <button className="faq-q" onClick={() => setOpen(open === i ? null : i)}>
-                <span style={{ paddingRight: "clamp(8px, 2vw, 16px)", flex: 1, textAlign: "left" }}>{f.q}</span>
-                <div className="faq-icon" style={{ transform: open === i ? "rotate(45deg)" : "none" }}>
-                  +
-                </div>
-              </button>
-              <div className={`faq-a${open === i ? " open" : ""}`}>
-                {f.a}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
 /* ============================================================
 SECTION 9 — BOTTOM CTA
 ============================================================ */
@@ -1170,7 +1099,6 @@ export default function ReceptionistPage() {
           <ComparisonSection />
           <TestimonialsSection />
           <PricingSection />
-          <FAQSection />
           <BottomCTASection />
         </div>
       </ServicePageTemplate>

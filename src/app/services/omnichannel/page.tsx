@@ -119,25 +119,7 @@ const OMNI_CSS = `
   content:''; position:absolute; top:0; left:0; right:0; height:2px;
   background: var(--grad-cta); opacity: 0.6;
 }
-.faq-row { border-bottom: 1px solid rgba(16,185,129,0.1); }
-.faq-btn {
-  width:100%; background:none; border:none; cursor:pointer;
-  display:flex; justify-content:space-between; align-items:center;
-  padding: 18px 0; text-align:left;
-  font-family:'JetBrains Mono', 'Geist Mono', monospace; font-size:13.5px; font-weight:700; color:var(--ink);
-}
-.faq-chevron {
-  width:22px; height:22px; border-radius:50%;
-  background:rgba(16,185,129,0.1); color:var(--mint);
-  display:flex; align-items:center; justify-content:center;
-  font-size:14px; font-weight:800; flex-shrink:0; transition:transform 0.2s;
-}
-.faq-body {
-  font-size:13px; line-height:1.65; color:var(--ink-soft);
-  max-height:0; overflow:hidden; padding-bottom:0;
-  transition: max-height 0.32s ease, padding-bottom 0.32s ease;
-}
-.faq-body.open { max-height:220px; padding-bottom:16px; }
+
 @keyframes float-y { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
 .float-anim { animation: float-y 4s ease-in-out infinite; }
 @keyframes cursor-blink { 0%,100%{opacity:1} 50%{opacity:0} }
@@ -149,9 +131,7 @@ const OMNI_CSS = `
   .omni-btn-primary, .omni-btn-outline { padding: 11px 20px; font-size: 12px; width: 100%; justify-content: center; }
   .omni-pill { font-size: 10px; padding: 4px 12px; }
   .tcard { padding: 20px 18px; border-radius: 18px; }
-  .faq-btn { font-size: 12px; padding: 12px 0; }
-  .faq-body { font-size: 12px; }
-  .faq-chevron { width: 20px; height: 20px; font-size: 12px; }
+
   .notif-card { padding: 9px 12px; }
   
   /* Critical mobile fixes */
@@ -611,40 +591,6 @@ const ProofWallSection = () => {
   );
 };
 
-/* ── FAQ ── */
-const FAQSection = () => {
-  const [open, setOpen] = useState<number | null>(null);
-  const FAQS = [
-    { q: "Can Aiaura really handle 8 channels at the same time?", a: "Yes. The AI runs as many parallel conversations as needed — there's no queue. A customer on Instagram, a WhatsApp inquiry, and an email can all get full responses simultaneously, each in the right tone and format for that channel." },
-    { q: "Will it sound like a robot on Instagram?", a: "No. Aiaura is trained on your voice, your fleet, and your style. It writes DMs the way a great customer service rep would — warm, fast, and on-brand. Most customers have no idea they're talking to AI." },
-    { q: "What stops it from replying to spam or junk?", a: "The AI classifies every inbound message for intent. Spam, trolls, and irrelevant messages are silently ignored or logged without replying. You can tune sensitivity to your preference." },
-    { q: "Does it work with my existing Instagram business account?", a: "Yes. We connect via official Instagram Business API. No credential sharing, no scraping. Just a one-time authorization from your Meta Business Suite. Same for WhatsApp Business API." },
-    { q: "What if a customer asks something the AI doesn't know?", a: "It will acknowledge, take down their details, and let you know immediately. It never fabricates an answer. You get a notification with the full context so you can follow up personally." },
-    { q: "How long until it's live?", a: "14 days or less from signup. We handle the integrations, train the AI on your business, and run a Test Mode period so you can review responses before it goes fully live." },
-  ];
-  return (
-    <section style={{ background: "var(--page-bg)", padding: "clamp(60px, 8vh, 100px) 0" }}>
-      <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 clamp(16px, 4vw, 32px)" }}>
-        <div style={{ textAlign: "center", marginBottom: "clamp(32px, 6vh, 56px)" }}>
-          <span className="omni-pill" style={{ marginBottom: 14, display: "inline-flex" }}><span className="omni-pill-dot" />FAQ</span>
-          <h2 style={{ fontSize: "clamp(20px,4vw,40px)", fontWeight: 800, color: "var(--ink)", letterSpacing: "-0.035em", lineHeight: 1.1, marginTop: 12 }}>Questions, answered.</h2>
-        </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: "clamp(8px, 2vw, 12px)" }}>
-          {FAQS.map((f, i) => (
-            <div key={i} className="faq-row" style={{ background: "white", borderRadius: "clamp(12px, 2vw, 16px)", border: "1px solid rgba(16,185,129,0.1)", overflow: "hidden" }}>
-              <button className="faq-btn" onClick={() => setOpen(open === i ? null : i)} style={{ padding: "clamp(12px, 3vw, 18px) clamp(16px, 4vw, 24px)" }}>
-                <span style={{ paddingRight: "clamp(8px, 2vw, 16px)", flex: 1, textAlign: "left", fontSize: "clamp(12px, 2.5vw, 13.5px)" }}>{f.q}</span>
-                <div className="faq-chevron" style={{ transform: open === i ? "rotate(45deg)" : "none", width: "clamp(18px, 4vw, 22px)", height: "clamp(18px, 4vw, 22px)", fontSize: "clamp(12px, 2.5vw, 14px)" }}>+</div>
-              </button>
-              <div className={`faq-body${open === i ? " open" : ""}`} style={{ padding: open === i ? `0 clamp(16px, 4vw, 24px) clamp(12px, 3vw, 16px)` : "0", fontSize: "clamp(11px, 2.2vw, 13px)" }}>{f.a}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
 /* ── BOTTOM CTA ── */
 const BottomCTASection = () => (
   <section style={{ background: "linear-gradient(135deg, #F0FDF4 0%, #ECFDF5 100%)", padding: "clamp(80px, 12vh, 120px) 0", position: "relative", overflow: "hidden", borderTop: "1px solid rgba(16,185,129,0.15)" }}>
@@ -683,7 +629,6 @@ export default function OmnichannelPage() {
           <ChannelShowcaseSection />
           <BentoSection />
           <ProofWallSection />
-          <FAQSection />
           <BottomCTASection />
         </div>
       </ServicePageTemplate>
